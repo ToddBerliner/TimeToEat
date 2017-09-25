@@ -6,7 +6,7 @@ export const planDayMonday = Immutable(defaultPlan.days.monday);
 export const dateKeySunday = getDateKey(new Date(2017, 1, 5));
 export const dateKeyMonday = getDateKey(new Date(2017, 1, 6));
 export const dateKeyWednesday = getDateKey(new Date(2017, 1, 8));
-export const expectedNodesMonday = [
+export const expectedNodesMonday = Immutable([
     {
         id: `${dateKeyMonday}_0`,
         name: "Breakfast",
@@ -42,8 +42,8 @@ export const expectedNodesMonday = [
         items: ["Lean Protien", "Lots of Veggies", "Quinoa"],
         completedTime: null
     }
-];
-export const expectedDayMonday = {
+]);
+export const expectedDayMonday = Immutable({
     id: dateKeyMonday,
     water: {
         completedTimes: [],
@@ -52,4 +52,14 @@ export const expectedDayMonday = {
     nodeIds: ["1486368000000_0", "1486368000000_1", "1486368000000_2",
         "1486368000000_3", "1486368000000_4"],
     offPlanNodeIds: []
-}
+});
+export const expectedDayMondayWithWater = Immutable({
+    id: dateKeyMonday,
+    water: {
+        completedTimes: ["456"],
+        target: 8
+    },
+    nodeIds: ["1486368000000_0", "1486368000000_1", "1486368000000_2",
+        "1486368000000_3", "1486368000000_4"],
+    offPlanNodeIds: []
+});

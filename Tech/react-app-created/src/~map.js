@@ -42,8 +42,8 @@
         Reducer
     days
         Actions
-            tapWater => dispatch({type: WATER_ADDED, dayId})
-            tapAndHoldWater => dispatch({type: WATER_REMOVED, dayId})
+            tapWater => dispatch({type: WATER_ADDED, {dayId: timestamp}})
+            tapAndHoldWater => dispatch({type: WATER_REMOVED, {dayId: timestamp}})
         Selectors
             ✔ getDayById(dayId) => returns a day or undefined
             ✔ getDayIds() => returns all the day ids
