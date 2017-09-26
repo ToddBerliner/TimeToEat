@@ -5,15 +5,15 @@ import * as rootFixtures from './fixtures';
 import * as uiStateFixtures from './uiState/fixtures';
 import defaultPlan from './plan/defaultPlan';
 import * as daysFixtures from './days/fixtures';
-import * as utilsFixtures from '../utils/fixtures';
+import * as nodesFixtures from './nodes/fixtures';
 
 describe('root Actions', () => {
     it('should dispatch the DAY_AND_NODES_ADDED for each dayId', () => {
         // call action with 3 days to create
         const dispatches = Thunk(_ensureDaysAndNodes)
             .withState(rootFixtures.expectedInitialState)
-            .execute(utilsFixtures.dateKeySunday,
-                utilsFixtures.dateKeyWednesday);
+            .execute(daysFixtures.dateKeySunday,
+                daysFixtures.dateKeyWednesday);
         // expect 3 dispatches
         expect(dispatches.length).toBe(3);
         expect(dispatches[0].isPlainObject()).toBe(true);

@@ -8,9 +8,6 @@ const initialState = Immutable(defaultPlan);
 // Reducer
 export default function reduce(state = initialState, action = {}) {
     switch(action.type) {
-        case DAY_SELECTED:
-            console.log('plan DAY_SELECTED');
-            return state;
         default:
             return state;
     }

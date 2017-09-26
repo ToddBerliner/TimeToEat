@@ -1,7 +1,8 @@
 import { getDow, getMonth, getDateKey, createDayFromPlanDay,
         createNodesFromPlanDay, getTimestampFromTimeObj,
         getDayIdsBetweenDayIds, createDayAndNodes } from './';
- import * as fixtures from './fixtures';
+ import * as daysFixtures from '../store/days/fixtures';
+ import * as nodesFixtures from '../store/nodes/fixtures';
 
 describe('Generic Utilities', () => {
     test('it returns the day of the week for the given index or null', () => {
@@ -24,9 +25,9 @@ describe('Generic Utilities', () => {
         expect(timestamp).toBe(1485952200000);
     });
     test('it returns a dayAndNodes object for a given dateKey', () => {
-        expect(createDayAndNodes(fixtures.dateKeyMonday, fixtures.planDayMonday)).toEqual({
-            day: fixtures.expectedDayMonday,
-            nodes: fixtures.expectedNodesMonday
+        expect(createDayAndNodes(daysFixtures.dateKeyMonday, daysFixtures.planDayMonday)).toEqual({
+            day: daysFixtures.expectedDayMonday,
+            nodes: nodesFixtures.expectedNodesMonday
         });
     });
 });
@@ -59,17 +60,17 @@ describe('Days Utilities', () => {
         expect(getDayIdsBetweenDayIds(dayId1, dayId2)).toEqual(expectedDayIds);
     });
     test('it returns a day object without mutating the planDay it\'s derived from ', () => {
-        const nodeIdsArr = fixtures.expectedNodesMonday.map((node) => node.id);
-        const day = createDayFromPlanDay(fixtures.dateKeyMonday,
-            fixtures.planDayMonday, nodeIdsArr);
-        expect(day).toEqual(fixtures.expectedDayMonday);
+        const nodeIdsArr = nodesFixtures.expectedNodesMonday.map((node) => node.id);
+        const day = createDayFromPlanDay(daysFixtures.dateKeyMonday,
+            daysFixtures.planDayMonday, nodeIdsArr);
+        expect(day).toEqual(daysFixtures.expectedDayMonday);
     });
 });
 
 describe('Nodes Utilities', () => {
     test('it returns an array of nodes without mutating the planDay it\' derived from ', () => {
-        const nodes = createNodesFromPlanDay(fixtures.dateKeyMonday,
-            fixtures.planDayMonday);
-        expect(nodes).toEqual(fixtures.expectedNodesMonday);
+        const nodes = createNodesFromPlanDay(daysFixtures.dateKeyMonday,
+            daysFixtures.planDayMonday);
+        expect(nodes).toEqual(nodesFixtures.expectedNodesMonday);
     });
 });

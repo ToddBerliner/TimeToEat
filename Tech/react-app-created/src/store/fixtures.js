@@ -4,7 +4,7 @@ import { DAY_AND_NODES_ADDED } from './reducer';
 import * as uiStateFixtures from './uiState/fixtures';
 import defaultPlan from './plan/defaultPlan';
 import * as daysFixtures from './days/fixtures';
-import * as utilsFixtures from '../utils/fixtures';
+import * as nodesFixtures from './nodes/fixtures';
 
 export const expectedInitialState = Immutable({
     uiState: uiStateFixtures.expectedInitialState,
@@ -20,7 +20,7 @@ export const stateWithDay = Immutable({
 export const expectedMondayDayAndNodesAddedAction = {
     type: DAY_AND_NODES_ADDED,
     dayAndNodes: {
-        day: utilsFixtures.expectedDayMonday,
-        nodes: utilsFixtures.expectedNodesMonday
+        day: daysFixtures.expectedDayMonday,
+        nodes: nodesFixtures.expectedNodesMonday
     }
 }

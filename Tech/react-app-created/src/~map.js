@@ -39,18 +39,19 @@
     plan
         Actions
         Selectors
+            ✔ getPlanDayByDayId => returns a plan day by a dayId
         Reducer
     days
         Actions
-            tapWater => dispatch({type: WATER_ADDED, {dayId: timestamp}})
-            tapAndHoldWater => dispatch({type: WATER_REMOVED, {dayId: timestamp}})
+            ✔ tapWater => dispatch({type: WATER_ADDED, {dayId: timestamp}})
+            ✔ tapAndHoldWater => dispatch({type: WATER_REMOVED, {dayId: timestamp}})
         Selectors
             ✔ getDayById(dayId) => returns a day or undefined
             ✔ getDayIds() => returns all the day ids
         Reducer
-            DAY_AND_NODES_ADDED => {...daysState, {...daysById, [dayId]: newDay}}
-            WATER_ADDED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp added]}}
-            WATER_REMOVED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp removed]}}
+            ✔ DAY_AND_NODES_ADDED => {...daysState, {...daysById, [dayId]: newDay}}
+            ✔ WATER_ADDED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp added]}}
+            ✔ WATER_REMOVED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp removed]}}
     nodes
         Actions
             tapNode(nodeId) => dispatch({type: NODE_CHECKED, nodeId})
@@ -119,11 +120,13 @@
         }
     }
     nodes: {
-        [nodeKey = dayKey_nodePositionIndex]: {
-            name: 'bfast',
-            time: timestamp,
-            items: [items...],
-            completedTime: timestamp
+        nodesById: {
+            [nodeKey = dayKey_nodePositionIndex]: {
+                name: 'bfast',
+                time: timestamp,
+                items: [items...],
+                completedTime: timestamp
+            }
         }
     }
 */

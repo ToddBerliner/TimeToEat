@@ -1,11 +1,9 @@
 import Immutable from 'seamless-immutable';
-import defaultPlan from '../store/plan/defaultPlan';
-import { getDateKey } from './';
+import { dateKeyMonday } from '../days/fixtures';
 
-export const planDayMonday = Immutable(defaultPlan.days.monday);
-export const dateKeySunday = getDateKey(new Date(2017, 1, 5));
-export const dateKeyMonday = getDateKey(new Date(2017, 1, 6));
-export const dateKeyWednesday = getDateKey(new Date(2017, 1, 8));
+export const expectedInitialState = Immutable({
+    nodesById: {}
+});
 export const expectedNodesMonday = Immutable([
     {
         id: `${dateKeyMonday}_0`,
@@ -43,23 +41,3 @@ export const expectedNodesMonday = Immutable([
         completedTime: null
     }
 ]);
-export const expectedDayMonday = Immutable({
-    id: dateKeyMonday,
-    water: {
-        completedTimes: [],
-        target: 8
-    },
-    nodeIds: ["1486368000000_0", "1486368000000_1", "1486368000000_2",
-        "1486368000000_3", "1486368000000_4"],
-    offPlanNodeIds: []
-});
-export const expectedDayMondayWithWater = Immutable({
-    id: dateKeyMonday,
-    water: {
-        completedTimes: ["456"],
-        target: 8
-    },
-    nodeIds: ["1486368000000_0", "1486368000000_1", "1486368000000_2",
-        "1486368000000_3", "1486368000000_4"],
-    offPlanNodeIds: []
-});

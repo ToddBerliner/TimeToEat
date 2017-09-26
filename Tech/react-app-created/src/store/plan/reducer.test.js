@@ -1,6 +1,6 @@
 import { Selector } from 'redux-testkit';
 import { getPlanDayByDayId } from './reducer';
-import { dateKeyWednesday } from '../../utils/fixtures';
+import { dateKeyWednesday } from '../days/fixtures';
 import { expectedInitialState, expectedPlanDayWednesday } from './fixtures';
 
 describe('plan Selectors', () => {
