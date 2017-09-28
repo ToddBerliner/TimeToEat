@@ -54,14 +54,15 @@
             ✔ WATER_REMOVED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp removed]}}
     nodes
         Actions
-            tapNode(nodeId) => dispatch({type: NODE_CHECKED, nodeId})
-            tapAndHoldNode(nodeId) => dispatch({type: NODE_UNCHECKED, nodeId})
+            ✔ tapNode(nodeId) => dispatch({type: NODE_CHECKED, nodeId, timestamp})
+            ✔ tapAndHoldNode(nodeId) => dispatch({type: NODE_UNCHECKED, nodeId, timestamp})
         Selectors
-            getNodesByIds([nodeIds]) => returns the requested nodes, in the order requested
+            ✔ getNodeById(nodeId) => returns the requested node or undefined if it doesn't exist
+            ✔ getNodesByIds([nodeIds]) => returns array of the requeted nodes
         Reducer
-            DAY_AND_NODES_ADDED => {...nodesState, [[newNodeId]: newNode}...]}
-            NODE_CHECKED => {...nodesState, [nodeId]: {...node, compltedTime: timestamp}}
-            NODE_UNCHECKED => {...nodesState, [nodeId]: {...node, compltedTime: null}}
+            ✔ DAY_AND_NODES_ADDED => {...nodesState, {...nodesById, [[nodeId]: newNode}...]}
+            ✔ NODE_CHECKED => {...nodesState, [nodeId]: {...node, compltedTime: timestamp}}
+            ✔ NODE_UNCHECKED => {...nodesState, [nodeId]: {...node, compltedTime: null}}
 */
 
 // Utilities

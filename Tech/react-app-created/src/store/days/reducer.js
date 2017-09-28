@@ -21,10 +21,10 @@ export const tapAndHoldWater = (dayId, time) => ({
 const initialState = Immutable({
     daysById: {}
 });
-const day = (state, action) => {
+const dayAdd = (daysById, action) => {
     const key = action.dayAndNodes.day.id;
     const day = action.dayAndNodes.day;
-    return { ...state, [key]: day };
+    return { ...daysById, [key]: day };
 };
 const waterAdd = (day, time) => {
     const newCompletes = day.water.completedTimes.asMutable();
@@ -55,17 +55,18 @@ const waterRemove = (day, time) => {
 };
 
 export default function reduce(state = initialState, action = {}) {
-    const dayId = action.dayId;
-    const dayObj = getDayById(state, dayId);
     switch (action.type) {
         case DAY_AND_NODES_ADDED:
-            return { ...state, daysById: day(state.daysById, action) };
+            return { ...state, daysById: dayAdd(state.daysById, action) };
         case WATER_ADDED:
             return {
                 ...state,
                 daysById: {
                     ...state.daysById,
-                    [dayId]: waterAdd(dayObj, action.time)
+                    [action.dayId]: waterAdd(
+                        getDayById(state, action.dayId),
+                        action.time
+                    )
                 }
             };
         case WATER_REMOVED:
@@ -73,7 +74,10 @@ export default function reduce(state = initialState, action = {}) {
                 ...state,
                 daysById: {
                     ...state.daysById,
-                    [dayId]: waterRemove(dayObj, action.time)
+                    [action.dayId]: waterRemove(
+                        getDayById(state, action.dayId),
+                        action.time
+                    )
                 }
             };
         default:
