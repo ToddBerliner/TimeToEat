@@ -1,27 +1,27 @@
 // useful array with days in order of JS "day"
 export const DOW = [
-    'sunday',
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday'
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday"
 ];
 
 export const months = [
-    'january',
-    'february',
-    'march',
-    'april',
-    'may',
-    'june',
-    'july',
-    'august',
-    'september',
-    'october',
-    'november',
-    'december'
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december"
 ];
 
 export function getDow(dayIndex) {
@@ -62,13 +62,12 @@ export function getDayIdsBetweenDayIds(firstDayId, secondDayId) {
 }
 
 export function getTimestampFromTimeObj(dateKey, timeObj) {
-
     try {
         const date = new Date(parseInt(dateKey));
         date.setHours(timeObj.hours);
         date.setMinutes(timeObj.minutes);
         return date.getTime();
-    } catch(err) {
+    } catch (err) {
         return undefined;
     }
 }
@@ -76,7 +75,7 @@ export function getTimestampFromTimeObj(dateKey, timeObj) {
 export function createDayAndNodes(dateKey, planDay) {
     // create the nodes
     const nodes = createNodesFromPlanDay(dateKey, planDay);
-    const nodeIdsArr = nodes.map((node) => node.id);
+    const nodeIdsArr = nodes.map(node => node.id);
     // create the day
     const day = createDayFromPlanDay(dateKey, planDay, nodeIdsArr);
     return { day, nodes };
@@ -91,7 +90,7 @@ export function createDayFromPlanDay(dateKey, planDay, nodeIdsArr) {
         },
         nodeIds: nodeIdsArr,
         offPlanNodeIds: []
-    }
+    };
     return day;
 }
 export function createNodesFromPlanDay(dateKey, planDay) {

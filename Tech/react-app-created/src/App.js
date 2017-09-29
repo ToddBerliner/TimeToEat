@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
+import React from "react";
+import MapScreen from "./components/MapScreen";
+import { appHolder } from "./styles/styles.scss";
 
-class App extends Component {
-  render() {
+// App will eventually be router component
+const App = () => {
     return (
-      <div className="App"></div>
+        <div className="appHolder">
+            <MapScreen />
+        </div>
     );
-  }
-}
+};
 
 export default App;
