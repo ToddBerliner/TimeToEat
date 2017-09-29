@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import {
     getDateKey,
+    getYesterdayDateKey,
     getDayIdsBetweenDayIds,
     getDow,
     createDayAndNodes
@@ -15,12 +16,13 @@ export const DAY_AND_NODES_ADDED = "day_added";
 
 // Actions
 export const _ensureDaysAndNodes = (
-    sinceDayId,
+    sinceDayId = getYesterdayDateKey(),
     throughDayId = getDateKey()
 ) => {
     const dayIdsToCreate = getDayIdsBetweenDayIds(sinceDayId, throughDayId);
     if (dayIdsToCreate.length > 0) {
         return function(dispatch, getState) {
+            console.log("inside thunk");
             const dayAndNodesPayloads = [];
             // map over dayIdsToCreate, create the payload and dispatch the action
             for (var dayId of dayIdsToCreate) {

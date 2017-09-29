@@ -39,6 +39,11 @@ export function getDateKey(date = new Date()) {
     return new Date(keyYear, keyMonth, keyDate).getTime().toString();
 }
 
+export function getYesterdayDateKey() {
+    let yesterday = (d => new Date(d.setDate(d.getDate() - 1)))(new Date());
+    return getDateKey(yesterday);
+}
+
 function addDays(date = new Date(), days = 1) {
     const result = new Date(date);
     result.setDate(result.getDate() + days);

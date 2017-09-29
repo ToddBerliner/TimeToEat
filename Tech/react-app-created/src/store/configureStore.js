@@ -21,7 +21,6 @@ export const saveState = state => {
         const serializedState = JSON.stringify(state);
         if (savedState !== serializedState) {
             localStorage.setItem("state", serializedState);
-            console.log("saved state", serializedState);
         }
     } catch (err) {
         // ignore write error (for now);
@@ -37,7 +36,7 @@ export const configureStore = () => {
     store.subscribe(() => {
         saveState(store.getState());
     });
-    _ensureDaysAndNodes();
+    store.dispatch(_ensureDaysAndNodes());
     return store;
 };
 

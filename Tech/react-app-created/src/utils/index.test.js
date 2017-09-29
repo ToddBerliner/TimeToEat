@@ -2,6 +2,7 @@ import {
     getDow,
     getMonth,
     getDateKey,
+    getYesterdayDateKey,
     createDayFromPlanDay,
     createNodesFromPlanDay,
     getTimestampFromTimeObj,
