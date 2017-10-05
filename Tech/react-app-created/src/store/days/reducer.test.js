@@ -59,11 +59,6 @@ describe("days Reducer", () => {
         const stateWithNewDay = Reducer(days)
             .withState(daysFixtures.expectedInitialState)
             .execute(expectedMondayDayAndNodesAddedAction);
-        console.log(
-            Immutable.isImmutable(
-                stateWithNewDay.daysById[daysFixtures.dateKeyMonday]
-            )
-        );
     });
     it("should add a new day to a populated days slice of state", () => {
         Reducer(days)

@@ -2,6 +2,7 @@ import React from "react";
 import NodeRow from "../components/NodeRow";
 import "../styles/styles.css";
 import { UNCHECKED, CHECKED, MISSED } from "../store/nodes/reducer";
+import { getFriendlyTime } from "../utils";
 
 const getCurrentNodeId = nodes => {
     const nowDate = new Date();
@@ -38,7 +39,7 @@ const NodeRows = props => {
             <NodeRow
                 key={node.id}
                 name={node.name}
-                time={node.time}
+                time={getFriendlyTime(node.time)}
                 status={status}
                 selected={node.id === selectedNodeId}
                 id={node.id}

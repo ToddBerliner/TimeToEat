@@ -10,8 +10,10 @@ import {
     _getDayById,
     _getNodesByIds
 } from "../store/reducer";
+import { selectDay } from "../store/uiState/reducer";
 import { tapWater, tapAndHoldWater } from "../store/days/reducer";
 import { tapNode, tapAndHoldNode } from "../store/nodes/reducer";
+import { getAdjacentDateKey } from "../utils";
 
 // MapScreen is a route in the App
 const MapScreen = props => {
@@ -75,7 +77,11 @@ const mapDispatchToProps = dispatch => {
         tapNode: (nodeId, time) => {
             dispatch(tapNode(nodeId, time));
         },
-        tapAndHoldNode
+        tapAndHoldNode,
+        selectDay: (dayId, dir) => {
+            const newDayId = getAdjacentDateKey(dayId, dir);
+            dispatch(selectDay(newDayId));
+        }
     };
 };
 

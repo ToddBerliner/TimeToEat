@@ -47,8 +47,23 @@ export function getDateFromKey(date) {
     }
 }
 
+export function getAdjacentDateKey(dateKey, dir) {
+    let adjacentDate;
+    if (dir === "prev") {
+        adjacentDate = (d => new Date(d.setDate(d.getDate() - 1)))(
+            getDateFromKey(dateKey)
+        );
+    }
+    if (dir === "next") {
+        adjacentDate = (d => new Date(d.setDate(d.getDate() + 1)))(
+            getDateFromKey(dateKey)
+        );
+    }
+    return getDateKey(adjacentDate);
+}
+
 export function getYesterdayDateKey() {
-    let yesterday = (d => new Date(d.setDate(d.getDate() - 1)))(new Date());
+    const yesterday = (d => new Date(d.setDate(d.getDate() - 1)))(new Date());
     return getDateKey(yesterday);
 }
 
@@ -83,6 +98,28 @@ export function getTimestampFromTimeObj(dateKey, timeObj) {
     } catch (err) {
         return undefined;
     }
+}
+
+export function getFriendlyTime(timestamp) {
+    const date = new Date(timestamp);
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    // let { hours, minutes } = timeObj;
+    if (hours === 0 && minutes === 0) {
+        return "Midnight";
+    }
+    if (hours === 12 && minutes === 0) {
+        return "Noon";
+    }
+    let ampm = "am";
+    if (hours > 12) {
+        ampm = "pm";
+        hours = hours - 12;
+    }
+    if (hours === 0) hours = "12";
+    minutes = minutes === 0 ? "" : `:${minutes}`;
+
+    return `${hours}${minutes} ${ampm}`;
 }
 
 export function createDayAndNodes(dateKey, planDay) {

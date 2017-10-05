@@ -2,6 +2,8 @@ import {
     getDow,
     getMonth,
     getDateKey,
+    getFriendlyTime,
+    getAdjacentDateKey,
     getYesterdayDateKey,
     createDayFromPlanDay,
     createNodesFromPlanDay,
@@ -31,6 +33,12 @@ describe("Generic Utilities", () => {
         };
         const timestamp = getTimestampFromTimeObj(dateKey, timeObj);
         expect(timestamp).toBe(1485952200000);
+    });
+    test("it returns the friendly time for a given timestamp", () => {
+        const timestamp = 1507134600000;
+        expect(getFriendlyTime(timestamp)).toBe("9:30 am");
+        const timestamp2 = 1507165200000;
+        expect(getFriendlyTime(timestamp2)).toBe("6 pm");
     });
     test("it returns a dayAndNodes object for a given dateKey", () => {
         expect(
@@ -71,6 +79,11 @@ describe("Days Utilities", () => {
             getDateKey(new Date(2017, 2, 2))
         ];
         expect(getDayIdsBetweenDayIds(dayId1, dayId2)).toEqual(expectedDayIds);
+    });
+    test("it returns the previous date key for a given date key", () => {
+        const dayId = getDateKey(new Date(2017, 1, 25));
+        const expectedPrevDateKey = getDateKey(new Date(2017, 1, 24));
+        expect(getAdjacentDateKey(dayId, "prev")).toBe(expectedPrevDateKey);
     });
     test("it returns a day object without mutating the planDay it's derived from ", () => {
         const nodeIdsArr = nodesFixtures.expectedNodesMonday.map(
