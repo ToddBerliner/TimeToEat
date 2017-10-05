@@ -88,6 +88,9 @@ $dkGrey: #666;
         }
     }
 }
+.pointer {
+    cursor: pointer;
+}
 .appHolder {
     width: 100%;
     height: 100%;
@@ -111,7 +114,6 @@ $dkGrey: #666;
     align-items: center;
     justify-content: start;
 }
-
 .nodeRowSelected {
     background: $selectedGrey;
     padding: 8px 25px;
@@ -120,7 +122,6 @@ $dkGrey: #666;
     align-items: center;
     justify-content: start;
 }
-
 .circle {
     width: 53px;
     height: 53px;
@@ -128,7 +129,6 @@ $dkGrey: #666;
     border: 2px solid $dkGrey;
     background-color: #fff;
 }
-
 .circleFill {
     background-color: $dkGrey;
     width: 47px;
@@ -139,13 +139,11 @@ $dkGrey: #666;
     margin: 3px;
     color: #fff;
 }
-
 .nodeNameBlock {
     margin-left: 14px;
     color: $dkGrey;
     line-height: 1.4em;
 }
-
 .nodeName {
     font-size: 1.4em;
 }

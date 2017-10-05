@@ -1,12 +1,14 @@
-import Immutable from 'seamless-immutable';
-import { _getDayById } from '../reducer';
-import { getDateKey } from '../../utils';
+import Immutable from "seamless-immutable";
+import { getDateKey } from "../../utils";
 
 // Action Types
-export const DAY_SELECTED = 'day_selected';
+export const DAY_SELECTED = "day_selected";
 
 // Actions
-export const selectDay = (dayId = getDateKey()) => ({type: DAY_SELECTED, dayId})
+export const selectDay = (dayId = getDateKey()) => ({
+    type: DAY_SELECTED,
+    dayId
+});
 
 // Reducer
 const initialState = Immutable({
@@ -14,12 +16,13 @@ const initialState = Immutable({
 });
 
 export default function reduce(state = initialState, action = {}) {
-    switch(action.type) {
+    switch (action.type) {
         case DAY_SELECTED:
-            return {...state, selectedDayId: action.dayId}
-        default: return state;
+            return Immutable({ ...state, selectedDayId: action.dayId });
+        default:
+            return state;
     }
 }
 
 // Selectors
-export const getSelectedDayId = state => state.selectedDayId;
+export const getSelectedDayId = state => state.selectedDayId || getDateKey();

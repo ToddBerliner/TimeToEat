@@ -35,7 +35,7 @@ describe("days Reducer", () => {
     // sample state with Monday added
     const expectedSampleStateWithMonday = {
         daysById: {
-            "123": { id: "123" }
+            "123": Immutable({ id: "123" })
         }
     };
     expectedSampleStateWithMonday.daysById[daysFixtures.dateKeyMonday] =
@@ -54,6 +54,16 @@ describe("days Reducer", () => {
             .withState(daysFixtures.expectedInitialState)
             .expect(expectedMondayDayAndNodesAddedAction)
             .toReturnState(expectedInitialStateWithMonday);
+    });
+    it("should ensure that the added day is an instance of Immutable", () => {
+        const stateWithNewDay = Reducer(days)
+            .withState(daysFixtures.expectedInitialState)
+            .execute(expectedMondayDayAndNodesAddedAction);
+        console.log(
+            Immutable.isImmutable(
+                stateWithNewDay.daysById[daysFixtures.dateKeyMonday]
+            )
+        );
     });
     it("should add a new day to a populated days slice of state", () => {
         Reducer(days)

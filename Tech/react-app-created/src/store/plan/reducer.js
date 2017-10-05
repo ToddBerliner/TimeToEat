@@ -1,13 +1,12 @@
-import Immutable from 'seamless-immutable';
-import defaultPlan from './defaultPlan';
-import { DAY_SELECTED } from '../uiState/reducer';
-import { getDow } from '../../utils/index';
+import Immutable from "seamless-immutable";
+import defaultPlan from "./defaultPlan";
+import { getDow } from "../../utils/index";
 
 const initialState = Immutable(defaultPlan);
 
 // Reducer
 export default function reduce(state = initialState, action = {}) {
-    switch(action.type) {
+    switch (action.type) {
         default:
             return state;
     }
@@ -15,7 +14,7 @@ export default function reduce(state = initialState, action = {}) {
 
 // Selectors
 export const getPlanDayByDayId = (state, dayId) => {
-    const dateToGet = new Date(parseInt(dayId));
+    const dateToGet = new Date(parseInt(dayId, 10));
     const dayOfWeek = getDow(dateToGet.getDay());
     return state.days[dayOfWeek];
-}
+};

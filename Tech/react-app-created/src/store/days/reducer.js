@@ -6,11 +6,13 @@ export const WATER_ADDED = "water_added";
 export const WATER_REMOVED = "water_removed";
 
 // Actions
-export const tapWater = (dayId, time) => ({
-    type: WATER_ADDED,
-    dayId,
-    time
-});
+export const tapWater = (dayId, time) => {
+    return {
+        type: WATER_ADDED,
+        dayId,
+        time
+    };
+};
 export const tapAndHoldWater = (dayId, time) => ({
     type: WATER_REMOVED,
     dayId,
@@ -57,9 +59,12 @@ const waterRemove = (day, time) => {
 export default function reduce(state = initialState, action = {}) {
     switch (action.type) {
         case DAY_AND_NODES_ADDED:
-            return { ...state, daysById: dayAdd(state.daysById, action) };
+            return Immutable({
+                ...state,
+                daysById: dayAdd(state.daysById, action)
+            });
         case WATER_ADDED:
-            return {
+            return Immutable({
                 ...state,
                 daysById: {
                     ...state.daysById,
@@ -68,9 +73,9 @@ export default function reduce(state = initialState, action = {}) {
                         action.time
                     )
                 }
-            };
+            });
         case WATER_REMOVED:
-            return {
+            return Immutable({
                 ...state,
                 daysById: {
                     ...state.daysById,
@@ -79,7 +84,7 @@ export default function reduce(state = initialState, action = {}) {
                         action.time
                     )
                 }
-            };
+            });
         default:
             return state;
     }
@@ -91,4 +96,11 @@ export const getDayById = (state, dayId) => {
 };
 export const getAllDayIds = state => {
     return Object.keys(state.daysById);
+};
+export const getLastDayId = state => {
+    const dayIds = getAllDayIds(state);
+    dayIds.sort((a, b) => {
+        return parseInt(a, 10) - parseInt(b, 10);
+    });
+    return dayIds.shift();
 };

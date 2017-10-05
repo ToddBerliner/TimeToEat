@@ -39,6 +39,14 @@ export function getDateKey(date = new Date()) {
     return new Date(keyYear, keyMonth, keyDate).getTime().toString();
 }
 
+export function getDateFromKey(date) {
+    try {
+        return new Date(parseInt(date, 10));
+    } catch (err) {
+        return undefined;
+    }
+}
+
 export function getYesterdayDateKey() {
     let yesterday = (d => new Date(d.setDate(d.getDate() - 1)))(new Date());
     return getDateKey(yesterday);
@@ -52,7 +60,7 @@ function addDays(date = new Date(), days = 1) {
 
 export function getDayIdsBetweenDayIds(firstDayId, secondDayId) {
     const dayIds = [];
-    const firstDate = new Date(parseInt(firstDayId));
+    const firstDate = new Date(parseInt(firstDayId, 10));
     let dateToAdd = addDays(firstDate);
     let dayId = getDateKey(dateToAdd);
 
@@ -68,7 +76,7 @@ export function getDayIdsBetweenDayIds(firstDayId, secondDayId) {
 
 export function getTimestampFromTimeObj(dateKey, timeObj) {
     try {
-        const date = new Date(parseInt(dateKey));
+        const date = new Date(parseInt(dateKey, 10));
         date.setHours(timeObj.hours);
         date.setMinutes(timeObj.minutes);
         return date.getTime();
@@ -100,7 +108,7 @@ export function createDayFromPlanDay(dateKey, planDay, nodeIdsArr) {
 }
 export function createNodesFromPlanDay(dateKey, planDay) {
     const nodes = [];
-    planDay.nodes.map((node, idx) => {
+    planDay.nodes.forEach(function(node, idx) {
         nodes.push({
             id: `${dateKey}_${idx}`,
             name: node.name,

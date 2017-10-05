@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
-import rootReducer, { _ensureDaysAndNodes } from "./reducer";
-import { getAllDayIds } from "./days/reducer";
+import rootReducer, { _ensureDaysAndNodes, _getLastDayId } from "./reducer";
 import thunk from "redux-thunk";
+import Immutable from "seamless-immutable";
 
 export const loadState = () => {
     try {
@@ -21,6 +21,7 @@ export const saveState = state => {
         const serializedState = JSON.stringify(state);
         if (savedState !== serializedState) {
             localStorage.setItem("state", serializedState);
+            console.log("saved", state);
         }
     } catch (err) {
         // ignore write error (for now);
@@ -31,12 +32,18 @@ export const configureStore = () => {
     // check for savedState
     const savedState = loadState();
     // create the store
-    const store = createStore(rootReducer, savedState, applyMiddleware(thunk));
+    const store = createStore(
+        rootReducer,
+        Immutable(savedState),
+        applyMiddleware(thunk)
+    );
     // subscribe to save
     store.subscribe(() => {
         saveState(store.getState());
     });
-    store.dispatch(_ensureDaysAndNodes());
+    // ensure the store is up to date
+    const lastDayId = _getLastDayId(store.getState());
+    store.dispatch(_ensureDaysAndNodes(lastDayId));
     return store;
 };
 

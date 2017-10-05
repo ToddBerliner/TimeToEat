@@ -1,6 +1,10 @@
 import Immutable from "seamless-immutable";
-import { DAY_SELECTED } from "../uiState/reducer";
 import { DAY_AND_NODES_ADDED } from "../reducer";
+
+// Node Statuses
+export const CHECKED = "checked";
+export const UNCHECKED = "unchecked";
+export const MISSED = "missed";
 
 // Action Types
 export const NODE_CHECKED = "node_checked";
@@ -39,9 +43,12 @@ const nodeUnCheck = node => {
 export default function reduce(state = initialState, action = {}) {
     switch (action.type) {
         case DAY_AND_NODES_ADDED:
-            return { ...state, nodesById: nodesAdd(state.nodesById, action) };
+            return Immutable({
+                ...state,
+                nodesById: nodesAdd(state.nodesById, action)
+            });
         case NODE_CHECKED:
-            return {
+            return Immutable({
                 ...state,
                 nodesById: {
                     ...state.nodesById,
@@ -50,9 +57,9 @@ export default function reduce(state = initialState, action = {}) {
                         action.time
                     )
                 }
-            };
+            });
         case NODE_UNCHECKED:
-            return {
+            return Immutable({
                 ...state,
                 nodesById: {
                     ...state.nodesById,
@@ -61,7 +68,7 @@ export default function reduce(state = initialState, action = {}) {
                         action.time
                     )
                 }
-            };
+            });
         default:
             return state;
     }
