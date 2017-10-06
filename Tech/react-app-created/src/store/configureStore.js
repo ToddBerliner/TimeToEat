@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer, { _ensureDaysAndNodes, _getLastDayId } from "./reducer";
 import thunk from "redux-thunk";
 import Immutable from "seamless-immutable";
@@ -31,12 +31,12 @@ export const saveState = state => {
 export const configureStore = () => {
     // check for savedState
     const savedState = loadState();
+    // add chrome dev tools
+    const composeEnhancers =
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const enhancer = composeEnhancers(applyMiddleware(thunk));
     // create the store
-    const store = createStore(
-        rootReducer,
-        Immutable(savedState),
-        applyMiddleware(thunk)
-    );
+    const store = createStore(rootReducer, Immutable(savedState), enhancer);
     // subscribe to save
     store.subscribe(() => {
         saveState(store.getState());
