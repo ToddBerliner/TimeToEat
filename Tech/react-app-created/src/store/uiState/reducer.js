@@ -12,7 +12,7 @@ export const selectDay = (dayId = getDateKey()) => ({
 
 // Reducer
 const initialState = Immutable({
-    selectedDayId: undefined
+    selectedDayId: null
 });
 
 export default function reduce(state = initialState, action = {}) {

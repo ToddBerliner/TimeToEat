@@ -43,7 +43,7 @@ export const _ensureDaysAndNodes = (
 
 // Reducers
 const store = combineReducers({
-    uiState,
+    uiState, // call uiState(state.plan, action);
     plan, // call plan(state.plan, action);
     days, // call days(state.daysById, action);
     nodes // call nodes(state.nodesById, action);
