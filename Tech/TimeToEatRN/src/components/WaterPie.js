@@ -12,20 +12,20 @@ import "../styles/styles.css";
 const slices = [wp0, wp1, wp2, wp3, wp4, wp5, wp6, wp7, wp8];
 
 const WaterPie = props => {
-    return (
-        <img
-            src={slices[props.count]}
-            className="pointer"
-            width="48"
-            height="48"
-            onClick={() => {
-                if (props.count < 8) {
-                    props.tap();
-                }
-            }}
-            alt="Water cup"
-        />
-    );
+  return (
+    <img
+      src={slices[props.count]}
+      className="pointer"
+      width="48"
+      height="48"
+      onClick={() => {
+        if (props.count < 8) {
+          props.tap();
+        }
+      }}
+      alt="Water cup"
+    />
+  );
 };
 
 export default WaterPie;

@@ -1,5 +1,5 @@
 import React from "react";
 const Stubb = () => {
-    return <div>Stubb</div>;
+  return <div>Stubb</div>;
 };
 export default Stubb;
