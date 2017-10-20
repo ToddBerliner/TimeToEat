@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer, { _ensureDaysAndNodes, _getLastDayId } from "./reducer";
 import thunk from "redux-thunk";
 import Immutable from "seamless-immutable";
+import { AsyncStorage } from "react-native";
 
 export const loadState = () => {
     try {
@@ -20,11 +21,23 @@ export const saveState = state => {
         const savedState = JSON.stringify(loadState());
         const serializedState = JSON.stringify(state);
         if (savedState !== serializedState) {
-            localStorage.setItem("state", serializedState);
-            console.log("saved", state);
+            AsyncStorage.setItem("state", serializedState, error => {
+                if (error === null) {
+                    AsyncStorage.getItem("state", (error, result) => {
+                        if (error === null) {
+                            console.log("Result: ", JSON.parse(result));
+                        } else {
+                            console.log("Get Error: ", error);
+                        }
+                    });
+                } else {
+                    console.log("Set Error: ", error);
+                }
+            });
         }
     } catch (err) {
         // ignore write error (for now);
+        console.log("Save State Error: ", err);
     }
 };
 
