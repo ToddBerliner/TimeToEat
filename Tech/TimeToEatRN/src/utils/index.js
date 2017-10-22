@@ -119,7 +119,7 @@ export function getFriendlyTime(timestamp) {
   if (hours === 0) hours = "12";
   minutes = minutes === 0 ? "" : `:${minutes}`;
 
-  return `${hours}${minutes} ${ampm}`;
+  return `${hours}${minutes}${ampm}`;
 }
 
 export function createDayAndNodes(dateKey, planDay) {

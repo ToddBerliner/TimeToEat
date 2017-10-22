@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import configureStore from "./src/store/configureStore";
 import MapScreen from "./src/containers/MapScreen";
 import { Font } from "expo";
-import { Text } from "react-native";
+import { Text, Image, View } from "react-native";
 
 export default class App extends React.Component {
   state = { ready: false };
@@ -28,7 +28,15 @@ export default class App extends React.Component {
         </Provider>
       );
     } else {
-      return null;
+      let pic = {
+        uri: "/src/images/splash@3x.jpg"
+      };
+      return (
+        <Image
+          style={{ width: 375, height: 812 }}
+          source={require("./src/images/splash.png")}
+        />
+      );
     }
   }
 }

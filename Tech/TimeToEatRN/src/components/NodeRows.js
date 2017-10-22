@@ -1,6 +1,6 @@
 import React from "react";
-import NodeRow from "../components/NodeRow";
-import "../styles/styles.css";
+import { View, StyleSheet } from "react-native";
+import NodeRow from "./NodeRow";
 import { UNCHECKED, CHECKED, MISSED } from "../store/nodes/reducer";
 import { getFriendlyTime } from "../utils";
 
@@ -43,16 +43,25 @@ const NodeRows = props => {
         status={status}
         selected={node.id === selectedNodeId}
         id={node.id}
-        onClick={() => {
+        onTap={() => {
           if (node.completedTime === null) {
-            props.tap(node.id);
+            props.onTap(node.id);
           }
         }}
       />
     );
   });
 
-  return <div className="content">{rows}</div>;
+  return <View style={styles.content}>{rows}</View>;
 };
+
+const styles = StyleSheet.create({
+  content: {
+    backgroundColor: "whitesmoke",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-around"
+  }
+});
 
 export default NodeRows;

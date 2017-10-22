@@ -36,9 +36,9 @@ describe("Generic Utilities", () => {
   });
   test("it returns the friendly time for a given timestamp", () => {
     const timestamp = 1507134600000;
-    expect(getFriendlyTime(timestamp)).toBe("9:30 am");
+    expect(getFriendlyTime(timestamp)).toBe("9:30am");
     const timestamp2 = 1507165200000;
-    expect(getFriendlyTime(timestamp2)).toBe("6 pm");
+    expect(getFriendlyTime(timestamp2)).toBe("6pm");
   });
   test("it returns a dayAndNodes object for a given dateKey", () => {
     expect(

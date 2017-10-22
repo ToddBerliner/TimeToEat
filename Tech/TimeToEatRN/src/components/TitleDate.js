@@ -14,7 +14,7 @@ const TitleDate = props => {
 const styles = StyleSheet.create({
   titleDate: {
     fontFamily: "fugazone",
-    fontSize: 20,
+    fontSize: 18,
     letterSpacing: -1
   }
 });

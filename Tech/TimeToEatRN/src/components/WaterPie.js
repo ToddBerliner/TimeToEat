@@ -1,31 +1,54 @@
 import React from "react";
-import wp0 from "../images/wp0@3x.png";
-import wp1 from "../images/wp1@3x.png";
-import wp2 from "../images/wp2@3x.png";
-import wp3 from "../images/wp3@3x.png";
-import wp4 from "../images/wp4@3x.png";
-import wp5 from "../images/wp5@3x.png";
-import wp6 from "../images/wp6@3x.png";
-import wp7 from "../images/wp7@3x.png";
-import wp8 from "../images/wp8@3x.png";
-import "../styles/styles.css";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableHighlight
+} from "react-native";
+const wp0 = require("../images/wp0.png");
+const wp1 = require("../images/wp1.png");
+const wp2 = require("../images/wp2.png");
+const wp3 = require("../images/wp3.png");
+const wp4 = require("../images/wp4.png");
+const wp5 = require("../images/wp5.png");
+const wp6 = require("../images/wp6.png");
+const wp7 = require("../images/wp7.png");
+const wp8 = require("../images/wp8.png");
 const slices = [wp0, wp1, wp2, wp3, wp4, wp5, wp6, wp7, wp8];
 
 const WaterPie = props => {
   return (
-    <img
-      src={slices[props.count]}
-      className="pointer"
-      width="48"
-      height="48"
-      onClick={() => {
-        if (props.count < 8) {
-          props.tap();
-        }
-      }}
-      alt="Water cup"
-    />
+    <View style={styles.waterPieWrap}>
+      <TouchableHighlight
+        onPress={props.onTap}
+        style={styles.waterPieTouchable}
+      >
+        <Image source={slices[props.waterCount]} style={styles.waterPieImage} />
+      </TouchableHighlight>
+      <Text style={styles.waterPieText}>Water</Text>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  waterPieWrap: {
+    marginRight: 10,
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  waterPieTouchable: {
+    borderRadius: 24
+  },
+  waterPieImage: {
+    width: 48,
+    height: 48
+  },
+  waterPieText: {
+    fontSize: 20,
+    letterSpacing: -1,
+    marginLeft: 8
+  }
+});
 
 export default WaterPie;
