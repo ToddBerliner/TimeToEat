@@ -13,7 +13,7 @@ import {
 import { selectDay } from "../store/uiState/reducer";
 import { tapWater, tapAndHoldWater } from "../store/days/reducer";
 import { tapNode, tapAndHoldNode } from "../store/nodes/reducer";
-import { getAdjacentDateKey } from "../utils";
+import { getAdjacentDateKey, PREV, NEXT } from "../utils";
 import Icon from "react-native-vector-icons/Ionicons";
 // MapScreen is a route in the App
 const MapScreen = props => {
@@ -24,9 +24,17 @@ const MapScreen = props => {
           <Icon name="ios-contact" size={24} />
         </View>
         <View style={styles.titleRowCenter}>
-          <Icon name="ios-arrow-back" size={24} style={{ marginRight: 20 }} />
+          <TouchableHighlight onPress={props.selectDay(props.dayId, PREV)}>
+            <Icon name="ios-arrow-back" size={24} style={{ marginRight: 20 }} />
+          </TouchableHighlight>
           <TitleDate dayId={props.dayId} />
-          <Icon name="ios-arrow-forward" size={24} style={{ marginLeft: 20 }} />
+          <TouchableHighlight onPress={props.selectDay(props.dayId, PREV)}>
+            <Icon
+              name="ios-arrow-forward"
+              size={24}
+              style={{ marginLeft: 20 }}
+            />
+          </TouchableHighlight>
         </View>
         <View style={styles.titleRowRight}>
           <Icon name="ios-pulse" size={24} />

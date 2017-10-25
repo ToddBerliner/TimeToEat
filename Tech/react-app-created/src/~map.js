@@ -7,6 +7,8 @@
         -> ensures days are created & dispatches DAY_AND_NODES_ADDED
     map screen renders
 
+
+
     // TODO: handle app running when new day starts (use clock to kick off
     day and node addition)
 */
@@ -33,7 +35,7 @@
                 // tap on day in calendar, navigate with arrows on map screen
                 // dispatch({type: DAY_SELECTED, dayId})
         Selectors
-            ✔ getSelectedDayId => return the selected day id || undefined
+            ✔ getSelectedDayId => return the selected day id || today
         Reducer
             ✔ DAY_SELECTED => returns {...uiState, selectedDay: dayId}
     plan
@@ -81,7 +83,7 @@
         ? getNodeKey => return the dateKey_nodePositionIndex
         ? getCurrentNode => return the node that should be highlighted
         ? getNodeEndBoundaryTime => return the time the node becomes 'missed'
-        ? getFriendlyNodeTime => return the cute time
+        ✔ getFriendlyNodeTime => return the cute time
         (sortNodes - not needed since day.nodes is an array with the id in the correct order)
         (getNodeTime - not needed since node time will be timestamp)
 */
