@@ -33,6 +33,7 @@
         Actions
             ✔ selectDay =>
                 // tap on day in calendar, navigate with arrows on map screen
+                // if necessary, create day and dispatch({type: DAY_AND_NODES_ADDED, dayAndNodes)
                 // dispatch({type: DAY_SELECTED, dayId})
         Selectors
             ✔ getSelectedDayId => return the selected day id || today

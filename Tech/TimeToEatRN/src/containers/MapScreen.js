@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import TitleDate from "../components/TitleDate";
 import AddSnack from "../components/AddSnack";
 import WaterPie from "../components/WaterPie";
@@ -17,6 +17,7 @@ import { getAdjacentDateKey, PREV, NEXT } from "../utils";
 import Icon from "react-native-vector-icons/Ionicons";
 // MapScreen is a route in the App
 const MapScreen = props => {
+  console.log(props.selectDay);
   return (
     <View style={styles.appWrap}>
       <View style={styles.titleRow}>
@@ -24,11 +25,19 @@ const MapScreen = props => {
           <Icon name="ios-contact" size={24} />
         </View>
         <View style={styles.titleRowCenter}>
-          <TouchableHighlight onPress={props.selectDay(props.dayId, PREV)}>
+          <TouchableHighlight
+            onPress={() => {
+              props.selectDay(props.dayId, PREV);
+            }}
+          >
             <Icon name="ios-arrow-back" size={24} style={{ marginRight: 20 }} />
           </TouchableHighlight>
           <TitleDate dayId={props.dayId} />
-          <TouchableHighlight onPress={props.selectDay(props.dayId, PREV)}>
+          <TouchableHighlight
+            onPress={() => {
+              props.selectDay(props.dayId, NEXT);
+            }}
+          >
             <Icon
               name="ios-arrow-forward"
               size={24}
