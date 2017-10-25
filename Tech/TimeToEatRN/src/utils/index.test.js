@@ -82,6 +82,11 @@ describe("Days Utilities", () => {
     const expectedPrevDateKey = getDateKey(new Date(2017, 1, 24));
     expect(getAdjacentDateKey(dayId, "prev")).toBe(expectedPrevDateKey);
   });
+  test("it returns the next date key for a given date key", () => {
+    const dayId = getDateKey(new Date(2017, 1, 25));
+    const expectedNextDateKey = getDateKey(new Date(2017, 1, 26));
+    expect(getAdjacentDateKey(dayId, "next")).toBe(expectedNextDateKey);
+  });
   test("it returns a day object without mutating the planDay it's derived from ", () => {
     const nodeIdsArr = nodesFixtures.expectedNodesMonday.map(node => node.id);
     const day = createDayFromPlanDay(

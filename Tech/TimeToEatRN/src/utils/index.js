@@ -1,3 +1,6 @@
+export const PREV = "prev";
+export const NEXT = "next";
+
 // useful array with days in order of JS "day"
 export const DOW = [
   "Sunday",
@@ -49,12 +52,12 @@ export function getDateFromKey(date) {
 
 export function getAdjacentDateKey(dateKey, dir) {
   let adjacentDate;
-  if (dir === "prev") {
+  if (dir === PREV) {
     adjacentDate = (d => new Date(d.setDate(d.getDate() - 1)))(
       getDateFromKey(dateKey)
     );
   }
-  if (dir === "next") {
+  if (dir === NEXT) {
     adjacentDate = (d => new Date(d.setDate(d.getDate() + 1)))(
       getDateFromKey(dateKey)
     );
