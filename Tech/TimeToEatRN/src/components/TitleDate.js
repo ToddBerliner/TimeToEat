@@ -13,9 +13,11 @@ const TitleDate = props => {
 
 const styles = StyleSheet.create({
   titleDate: {
+    textAlign: "center",
     fontFamily: "fugazone",
     fontSize: 18,
-    letterSpacing: -1
+    letterSpacing: -1,
+    width: 220
   }
 });
 
