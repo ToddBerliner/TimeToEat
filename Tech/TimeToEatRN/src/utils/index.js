@@ -148,11 +148,12 @@ export function createDayFromPlanDay(dateKey, planDay, nodeIdsArr) {
 }
 export function createNodesFromPlanDay(dateKey, planDay) {
   const nodes = [];
-  planDay.nodes.forEach(function(node, idx) {
+  planDay.nodes.forEach(function(node) {
+    const planned_timestamp = getTimestampFromTimeObj(dateKey, node.time);
     nodes.push({
-      id: `${dateKey}_${idx}`,
+      id: `${dateKey}_${planned_timestamp}`,
       name: node.name,
-      time: getTimestampFromTimeObj(dateKey, node.time),
+      time: planned_timestamp,
       items: node.items.slice(),
       completedTime: null
     });

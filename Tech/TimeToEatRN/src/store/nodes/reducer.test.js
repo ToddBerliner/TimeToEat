@@ -57,17 +57,20 @@ describe("nodes Selectors", () => {
   it("should return the requested nodes for existing keys", () => {
     Selector(getNodesByIds)
       .expect(nodesFixtures.expectedInitialStateWithMonday, [
-        "1486368000000_0",
-        "1486368000000_1",
-        "1486368000000_2",
-        "1486368000000_3",
-        "1486368000000_4"
+        "1486368000000_1486393200000",
+        "1486368000000_1486402200000",
+        "1486368000000_1486413000000",
+        "1486368000000_1486422000000",
+        "1486368000000_1486432800000"
       ])
       .toReturn(nodesFixtures.expectedNodesMonday);
   });
   it("should return a single node for a given key", () => {
     Selector(getNodeById)
-      .expect(nodesFixtures.expectedInitialStateWithMonday, "1486368000000_0")
+      .expect(
+        nodesFixtures.expectedInitialStateWithMonday,
+        "1486368000000_1486393200000"
+      )
       .toReturn(nodesFixtures.expectedSingleNode);
   });
 });

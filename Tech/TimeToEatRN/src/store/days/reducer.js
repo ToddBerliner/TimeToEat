@@ -13,11 +13,12 @@ export const tapWater = (dayId, time) => {
     time
   };
 };
-export const tapAndHoldWater = (dayId, time) => ({
-  type: WATER_REMOVED,
-  dayId,
-  time
-});
+export const tapAndHoldWater = dayId => {
+  return {
+    type: WATER_REMOVED,
+    dayId
+  };
+};
 
 // Reducer
 const initialState = Immutable({
@@ -42,18 +43,13 @@ const waterAdd = (day, time) => {
   }
 };
 
-const waterRemove = (day, time) => {
+const waterRemove = day => {
   const newCompletes = day.water.completedTimes.asMutable();
-  const waterTimeIdx = newCompletes.indexOf(time);
-  if (waterTimeIdx > -1) {
-    newCompletes.splice(waterTimeIdx, 1);
-    return {
-      ...day,
-      water: { ...day.water, completedTimes: newCompletes }
-    };
-  } else {
-    return day;
-  }
+  newCompletes.pop();
+  return {
+    ...day,
+    water: { ...day.water, completedTimes: newCompletes }
+  };
 };
 
 export default function reduce(state = initialState, action = {}) {

@@ -25,8 +25,7 @@ export const expectedWaterAddAction = {
 };
 export const expectedWaterRemoveAction = {
   type: WATER_REMOVED,
-  dayId: dateKeyMonday,
-  time: "456"
+  dayId: dateKeyMonday
 };
 export const expectedDayMonday = Immutable({
   id: dateKeyMonday,
@@ -35,11 +34,11 @@ export const expectedDayMonday = Immutable({
     target: 8
   },
   nodeIds: [
-    "1486368000000_0",
-    "1486368000000_1",
-    "1486368000000_2",
-    "1486368000000_3",
-    "1486368000000_4"
+    "1486368000000_1486393200000",
+    "1486368000000_1486402200000",
+    "1486368000000_1486413000000",
+    "1486368000000_1486422000000",
+    "1486368000000_1486432800000"
   ],
   offPlanNodeIds: []
 });
@@ -50,11 +49,11 @@ export const expectedDayMondayWithWater = Immutable({
     target: 8
   },
   nodeIds: [
-    "1486368000000_0",
-    "1486368000000_1",
-    "1486368000000_2",
-    "1486368000000_3",
-    "1486368000000_4"
+    "1486368000000_1486393200000",
+    "1486368000000_1486402200000",
+    "1486368000000_1486413000000",
+    "1486368000000_1486422000000",
+    "1486368000000_1486432800000"
   ],
   offPlanNodeIds: []
 });
