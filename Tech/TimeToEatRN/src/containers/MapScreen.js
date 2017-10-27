@@ -62,6 +62,8 @@ const MapScreen = props => {
           dayId={props.dayId}
           nodes={props.nodes}
           onTap={nodeId => props.tapNode(nodeId, new Date().getTime())}
+          onTapAndHold={nodeId =>
+            props.tapAndHoldNode(nodeId, new Date().getTime())}
         />
       </View>
       <View style={styles.footerRow}>
@@ -74,6 +76,9 @@ const MapScreen = props => {
           waterCount={props.waterCount}
           onTap={() => {
             props.tapWater(props.dayId, new Date().getTime());
+          }}
+          onTapAndHold={() => {
+            props.tapAndHoldWater(props.dayId);
           }}
         />
       </View>
@@ -99,11 +104,15 @@ const mapDispatchToProps = dispatch => {
     tapWater: (dayId, time) => {
       dispatch(tapWater(dayId, time));
     },
-    tapAndHoldWater,
+    tapAndHoldWater: nodeId => {
+      dispatch(tapAndHoldWater(nodeId));
+    },
     tapNode: (nodeId, time) => {
       dispatch(tapNode(nodeId, time));
     },
-    tapAndHoldNode,
+    tapAndHoldNode: (nodeId, time) => {
+      dispatch(tapAndHoldNode(nodeId, time));
+    },
     selectDay: (dayId, dir) => {
       const newDayId = getAdjacentDateKey(dayId, dir);
       dispatch(selectDay(newDayId));

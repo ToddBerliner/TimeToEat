@@ -48,6 +48,11 @@ const NodeRows = props => {
             props.onTap(node.id);
           }
         }}
+        onTapAndHold={() => {
+          if (node.completedTime !== null) {
+            props.onTapAndHold(node.id);
+          }
+        }}
       />
     );
   });

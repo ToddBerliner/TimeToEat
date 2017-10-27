@@ -26,7 +26,11 @@ const NodeRow = props => {
 
   return (
     <View style={props.selected ? styles.nodeRowSelected : styles.nodeRow}>
-      <TouchableHighlight onPress={props.onTap} style={styles.circleTouchable}>
+      <TouchableHighlight
+        onPress={props.onTap}
+        onLongPress={props.onTapAndHold}
+        style={styles.circleTouchable}
+      >
         <View style={styles.circle} onClick={props.onClick}>
           {circleFillJsx}
         </View>

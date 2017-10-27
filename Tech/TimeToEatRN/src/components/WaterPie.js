@@ -21,7 +21,16 @@ const WaterPie = props => {
   return (
     <View style={styles.waterPieWrap}>
       <TouchableHighlight
-        onPress={props.onTap}
+        onPress={() => {
+          if (props.waterCount < 8) {
+            props.onTap();
+          }
+        }}
+        onLongPress={() => {
+          if (props.waterCount > 0) {
+            props.onTapAndHold();
+          }
+        }}
         style={styles.waterPieTouchable}
       >
         <Image source={slices[props.waterCount]} style={styles.waterPieImage} />
