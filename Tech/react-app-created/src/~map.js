@@ -59,6 +59,9 @@
         Actions
             ✔ tapNode(nodeId) => dispatch({type: NODE_CHECKED, nodeId, timestamp})
             ✔ tapAndHoldNode(nodeId) => dispatch({type: NODE_UNCHECKED, nodeId, timestamp})
+            tapAddSnack(dayId, timestamp) =>
+                // create new snack node createSnackNode(dayId, timestamp)
+                dispatch({type: SNACK_ADDED, snackNode})
         Selectors
             ✔ getNodeById(nodeId) => returns the requested node or undefined if it doesn't exist
             ✔ getNodesByIds([nodeIds]) => returns array of the requeted nodes
@@ -66,6 +69,7 @@
             ✔ DAY_AND_NODES_ADDED => {...nodesState, {...nodesById, [[nodeId]: newNode}...]}
             ✔ NODE_CHECKED => {...nodesState, [nodeId]: {...node, compltedTime: timestamp}}
             ✔ NODE_UNCHECKED => {...nodesState, [nodeId]: {...node, compltedTime: null}}
+            NODE_ADDED => {...nodesState, {...nodeById, [nodeId]: snackNode}}}
 */
 
 // Utilities
@@ -81,6 +85,7 @@
         ✔ getDayIdsBetweenDayIds => returns an array of dayIds between the dates
     nodes
         ✔ createNodesFromPlanDay => returns an array of nodes from a plan day
+        createSnackNode => returns a node object for a given dayId and timestamp
         ? getNodeKey => return the dateKey_nodePositionIndex
         ? getCurrentNode => return the node that should be highlighted
         ? getNodeEndBoundaryTime => return the time the node becomes 'missed'
@@ -125,11 +130,12 @@
     }
     nodes: {
         nodesById: {
-            [nodeKey = dayKey_nodePositionIndex]: {
+            [nodeKey = dayKey_timestamp]: {
+                type: 'planned' || 'snack'
                 name: 'bfast',
                 time: timestamp,
                 items: [items...],
-                completedTime: timestamp
+                completedTime: actual timestamp
             }
         }
     }
