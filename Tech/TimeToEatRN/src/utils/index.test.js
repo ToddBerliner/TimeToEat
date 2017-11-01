@@ -9,7 +9,8 @@ import {
   createNodesFromPlanDay,
   getTimestampFromTimeObj,
   getDayIdsBetweenDayIds,
-  createDayAndNodes
+  createDayAndNodes,
+  createSnackNode
 } from "./";
 import * as daysFixtures from "../store/days/fixtures";
 import * as nodesFixtures from "../store/nodes/fixtures";
@@ -105,5 +106,12 @@ describe("Nodes Utilities", () => {
       daysFixtures.planDayMonday
     );
     expect(nodes).toEqual(nodesFixtures.expectedNodesMonday);
+  });
+  test("it returns a snack node for a given day and timestamp", () => {
+    const snackNode = createSnackNode(
+      daysFixtures.dateKeyMonday,
+      daysFixtures.snackTimestampMonday
+    );
+    expect(snackNode).toEqual(nodesFixtures.expectedSnackNodeMonday);
   });
 });

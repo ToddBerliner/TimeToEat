@@ -146,11 +146,13 @@ export function createDayFromPlanDay(dateKey, planDay, nodeIdsArr) {
   };
   return day;
 }
+
 export function createNodesFromPlanDay(dateKey, planDay) {
   const nodes = [];
   planDay.nodes.forEach(function(node) {
     const planned_timestamp = getTimestampFromTimeObj(dateKey, node.time);
     nodes.push({
+      type: "plan", // can't import this TODO?!?
       id: `${dateKey}_${planned_timestamp}`,
       name: node.name,
       time: planned_timestamp,
@@ -159,4 +161,13 @@ export function createNodesFromPlanDay(dateKey, planDay) {
     });
   });
   return nodes;
+}
+
+export function createSnackNode(dateKey, timestamp) {
+  return {
+    type: "offplan", // can't import this TODO?!?
+    id: `${dateKey}_${timestamp}`,
+    time: timestamp,
+    completedTime: timestamp
+  };
 }

@@ -1,5 +1,6 @@
 import Immutable from "seamless-immutable";
 import { DAY_AND_NODES_ADDED } from "../reducer";
+import { NODE_ADDED } from "../nodes/reducer";
 
 // Action Types
 export const WATER_ADDED = "water_added";
@@ -28,6 +29,12 @@ const dayAdd = (daysById, action) => {
   const key = action.dayAndNodes.day.id;
   const day = action.dayAndNodes.day;
   return { ...daysById, [key]: day };
+};
+const nodeIdAdd = (day, nodeId) => {
+  const newNodeIds = day.nodeIds.asMutable();
+  newNodeIds.push(nodeId);
+  newNodeIds.sort();
+  return Immutable.set(day, "nodeIds", newNodeIds);
 };
 const waterAdd = (day, time) => {
   const newCompletes = day.water.completedTimes.asMutable();
@@ -59,6 +66,22 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         daysById: dayAdd(state.daysById, action)
       });
+    case NODE_ADDED:
+      const nodeId = action.node.id;
+      const nodeIdParts = nodeId.split("_");
+      const dayId = nodeIdParts[0];
+
+      // TODO: consider handling a dayId that doesn't exist?
+      // unlikely since the tap action happened in the MapScreen
+      // which requires the day exist
+      return Immutable({
+        ...state,
+        daysById: {
+          ...state.daysById,
+          [dayId]: nodeIdAdd(getDayById(state, dayId), nodeId)
+        }
+      });
+      return state;
     case WATER_ADDED:
       return Immutable({
         ...state,

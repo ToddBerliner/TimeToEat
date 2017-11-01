@@ -5,10 +5,13 @@ import nodes, {
   getNodesByIds,
   NODE_CHECKED,
   NODE_UNCHECKED,
+  SNACK_TAPPED,
   tapNode,
-  tapAndHoldNode
+  tapAndHoldNode,
+  tapAddSnack
 } from "./reducer";
 import * as nodesFixtures from "./fixtures";
+import * as daysFixtures from "../days/fixtures";
 import { expectedMondayDayAndNodesAddedAction } from "../fixtures";
 
 describe("nodes Actions", () => {
@@ -22,6 +25,11 @@ describe("nodes Actions", () => {
       nodesFixtures.expectedNodeUnCheckAction
     );
   });
+  it("should dispatch the snack node added action", () => {
+    expect(
+      tapAddSnack(daysFixtures.dateKeyMonday, daysFixtures.snackTimestampMonday)
+    ).toEqual(nodesFixtures.expectedSnackTapAction);
+  });
 });
 
 describe("nodes Reducer", () => {
@@ -33,6 +41,12 @@ describe("nodes Reducer", () => {
       .withState(nodesFixtures.expectedInitialState)
       .expect(expectedMondayDayAndNodesAddedAction)
       .toReturnState(nodesFixtures.expectedInitialStateWithMonday);
+  });
+  it("should add a snack node to the nodes slice of state", () => {
+    Reducer(nodes)
+      .withState(nodesFixtures.expectedInitialStateWithMonday)
+      .expect(nodesFixtures.expectedSnackTapAction)
+      .toReturnState(nodesFixtures.expectedStateWithMondayWithSnack);
   });
   it("should set the completed time of an unchecked node", () => {
     Reducer(nodes)

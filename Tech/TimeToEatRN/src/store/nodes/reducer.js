@@ -1,14 +1,20 @@
 import Immutable from "seamless-immutable";
 import { DAY_AND_NODES_ADDED } from "../reducer";
+import { createSnackNode } from "../../utils";
 
 // Node Statuses
 export const CHECKED = "checked";
 export const UNCHECKED = "unchecked";
 export const MISSED = "missed";
 
+// Node Types
+export const PLAN = "plan";
+export const OFFPLAN = "offplan";
+
 // Action Types
 export const NODE_CHECKED = "node_checked";
 export const NODE_UNCHECKED = "node_unchecked";
+export const NODE_ADDED = "NODE_ADDED";
 
 // Actions
 export const tapNode = (nodeId, time) => ({
@@ -21,6 +27,13 @@ export const tapAndHoldNode = (nodeId, time) => ({
   nodeId,
   time
 });
+export const tapAddSnack = (dateKey, time) => {
+  const node = createSnackNode(dateKey, time);
+  return {
+    type: NODE_ADDED,
+    node
+  };
+};
 
 // Reducer
 const initialState = Immutable({
@@ -69,6 +82,10 @@ export default function reduce(state = initialState, action = {}) {
           )
         }
       });
+    case NODE_ADDED:
+      const newNode = action.node;
+      const newNodeKey = newNode.id;
+      return Immutable.setIn(state, ["nodesById", newNodeKey], newNode);
     default:
       return state;
   }

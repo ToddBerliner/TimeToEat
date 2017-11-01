@@ -55,14 +55,14 @@
             ✔ DAY_AND_NODES_ADDED => {...daysState, {...daysById, [dayId]: newDay}}
             ✔ WATER_ADDED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp added]}}
             ✔ WATER_REMOVED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp removed]}}
-            NODE_ADDED => {...daysState, daysById[dayId]: {...day, nodeIds: {...nodeIds, [nodeId]: newNode}}}
+            ✔ NODE_ADDED => {...daysState, daysById[dayId]: {...day, nodeIds: {...nodeIds, [nodeId]: newNode}}}
     nodes
         Actions
             ✔ tapNode(nodeId) => dispatch({type: NODE_CHECKED, nodeId, timestamp})
             ✔ tapAndHoldNode(nodeId) => dispatch({type: NODE_UNCHECKED, nodeId, timestamp})
             ✔ tapAddSnack(dayId, timestamp) =>
                 // create new snack node createSnackNode(dayId, timestamp)
-                dispatch({type: NODE_ADDED, snackNode})
+                // dispatch({type: NODE_ADDED, snackNode})
         Selectors
             ✔ getNodeById(nodeId) => returns the requested node or undefined if it doesn't exist
             ✔ getNodesByIds([nodeIds]) => returns array of the requeted nodes
@@ -70,7 +70,7 @@
             ✔ DAY_AND_NODES_ADDED => {...nodesState, {...nodesById, [[nodeId]: newNode}...]}
             ✔ NODE_CHECKED => {...nodesState, [nodeId]: {...node, compltedTime: timestamp}}
             ✔ NODE_UNCHECKED => {...nodesState, [nodeId]: {...node, compltedTime: null}}
-            NODE_ADDED => {...nodesState, {...nodeById, [nodeId]: snackNode}}}
+            ✔ NODE_ADDED => {...nodesState, {...nodeById, [nodeId]: snackNode}}}
 */
 
 // Utilities
