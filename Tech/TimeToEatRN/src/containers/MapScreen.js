@@ -18,7 +18,7 @@ import {
 } from "../store/reducer";
 import { selectDay } from "../store/uiState/reducer";
 import { tapWater, tapAndHoldWater } from "../store/days/reducer";
-import { tapNode, tapAndHoldNode } from "../store/nodes/reducer";
+import { tapNode, tapAndHoldNode, tapAddSnack } from "../store/nodes/reducer";
 import { getDateKey, getAdjacentDateKey, PREV, NEXT } from "../utils";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -69,7 +69,7 @@ const MapScreen = props => {
       <View style={styles.footerRow}>
         <AddSnack
           onTap={() => {
-            Alert.alert("Add a snack!");
+            props.tapAddSnack(props.dayId, new Date().getTime());
           }}
         />
         <WaterPie
@@ -112,6 +112,9 @@ const mapDispatchToProps = dispatch => {
     },
     tapAndHoldNode: (nodeId, time) => {
       dispatch(tapAndHoldNode(nodeId, time));
+    },
+    tapAddSnack: (dayId, time) => {
+      dispatch(tapAddSnack(dayId, time));
     },
     selectDay: (dayId, dir) => {
       const newDayId = getAdjacentDateKey(dayId, dir);
