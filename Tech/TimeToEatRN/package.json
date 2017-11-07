@@ -26,6 +26,7 @@
     "expo": "^21.0.0",
     "react": "16.0.0-alpha.12",
     "react-native": "^0.48.4",
+    "react-native-navigation": "^1.1.260",
     "react-native-vector-icons": "^4.4.2",
     "redux": "^3.7.2",
     "redux-testkit": "^1.0.6",
