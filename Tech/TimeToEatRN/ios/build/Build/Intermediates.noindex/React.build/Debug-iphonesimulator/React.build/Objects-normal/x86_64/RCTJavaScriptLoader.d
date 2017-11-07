@@ -1,0 +1,26 @@
+dependencies: \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTJavaScriptLoader.mm \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTJavaScriptLoader.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTDefines.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/ios/build/Build/Products/Debug-iphonesimulator/include/cxxreact/JSBundleType.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/ios/build/Build/Products/Debug-iphonesimulator/include/jschelpers/JavaScriptCore.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/ios/build/Build/Products/Debug-iphonesimulator/include/jschelpers/JSCWrapper.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTBridge.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTBridgeDelegate.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTBridgeModule.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTFrameUpdate.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTInvalidating.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTConvert.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Views/RCTAnimationType.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Views/RCTBorderStyle.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTLog.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTUtils.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Views/RCTPointerEvents.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTMultipartDataTask.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTMultipartStreamReader.h \
+  /Users/toddberliner/TimeToEat/Tech/TimeToEatRN/node_modules/react-native/React/Base/RCTPerformanceLogger.h
