@@ -5,13 +5,16 @@ import Immutable from "seamless-immutable";
 import { AsyncStorage } from "react-native";
 
 export const loadState = () => {
+  console.log("Trying to load state");
   try {
-    const serializedState = localStorage.getItem("state");
+    const serializedState = AsyncStorage.getItem("state");
+    console.log("loaded:", serializedState);
     if (serializedState === null) {
       return undefined;
     }
     return JSON.parse(serializedState);
   } catch (err) {
+    console.log(err);
     return undefined;
   }
 };
@@ -21,11 +24,13 @@ export const saveState = state => {
     const savedState = JSON.stringify(loadState());
     const serializedState = JSON.stringify(state);
     if (savedState !== serializedState) {
+      console.log("should save:", serializedState);
       AsyncStorage.setItem("state", serializedState, error => {
         if (error === null) {
           AsyncStorage.getItem("state", (error, result) => {
             if (error === null) {
-              console.log("Result: ", JSON.parse(result));
+              console.log("Saved State: ", JSON.parse(result));
+              loadState();
             } else {
               console.log("Get Error: ", error);
             }
@@ -44,6 +49,7 @@ export const saveState = state => {
 export const configureStore = () => {
   // check for savedState
   const savedState = loadState();
+  console.log("saved state?", savedState);
   // add chrome dev tools
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
