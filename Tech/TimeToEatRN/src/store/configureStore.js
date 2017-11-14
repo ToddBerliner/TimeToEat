@@ -4,58 +4,51 @@ import thunk from "redux-thunk";
 import Immutable from "seamless-immutable";
 import { AsyncStorage } from "react-native";
 
-export const loadState = () => {
-  console.log("Trying to load state");
+export const clearSavedState = async () => {
   try {
-    const serializedState = AsyncStorage.getItem("state");
-    console.log("loaded:", serializedState);
-    if (serializedState === null) {
+    await AsyncStorage.removeItem("@state");
+    return true;
+  } catch (err) {
+    console.log("Err clearing saved state:", err);
+    return false;
+  }
+};
+
+export const getSavedState = () => {
+  return AsyncStorage.getItem("@state")
+    .then(state => {
+      if (state === null) {
+        return undefined;
+      }
+      return JSON.parse(state);
+    })
+    .catch(err => {
+      console.log("Err getting saved state:", err);
       return undefined;
-    }
-    return JSON.parse(serializedState);
-  } catch (err) {
-    console.log(err);
-    return undefined;
-  }
+    });
 };
 
-export const saveState = state => {
+export const saveState = async state => {
   try {
-    const savedState = JSON.stringify(loadState());
-    const serializedState = JSON.stringify(state);
-    if (savedState !== serializedState) {
-      console.log("should save:", serializedState);
-      AsyncStorage.setItem("state", serializedState, error => {
-        if (error === null) {
-          AsyncStorage.getItem("state", (error, result) => {
-            if (error === null) {
-              console.log("Saved State: ", JSON.parse(result));
-              loadState();
-            } else {
-              console.log("Get Error: ", error);
-            }
-          });
-        } else {
-          console.log("Set Error: ", error);
-        }
-      });
-    }
+    await AsyncStorage.setItem("@state", JSON.stringify(state));
   } catch (err) {
-    // ignore write error (for now);
-    console.log("Save State Error: ", err);
+    console.log("Err trying to save state:", err);
   }
 };
 
-export const configureStore = () => {
-  // check for savedState
-  const savedState = loadState();
-  console.log("saved state?", savedState);
+export const configureStore = (savedState = undefined) => {
   // add chrome dev tools
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const enhancer = composeEnhancers(applyMiddleware(thunk));
   // create the store
-  const store = createStore(rootReducer, Immutable(savedState), enhancer);
+  let store = null;
+  if (savedState !== undefined) {
+    store = createStore(rootReducer, savedState, enhancer);
+  } else {
+    console.log("Null savedState, creating fresh store.");
+    store = createStore(rootReducer, enhancer);
+  }
   // subscribe to save
   store.subscribe(() => {
     saveState(store.getState());
