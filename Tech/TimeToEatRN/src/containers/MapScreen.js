@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   StyleSheet,
@@ -23,68 +23,94 @@ import { getDateKey, getAdjacentDateKey, PREV, NEXT } from "../utils";
 import Icon from "react-native-vector-icons/Ionicons";
 
 // MapScreen is a route in the App
-const MapScreen = props => {
-  return (
-    <View style={styles.appWrap}>
-      <View style={styles.titleRow}>
-        <View style={styles.titleRowLeft}>
-          <Icon name="ios-contact" size={24} />
-        </View>
-        <View style={styles.titleRowCenter}>
-          <View style={styles.titleLeftArrow}>
-            <TouchableHighlight
-              onPress={() => {
-                props.selectDay(props.dayId, PREV);
-              }}
-            >
-              <Icon name="ios-arrow-back" size={24} />
-            </TouchableHighlight>
+class MapScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  onNavigatorEvent(event) {
+    if (event.type == "NavBarButtonPress") {
+      if (event.id == "map-to-metrics") {
+        // this is the same id field from the static navigatorButtons definition
+        this.props.navigator.push({
+          screen: "tte.Metrics"
+        });
+      }
+      if (event.id == "map-to-menu") {
+        console.log("heyo - open that drawer!");
+        // this is the same id field from the static navigatorButtons definition
+        this.props.navigator.toggleDrawer({
+          side: "left"
+        });
+      }
+    }
+    console.log(event);
+  }
+
+  render() {
+    return (
+      <View style={styles.appWrap}>
+        <View style={styles.titleRow}>
+          <View style={styles.titleRowLeft}>
+            <Icon name="ios-contact" size={24} />
           </View>
-          <TitleDate dayId={props.dayId} />
-          <View style={styles.titleRightArrow}>
-            {!props.isToday && (
+          <View style={styles.titleRowCenter}>
+            <View style={styles.titleLeftArrow}>
               <TouchableHighlight
                 onPress={() => {
-                  props.selectDay(props.dayId, NEXT);
+                  this.props.selectDay(this.props.dayId, PREV);
                 }}
               >
-                <Icon name="ios-arrow-forward" size={24} />
+                <Icon name="ios-arrow-back" size={24} />
               </TouchableHighlight>
-            )}
+            </View>
+            <TitleDate dayId={this.props.dayId} />
+            <View style={styles.titleRightArrow}>
+              {!this.props.isToday && (
+                <TouchableHighlight
+                  onPress={() => {
+                    this.props.selectDay(this.props.dayId, NEXT);
+                  }}
+                >
+                  <Icon name="ios-arrow-forward" size={24} />
+                </TouchableHighlight>
+              )}
+            </View>
+          </View>
+          <View style={styles.titleRowRight}>
+            <Icon name="ios-pulse" size={24} />
           </View>
         </View>
-        <View style={styles.titleRowRight}>
-          <Icon name="ios-pulse" size={24} />
+        <View style={styles.bodyRow}>
+          <NodeRows
+            dayId={this.props.dayId}
+            nodes={this.props.nodes}
+            onTap={nodeId => this.props.tapNode(nodeId, new Date().getTime())}
+            onTapAndHold={nodeId =>
+              this.props.tapAndHoldNode(nodeId, new Date().getTime())}
+          />
+        </View>
+        <View style={styles.footerRow}>
+          {/* <AddSnack
+            onTap={() => {
+              this.props.tapAddSnack(this.props.dayId, new Date().getTime());
+            }}
+          />
+          <WaterPie
+            waterCount={props.waterCount}
+            onTap={() => {
+              props.tapWater(props.dayId, new Date().getTime());
+            }}
+            onTapAndHold={() => {
+              props.tapAndHoldWater(props.dayId);
+            }}
+          /> */}
         </View>
       </View>
-      <View style={styles.bodyRow}>
-        <NodeRows
-          dayId={props.dayId}
-          nodes={props.nodes}
-          onTap={nodeId => props.tapNode(nodeId, new Date().getTime())}
-          onTapAndHold={nodeId =>
-            props.tapAndHoldNode(nodeId, new Date().getTime())}
-        />
-      </View>
-      <View style={styles.footerRow}>
-        <AddSnack
-          onTap={() => {
-            props.tapAddSnack(props.dayId, new Date().getTime());
-          }}
-        />
-        <WaterPie
-          waterCount={props.waterCount}
-          onTap={() => {
-            props.tapWater(props.dayId, new Date().getTime());
-          }}
-          onTapAndHold={() => {
-            props.tapAndHoldWater(props.dayId);
-          }}
-        />
-      </View>
-    </View>
-  );
-};
+    );
+  }
+}
 
 const mapStateToProps = state => {
   const dayId = _getSelectedDayId(state);
