@@ -28,7 +28,7 @@ const initialState = Immutable({
 const dayAdd = (daysById, action) => {
   const key = action.dayAndNodes.day.id;
   const day = action.dayAndNodes.day;
-  return { ...daysById, [key]: day };
+  return Immutable({ ...daysById, [key]: day });
 };
 const nodeIdAdd = (day, nodeId) => {
   const newNodeIds = day.nodeIds.asMutable();
@@ -41,10 +41,10 @@ const waterAdd = (day, time) => {
   const waterTimeIdx = newCompletes.indexOf(time);
   if (waterTimeIdx === -1) {
     newCompletes.push(time);
-    return {
+    return Immutable({
       ...day,
       water: { ...day.water, completedTimes: newCompletes }
-    };
+    });
   } else {
     return day;
   }
@@ -53,10 +53,10 @@ const waterAdd = (day, time) => {
 const waterRemove = day => {
   const newCompletes = day.water.completedTimes.asMutable();
   newCompletes.pop();
-  return {
+  return Immutable({
     ...day,
     water: { ...day.water, completedTimes: newCompletes }
-  };
+  });
 };
 
 export default function reduce(state = initialState, action = {}) {

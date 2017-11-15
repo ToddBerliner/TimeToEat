@@ -44,7 +44,7 @@ export const configureStore = (savedState = undefined) => {
   // create the store
   let store = null;
   if (savedState !== undefined) {
-    store = createStore(rootReducer, savedState, enhancer);
+    store = createStore(rootReducer, Immutable(savedState), enhancer);
   } else {
     console.log("Null savedState, creating fresh store.");
     store = createStore(rootReducer, enhancer);
