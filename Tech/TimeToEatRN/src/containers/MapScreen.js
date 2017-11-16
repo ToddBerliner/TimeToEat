@@ -7,7 +7,6 @@ import {
   TouchableHighlight,
   Alert
 } from "react-native";
-import TitleDate from "../components/TitleDate";
 import AddSnack from "../components/AddSnack";
 import WaterPie from "../components/WaterPie";
 import NodeRows from "../components/NodeRows";
@@ -32,56 +31,37 @@ class MapScreen extends Component {
   onNavigatorEvent(event) {
     if (event.type == "NavBarButtonPress") {
       if (event.id == "map-to-metrics") {
-        // this is the same id field from the static navigatorButtons definition
         this.props.navigator.push({
-          screen: "tte.Metrics"
+          screen: "tte.Metrics",
+          navigatorButtons: {
+            leftButtons: [
+              {
+                id: "back-to-map"
+              }
+            ]
+          }
         });
       }
       if (event.id == "map-to-menu") {
-        console.log("heyo - open that drawer!");
-        // this is the same id field from the static navigatorButtons definition
-        this.props.navigator.toggleDrawer({
-          side: "left"
+        this.props.navigator.showModal({
+          screen: "tte.Menu",
+          title: "Settings",
+          navigatorButtons: {
+            rightButtons: [
+              {
+                title: "Done",
+                id: "menu-done"
+              }
+            ]
+          }
         });
       }
     }
-    console.log(event);
   }
 
   render() {
     return (
       <View style={styles.appWrap}>
-        <View style={styles.titleRow}>
-          <View style={styles.titleRowLeft}>
-            <Icon name="ios-contact" size={24} />
-          </View>
-          <View style={styles.titleRowCenter}>
-            <View style={styles.titleLeftArrow}>
-              <TouchableHighlight
-                onPress={() => {
-                  this.props.selectDay(this.props.dayId, PREV);
-                }}
-              >
-                <Icon name="ios-arrow-back" size={24} />
-              </TouchableHighlight>
-            </View>
-            <TitleDate dayId={this.props.dayId} />
-            <View style={styles.titleRightArrow}>
-              {!this.props.isToday && (
-                <TouchableHighlight
-                  onPress={() => {
-                    this.props.selectDay(this.props.dayId, NEXT);
-                  }}
-                >
-                  <Icon name="ios-arrow-forward" size={24} />
-                </TouchableHighlight>
-              )}
-            </View>
-          </View>
-          <View style={styles.titleRowRight}>
-            <Icon name="ios-pulse" size={24} />
-          </View>
-        </View>
         <View style={styles.bodyRow}>
           <NodeRows
             dayId={this.props.dayId}
@@ -92,20 +72,20 @@ class MapScreen extends Component {
           />
         </View>
         <View style={styles.footerRow}>
-          {/* <AddSnack
+          <AddSnack
             onTap={() => {
               this.props.tapAddSnack(this.props.dayId, new Date().getTime());
             }}
           />
           <WaterPie
-            waterCount={props.waterCount}
+            waterCount={this.props.waterCount}
             onTap={() => {
-              props.tapWater(props.dayId, new Date().getTime());
+              this.props.tapWater(this.props.dayId, new Date().getTime());
             }}
             onTapAndHold={() => {
-              props.tapAndHoldWater(props.dayId);
+              this.props.tapAndHoldWater(this.props.dayId);
             }}
-          /> */}
+          />
         </View>
       </View>
     );
@@ -150,11 +130,17 @@ const mapDispatchToProps = dispatch => {
 };
 
 const styles = StyleSheet.create({
+  button: {
+    overflow: "hidden",
+    width: 50,
+    height: 34,
+    borderRadius: 34 / 2,
+    justifyContent: "center",
+    alignItems: "center"
+  },
   appWrap: {
     backgroundColor: "rgb(245, 245, 245)",
-    flex: 1,
-    paddingTop: 50,
-    paddingBottom: 30
+    flex: 1
   },
   box: {
     backgroundColor: "rgb(102, 102, 102)",
@@ -182,20 +168,6 @@ const styles = StyleSheet.create({
     height: 36,
     alignItems: "center",
     justifyContent: "center"
-  },
-  titleRowCenter: {
-    flex: 1,
-    height: 36,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row"
-  },
-  titleLeftArrow: {
-    width: 15,
-    alignItems: "flex-end"
-  },
-  titleRightArrow: {
-    width: 15
   },
   footerRow: {
     height: 70,

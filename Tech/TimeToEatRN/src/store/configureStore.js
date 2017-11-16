@@ -7,6 +7,7 @@ import { AsyncStorage } from "react-native";
 export const clearSavedState = async () => {
   try {
     await AsyncStorage.removeItem("@state");
+    console.log("State cleared");
     return true;
   } catch (err) {
     console.log("Err clearing saved state:", err);

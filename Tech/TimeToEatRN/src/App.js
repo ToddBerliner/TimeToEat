@@ -23,6 +23,9 @@ class App extends Component {
         label: "Map",
         screen: "tte.Map",
         title: "< Title Date Here >",
+        navigatorStyle: {
+          navBarCustomView: "tte.TitleDateNav"
+        },
         navigatorButtons: {
           leftButtons: [
             {
@@ -36,15 +39,6 @@ class App extends Component {
               id: "map-to-metrics"
             }
           ]
-        }
-      },
-      drawer: {
-        left: {
-          screen: "tte.Menu",
-          side: "left"
-        },
-        style: {
-          leftDrawerWidth: 100
         }
       }
     });
