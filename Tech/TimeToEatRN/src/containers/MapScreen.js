@@ -18,7 +18,13 @@ import {
 import { selectDay } from "../store/uiState/reducer";
 import { tapWater, tapAndHoldWater } from "../store/days/reducer";
 import { tapNode, tapAndHoldNode, tapAddSnack } from "../store/nodes/reducer";
-import { getDateKey, getAdjacentDateKey, PREV, NEXT } from "../utils";
+import {
+  getDateKey,
+  getAdjacentDateKey,
+  getFriendlyDate,
+  PREV,
+  NEXT
+} from "../utils";
 import Icon from "react-native-vector-icons/Ionicons";
 
 // MapScreen is a route in the App
@@ -33,6 +39,7 @@ class MapScreen extends Component {
       if (event.id == "map-to-metrics") {
         this.props.navigator.push({
           screen: "tte.Metrics",
+          backButtonTitle: getFriendlyDate(this.props.dayId),
           navigatorButtons: {
             leftButtons: [
               {

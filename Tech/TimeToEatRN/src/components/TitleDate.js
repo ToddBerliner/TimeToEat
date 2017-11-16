@@ -1,13 +1,9 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
-import { months, getDow } from "../utils";
+import { months, getDow, getFriendlyDate } from "../utils";
 
 const TitleDate = props => {
-  const today = new Date(parseInt(props.dayId, 10));
-  const dow = getDow(today.getDay());
-  const month = months[today.getMonth()];
-  const date = today.getDate();
-  const dateStr = `${dow}, ${month} ${date}`;
+  const dateStr = getFriendlyDate(props.dayId);
   return <Text style={styles.titleDate}>{dateStr}</Text>;
 };
 

@@ -22,7 +22,6 @@ class App extends Component {
       screen: {
         label: "Map",
         screen: "tte.Map",
-        title: "< Title Date Here >",
         navigatorStyle: {
           navBarCustomView: "tte.TitleDateNav"
         },

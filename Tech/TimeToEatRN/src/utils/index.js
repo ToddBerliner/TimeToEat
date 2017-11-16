@@ -103,6 +103,17 @@ export function getTimestampFromTimeObj(dateKey, timeObj) {
   }
 }
 
+export function getFriendlyDate(timestamp) {
+  if (typeof timestamp === "string") {
+    timestamp = parseInt(timestamp, 10);
+  }
+  const today = new Date(timestamp);
+  const dow = getDow(today.getDay());
+  const month = months[today.getMonth()];
+  const date = today.getDate();
+  return `${dow}, ${month} ${date}`;
+}
+
 export function getFriendlyTime(timestamp) {
   const date = new Date(timestamp);
   let hours = date.getHours();
