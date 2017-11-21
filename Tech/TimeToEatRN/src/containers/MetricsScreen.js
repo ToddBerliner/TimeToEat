@@ -9,7 +9,8 @@ class MetricsScreen extends React.Component {
           flex: 1,
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          backgroundColor: "rgb(245, 245, 245)"
         }}
       >
         <Text

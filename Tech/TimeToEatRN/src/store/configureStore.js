@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer, { _ensureDaysAndNodes, _getLastDayId } from "./reducer";
+import { selectDay } from "./uiState/reducer";
 import thunk from "redux-thunk";
 import Immutable from "seamless-immutable";
 import { AsyncStorage } from "react-native";
@@ -57,6 +58,8 @@ export const configureStore = (savedState = undefined) => {
   // ensure the store is up to date
   const lastDayId = _getLastDayId(store.getState());
   store.dispatch(_ensureDaysAndNodes(lastDayId));
+  // ensure today is selected
+  store.dispatch(selectDay());
   return store;
 };
 

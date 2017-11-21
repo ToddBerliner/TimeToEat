@@ -137,14 +137,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 const styles = StyleSheet.create({
-  button: {
-    overflow: "hidden",
-    width: 50,
-    height: 34,
-    borderRadius: 34 / 2,
-    justifyContent: "center",
-    alignItems: "center"
-  },
   appWrap: {
     backgroundColor: "rgb(245, 245, 245)",
     flex: 1

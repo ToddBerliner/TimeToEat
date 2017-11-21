@@ -7,12 +7,13 @@ import configureStore, {
   getSavedState
 } from "./store/configureStore";
 import { registerScreens } from "./Screens";
+import { iconsMap, iconsLoaded } from "./utils/appicons";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    getSavedState().then(state => {
-      const store = configureStore(state);
+    Promise.all([getSavedState(), iconsLoaded]).then(values => {
+      const store = configureStore(values[0]);
       registerScreens(store, Provider);
       this.startApp(store);
     });
@@ -28,14 +29,16 @@ class App extends Component {
         navigatorButtons: {
           leftButtons: [
             {
-              title: "Menu",
-              id: "map-to-menu"
+              // title: "Menu",
+              id: "map-to-menu",
+              icon: iconsMap["ios-contact"]
             }
           ],
           rightButtons: [
             {
-              title: "Metrics",
-              id: "map-to-metrics"
+              // title: "Metrics",
+              id: "map-to-metrics",
+              icon: iconsMap["ios-pulse"]
             }
           ]
         }

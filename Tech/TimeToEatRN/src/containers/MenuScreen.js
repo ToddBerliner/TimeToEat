@@ -9,7 +9,6 @@ class MenuScreen extends React.Component {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
   onNavigatorEvent(event) {
-    console.log(event);
     if (event.type == "NavBarButtonPress") {
       if (event.id == "menu-done") {
         this.props.navigator.dismissModal();
@@ -23,7 +22,8 @@ class MenuScreen extends React.Component {
           flex: 1,
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          backgroundColor: "rgb(245, 245, 245)"
         }}
       >
         <TouchableHighlight onPress={clearSavedState}>
