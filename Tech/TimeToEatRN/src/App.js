@@ -6,18 +6,34 @@ import configureStore, {
   clearSavedState,
   getSavedState
 } from "./store/configureStore";
+import { _getSelectedDayId } from "./store/reducer";
 import { registerScreens } from "./Screens";
+import { getDateKey, getAdjacentDateKey, NEXT } from "./utils";
 import { iconsMap, iconsLoaded } from "./utils/appicons";
 
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = { tomorrow: getAdjacentDateKey(getDateKey(), NEXT) };
     Promise.all([getSavedState(), iconsLoaded]).then(values => {
       const store = configureStore(values[0]);
       registerScreens(store, Provider);
       this.startApp(store);
     });
   }
+
+  checkTime() {
+    console.log(this.state.tomorrow);
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(() => this.checkTime(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   startApp(store) {
     Navigation.startSingleScreenApp({
       screen: {

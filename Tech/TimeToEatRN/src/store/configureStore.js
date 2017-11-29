@@ -39,17 +39,17 @@ export const saveState = async state => {
 };
 
 export const configureStore = (savedState = undefined) => {
-  // add chrome dev tools
-  const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const enhancer = composeEnhancers(applyMiddleware(thunk));
   // create the store
   let store = null;
   if (savedState !== undefined) {
-    store = createStore(rootReducer, Immutable(savedState), enhancer);
+    store = createStore(
+      rootReducer,
+      Immutable(savedState),
+      applyMiddleware(thunk)
+    );
   } else {
     console.log("Null savedState, creating fresh store.");
-    store = createStore(rootReducer, enhancer);
+    store = createStore(rootReducer, applyMiddleware(thunk));
   }
   // subscribe to save
   store.subscribe(() => {
