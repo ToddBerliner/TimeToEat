@@ -31,11 +31,22 @@ import Icon from "react-native-vector-icons/Ionicons";
 class MapScreen extends Component {
   constructor(props) {
     super(props);
+    this.state = { tomorrow: getAdjacentDateKey(getDateKey(), NEXT) };
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
+  checkTime() {
+    this.setState({ tomorrow: "foobar" });
+    console.log(this.state.tomorrow);
+  }
+
   componentDidMount() {
-    console.log("Mounted map screen!");
+    console.log("Mounted Map Screen");
+    this.timer = setInterval(() => this.checkTime(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   onNavigatorEvent(event) {
@@ -79,7 +90,8 @@ class MapScreen extends Component {
             nodes={this.props.nodes}
             onTap={nodeId => this.props.tapNode(nodeId, new Date().getTime())}
             onTapAndHold={nodeId =>
-              this.props.tapAndHoldNode(nodeId, new Date().getTime())}
+              this.props.tapAndHoldNode(nodeId, new Date().getTime())
+            }
           />
         </View>
         <View style={styles.footerRow}>

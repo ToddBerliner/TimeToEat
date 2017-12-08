@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     height: 60,
-    paddingLeft: 48
+    paddingLeft: 24
   },
   circle: {
     width: 40,
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: 16
   },
   nodeNameBlock: {
-    marginLeft: 14
+    marginLeft: 22
   },
   nodeName: {
     fontSize: 20
