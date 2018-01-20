@@ -1,13 +1,25 @@
 import React from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  TouchableHighlight
+} from "react-native";
+import DateBackButton from "../components/DateBackButton";
 
 class MetricsScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    console.log(navigation);
-    const { navigate } = navigation;
+  static navigationOptions = ({ navigation, screenProps }) => {
+    const { dayId } = screenProps;
     return {
-      headerTitle: "Metric This",
-      headerBackTitle: "But Foo"
+      headerTitle: null,
+      headerStyle: {
+        paddingRight: 12,
+        paddingLeft: 12
+      },
+      headerLeft: (
+        <DateBackButton onPress={() => navigation.goBack()} dayId={dayId} />
+      )
     };
   };
   render() {

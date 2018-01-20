@@ -57,7 +57,6 @@ const initialNavState = AppNavigator.router.getStateForAction(
 );
 
 export function nav(state = initialNavState, action = {}) {
-  console.log(action);
   let newState;
   switch (action.type) {
     case NavigationActions.NAVIGATE:
@@ -73,12 +72,7 @@ export function nav(state = initialNavState, action = {}) {
         state.merge({ index: newIndex })
       );
       break;
-    default:
-      console.log(action.type);
-      console.log("dont nav nuttin");
   }
-
-  console.log("newState");
 
   return Immutable(newState) || state;
 }

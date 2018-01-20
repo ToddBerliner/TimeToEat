@@ -11,6 +11,7 @@ import {
 import AddSnack from "../components/AddSnack";
 import WaterPie from "../components/WaterPie";
 import NodeRows from "../components/NodeRows";
+import TitleDateNav from "../containers/TitleDateNav";
 import {
   _getSelectedDayId,
   _getDayById,
@@ -31,14 +32,27 @@ import { StackNavigator } from "react-navigation";
 
 // MapScreen is a route in the App
 class MapScreen extends Component {
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation, screenProps }) => {
+    console.log(screenProps);
     const { navigate } = navigation;
     return {
-      headerTitle: "Map This",
+      headerTitle: <TitleDateNav />,
+      headerStyle: {
+        paddingRight: 12,
+        paddingLeft: 12
+      },
+      headerLeft: (
+        <TouchableHighlight
+          onPress={() => {
+            navigate("Menu");
+          }}
+        >
+          <Icon name="ios-contact" size={24} />
+        </TouchableHighlight>
+      ),
       headerRight: (
         <TouchableHighlight
           onPress={() => {
-            console.log("pressed!");
             navigate("Metrics");
           }}
         >

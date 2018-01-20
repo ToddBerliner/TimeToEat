@@ -17,10 +17,8 @@ export const clearSavedState = async () => {
 };
 
 export const getSavedState = () => {
-  console.log("trying to get saved state");
   return AsyncStorage.getItem("@state")
     .then(state => {
-      console.log("got saved state, trying to parse");
       if (state === null) {
         return undefined;
       }

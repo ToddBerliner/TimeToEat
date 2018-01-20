@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MapScreen from "../containers/MapScreen";
 import MenuScreen from "../containers/MenuScreen";
 import MetricsScreen from "../containers/MetricsScreen";
+import { _getSelectedDayId } from "../store/reducer";
 
 export const AppNavigator = StackNavigator(
   {
@@ -24,15 +25,19 @@ export const AppNavigator = StackNavigator(
   }
 );
 
-const AppWithNavigationState = ({ dispatch, nav }) => {
+const AppWithNavigationState = ({ dispatch, nav, dayId }) => {
   return (
-    <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+    <AppNavigator
+      navigation={addNavigationHelpers({ dispatch, state: nav })}
+      screenProps={{ dayId }}
+    />
   );
 };
 
 const mapStateToProps = state => {
   return {
-    nav: state.nav
+    nav: state.nav,
+    dayId: _getSelectedDayId(state)
   };
 };
 
