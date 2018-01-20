@@ -6,14 +6,6 @@ import { clearSavedState } from "../store/configureStore";
 class MenuScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-  }
-  onNavigatorEvent(event) {
-    if (event.type == "NavBarButtonPress") {
-      if (event.id == "menu-done") {
-        this.props.navigator.dismissModal();
-      }
-    }
   }
   render() {
     return (

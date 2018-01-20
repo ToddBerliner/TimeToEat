@@ -5,7 +5,8 @@ import {
   View,
   Text,
   TouchableHighlight,
-  Alert
+  Alert,
+  Button
 } from "react-native";
 import AddSnack from "../components/AddSnack";
 import WaterPie from "../components/WaterPie";
@@ -26,59 +27,46 @@ import {
   NEXT
 } from "../utils";
 import Icon from "react-native-vector-icons/Ionicons";
+import { StackNavigator } from "react-navigation";
 
 // MapScreen is a route in the App
 class MapScreen extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { navigate } = navigation;
+    return {
+      headerTitle: "Map This",
+      headerRight: (
+        <TouchableHighlight
+          onPress={() => {
+            console.log("pressed!");
+            navigate("Metrics");
+          }}
+        >
+          <Icon name="ios-pulse" size={24} />
+        </TouchableHighlight>
+      )
+    };
+  };
+
   constructor(props) {
     super(props);
-    this.state = { tomorrow: getAdjacentDateKey(getDateKey(), NEXT) };
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    this.state = {
+      tomorrow: parseInt(getAdjacentDateKey(getDateKey(), NEXT), 10)
+    };
   }
 
   checkTime() {
-    this.setState({ tomorrow: "foobar" });
-    console.log(this.state.tomorrow);
+    console.log(new Date().getTime() === this.state.tomorrow);
+    console.log(new Date().getTime(), this.state.tomorrow);
   }
 
   componentDidMount() {
     console.log("Mounted Map Screen");
-    this.timer = setInterval(() => this.checkTime(), 1000);
+    // this.timer = setInterval(() => this.checkTime(), 1000);
   }
 
   componentWillUnmount() {
     clearInterval(this.timer);
-  }
-
-  onNavigatorEvent(event) {
-    if (event.type == "NavBarButtonPress") {
-      if (event.id == "map-to-metrics") {
-        this.props.navigator.push({
-          screen: "tte.Metrics",
-          backButtonTitle: getFriendlyDate(this.props.dayId),
-          navigatorButtons: {
-            leftButtons: [
-              {
-                id: "back-to-map"
-              }
-            ]
-          }
-        });
-      }
-      if (event.id == "map-to-menu") {
-        this.props.navigator.showModal({
-          screen: "tte.Menu",
-          title: "Settings",
-          navigatorButtons: {
-            rightButtons: [
-              {
-                title: "Done",
-                id: "menu-done"
-              }
-            ]
-          }
-        });
-      }
-    }
   }
 
   render() {

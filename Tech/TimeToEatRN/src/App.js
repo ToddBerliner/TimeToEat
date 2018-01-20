@@ -1,52 +1,55 @@
-// @flow
-import React, { Component } from "react";
+import React from "react";
 import { Provider } from "react-redux";
-import { Navigation } from "react-native-navigation";
 import configureStore, {
-  clearSavedState,
-  getSavedState
+  getSavedState,
+  clearSavedState
 } from "./store/configureStore";
-import { _getSelectedDayId } from "./store/reducer";
-import { registerScreens } from "./Screens";
-import { getDateKey, getAdjacentDateKey, NEXT } from "./utils";
-import { iconsMap, iconsLoaded } from "./utils/appicons";
+import MapScreen from "./containers/MapScreen";
+import { Text, Image, View, ActivityIndicator } from "react-native";
 
-class App extends Component {
+import AppWithNavigationState from "./navigators/AppNavigator";
+
+export default class App extends React.Component {
   constructor(props) {
     super(props);
-    Promise.all([getSavedState(), iconsLoaded]).then(values => {
-      const store = configureStore(values[0]);
-      registerScreens(store, Provider);
-      this.startApp(store);
-    });
+    this.state = {
+      isStoreLoading: false,
+      store: null
+    };
   }
 
-  startApp(store) {
-    Navigation.startSingleScreenApp({
-      screen: {
-        label: "Map",
-        screen: "tte.Map",
-        navigatorStyle: {
-          navBarCustomView: "tte.TitleDateNav"
-        },
-        navigatorButtons: {
-          leftButtons: [
-            {
-              // title: "Menu",
-              id: "map-to-menu",
-              icon: iconsMap["ios-contact"]
-            }
-          ],
-          rightButtons: [
-            {
-              // title: "Metrics",
-              id: "map-to-metrics",
-              icon: iconsMap["ios-pulse"]
-            }
-          ]
-        }
-      }
-    });
+  componentWillMount() {
+    getSavedState()
+      .then(values => {
+        const store = configureStore(values);
+        this.setState({
+          isStoreLoading: false,
+          store
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        // start fresh
+        const store = configureStore();
+        this.setState({
+          isStoreLoading: false,
+          store
+        });
+      });
+    // set the loading state
+    this.setState({ isStoreLoading: true });
+  }
+
+  render() {
+    const { isStoreLoading, store } = this.state;
+    if (!isStoreLoading) {
+      return (
+        <Provider store={store}>
+          <AppWithNavigationState />
+        </Provider>
+      );
+    } else {
+      return <ActivityIndicator animating={isStoreLoading} size="large" />;
+    }
   }
 }
-export default App;

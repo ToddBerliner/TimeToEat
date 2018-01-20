@@ -8,6 +8,12 @@ import uiState, { getSelectedDayId } from "./uiState/reducer";
 import plan, { getPlanDayByDayId } from "./plan/reducer";
 import days, { getDayById, getLastDayId } from "./days/reducer";
 import nodes, { getNodesByIds } from "./nodes/reducer";
+import { AppNavigator } from "../navigators/AppNavigator";
+import { NavigationActions } from "react-navigation";
+import MapScreen from "../containers/MapScreen";
+import MenuScreen from "../containers/MenuScreen";
+import MetricsScreen from "../containers/MetricsScreen";
+import Immutable from "seamless-immutable";
 
 // Action Types
 export const NOOP = "noop";
@@ -41,12 +47,48 @@ export const _ensureDaysAndNodes = (
   }
 };
 
-// Reducers
+// Nav Reducer
+const firstAction = AppNavigator.router.getActionForPathAndParams("Map");
+const tempState = AppNavigator.router.getStateForAction(firstAction);
+const secondAction = AppNavigator.router.getActionForPathAndParams("Metrics");
+const initialNavState = AppNavigator.router.getStateForAction(
+  secondAction,
+  tempState
+);
+
+export function nav(state = initialNavState, action = {}) {
+  console.log(action);
+  let newState;
+  switch (action.type) {
+    case NavigationActions.NAVIGATE:
+      newState = AppNavigator.router.getStateForAction(
+        action,
+        state.asMutable({ deep: true })
+      );
+      break;
+    case NavigationActions.BACK:
+      const newIndex = state.index--;
+      newState = AppNavigator.router.getStateForAction(
+        action,
+        state.merge({ index: newIndex })
+      );
+      break;
+    default:
+      console.log(action.type);
+      console.log("dont nav nuttin");
+  }
+
+  console.log("newState");
+
+  return Immutable(newState) || state;
+}
+
 const store = combineReducers({
   uiState, // call uiState(state.plan, action);
   plan, // call plan(state.plan, action);
   days, // call days(state.daysById, action);
-  nodes // call nodes(state.nodesById, action);
+  nodes, // call nodes(state.nodesById, action);
+  nav // call nav(state.nav, action)
 });
 export default store;
 

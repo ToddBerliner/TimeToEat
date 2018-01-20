@@ -1,7 +1,15 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Button } from "react-native";
 
 class MetricsScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    console.log(navigation);
+    const { navigate } = navigation;
+    return {
+      headerTitle: "Metric This",
+      headerBackTitle: "But Foo"
+    };
+  };
   render() {
     return (
       <View
