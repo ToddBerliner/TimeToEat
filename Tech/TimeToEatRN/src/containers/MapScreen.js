@@ -6,7 +6,7 @@ import {
   Text,
   TouchableHighlight,
   Alert,
-  Button
+  Button,
 } from "react-native";
 import AddSnack from "../components/AddSnack";
 import WaterPie from "../components/WaterPie";
@@ -15,7 +15,7 @@ import TitleDateNav from "../containers/TitleDateNav";
 import {
   _getSelectedDayId,
   _getDayById,
-  _getNodesByIds
+  _getNodesByIds,
 } from "../store/reducer";
 import { selectDay } from "../store/uiState/reducer";
 import { tapWater, tapAndHoldWater } from "../store/days/reducer";
@@ -25,7 +25,7 @@ import {
   getAdjacentDateKey,
   getFriendlyDate,
   PREV,
-  NEXT
+  NEXT,
 } from "../utils";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StackNavigator } from "react-navigation";
@@ -33,13 +33,12 @@ import { StackNavigator } from "react-navigation";
 // MapScreen is a route in the App
 class MapScreen extends Component {
   static navigationOptions = ({ navigation, screenProps }) => {
-    console.log(screenProps);
     const { navigate } = navigation;
     return {
       headerTitle: <TitleDateNav />,
       headerStyle: {
         paddingRight: 12,
-        paddingLeft: 12
+        paddingLeft: 12,
       },
       headerLeft: (
         <TouchableHighlight
@@ -58,14 +57,14 @@ class MapScreen extends Component {
         >
           <Icon name="ios-pulse" size={24} />
         </TouchableHighlight>
-      )
+      ),
     };
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      tomorrow: parseInt(getAdjacentDateKey(getDateKey(), NEXT), 10)
+      tomorrow: parseInt(getAdjacentDateKey(getDateKey(), NEXT), 10),
     };
   }
 
@@ -126,7 +125,7 @@ const mapStateToProps = state => {
     dayId,
     waterCount: dayObj.water.completedTimes.length,
     nodes,
-    isToday
+    isToday,
   };
 };
 
@@ -150,41 +149,41 @@ const mapDispatchToProps = dispatch => {
     selectDay: (dayId, dir) => {
       const newDayId = getAdjacentDateKey(dayId, dir);
       dispatch(selectDay(newDayId));
-    }
+    },
   };
 };
 
 const styles = StyleSheet.create({
   appWrap: {
     backgroundColor: "rgb(245, 245, 245)",
-    flex: 1
+    flex: 1,
   },
   box: {
     backgroundColor: "rgb(102, 102, 102)",
-    height: 50
+    height: 50,
   },
   bodyRow: {
     flex: 1,
-    backgroundColor: "rgb(220,220,220)"
+    backgroundColor: "rgb(220,220,220)",
   },
   titleRow: {
     height: 36,
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 14,
-    marginRight: 14
+    marginRight: 14,
   },
   titleRowLeft: {
     width: 38,
     height: 36,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   titleRowRight: {
     width: 38,
     height: 36,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   footerRow: {
     height: 70,
@@ -192,8 +191,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginLeft: 14,
-    marginRight: 14
-  }
+    marginRight: 14,
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);

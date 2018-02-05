@@ -35,15 +35,26 @@
                 // tap on day in calendar, navigate with arrows on map screen
                 // if necessary, create day and dispatch({type: DAY_AND_NODES_ADDED, dayAndNodes)
                 // dispatch({type: DAY_SELECTED, dayId})
+            ❍ toggleWaterTracking => dispatch({type: WATER_TRACKING_TOGGLED, BOOLEAN(tracking status)})
         Selectors
             ✔ getSelectedDayId => return the selected day id || today
+            ❍ getWaterTrackingState => return the water tracking state
         Reducer
             ✔ DAY_SELECTED => returns {...uiState, selectedDay: dayId}
+            ❍ WATER_TRACKING_TOGGLED => {...uiState, waterTracking: toggleState}
     plan
         Actions
+            ❍ updateWaterCupsPerDay => dispatch({type: CUPS_UPDATED, INT(waterTarget)})
+            ❍ addMeal => dispatch({type: MEAL_ADDED, mealObj})
+            ❍ updateMeal => dispatch({type: MEAL_UPDATED, index, mealObj})
+            ❍ removeMeal => dispacth({type: MEAL_REMOVED, index})
         Selectors
             ✔ getPlanDayByDayId => returns a plan day by a dayId
         Reducer
+            ❍ CUPS_UPDATED => {...planState, waterTarget}
+            ❍ MEAL_ADDED => {...planState, days: newDaysWithNewMeal }
+            ❍ MEAL_UPDATED => {...planState, days: newDaysWithUpdatedMeal }
+            ❍ MEAL_REMOVED => {...planState, days: newDaysWIthMealRemoved }
     days
         Actions
             ✔ tapWater => dispatch({type: WATER_ADDED, {dayId: timestamp}})
