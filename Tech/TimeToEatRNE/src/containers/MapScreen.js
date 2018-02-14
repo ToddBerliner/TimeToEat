@@ -122,7 +122,6 @@ class MapScreen extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.uiState);
   const dayId = _getSelectedDayId(state);
   const dayObj = _getDayById(state, dayId);
   const nodes = _getNodesByIds(state, dayObj.nodeIds);

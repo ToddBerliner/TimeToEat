@@ -68,7 +68,6 @@ export const _getLastDayId = state => {
 export const _getSelectedDayId = state => {
   return getSelectedDayId(state.uiState);
 };
-
 export const _getWaterTrackingState = state => {
   return getWaterTrackingState(state.uiState);
 };

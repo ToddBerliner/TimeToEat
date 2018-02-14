@@ -44,7 +44,6 @@
             ✔ WATER_TRACKING_TOGGLED => {...uiState, waterTracking: toggleState}
     plan
         Actions
-            ❍ updateWaterCupsPerDay => dispatch({type: CUPS_UPDATED, INT(waterTarget)})
             ❍ addMeal => dispatch({type: MEAL_ADDED, mealObj})
             ❍ updateMeal => dispatch({type: MEAL_UPDATED, index, mealObj})
             ❍ removeMeal => dispacth({type: MEAL_REMOVED, index})

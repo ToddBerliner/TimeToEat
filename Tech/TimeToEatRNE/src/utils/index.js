@@ -9,7 +9,7 @@ export const DOW = [
   "Wednesday",
   "Thursday",
   "Friday",
-  "Saturday"
+  "Saturday",
 ];
 
 export const months = [
@@ -24,7 +24,7 @@ export const months = [
   "September",
   "October",
   "November",
-  "December"
+  "December",
 ];
 
 export function getDow(dayIndex) {
@@ -54,12 +54,12 @@ export function getAdjacentDateKey(dateKey, dir) {
   let adjacentDate;
   if (dir === PREV) {
     adjacentDate = (d => new Date(d.setDate(d.getDate() - 1)))(
-      getDateFromKey(dateKey)
+      getDateFromKey(dateKey),
     );
   }
   if (dir === NEXT) {
     adjacentDate = (d => new Date(d.setDate(d.getDate() + 1)))(
-      getDateFromKey(dateKey)
+      getDateFromKey(dateKey),
     );
   }
   return getDateKey(adjacentDate);
@@ -150,10 +150,10 @@ export function createDayFromPlanDay(dateKey, planDay, nodeIdsArr) {
     id: dateKey,
     water: {
       completedTimes: [],
-      target: planDay.waterTarget
+      target: planDay.waterTarget,
     },
     nodeIds: nodeIdsArr,
-    offPlanNodeIds: []
+    offPlanNodeIds: [],
   };
   return day;
 }
@@ -168,7 +168,7 @@ export function createNodesFromPlanDay(dateKey, planDay) {
       name: node.name,
       time: planned_timestamp,
       items: node.items.slice(),
-      completedTime: null
+      completedTime: null,
     });
   });
   return nodes;
@@ -179,6 +179,6 @@ export function createSnackNode(dateKey, timestamp) {
     type: "offplan", // can't import this TODO?!?
     id: `${dateKey}_${timestamp}`,
     time: timestamp,
-    completedTime: timestamp
+    completedTime: timestamp,
   };
 }

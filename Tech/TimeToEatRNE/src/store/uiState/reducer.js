@@ -23,7 +23,7 @@ export const selectDay = (dayId = getDateKey()) => {
 };
 
 export const toggleWaterTracking = trackingState => {
-  dispatch({ type: WATER_TRACKING_TOGGLED, trackingState });
+  return { type: WATER_TRACKING_TOGGLED, trackingState };
 };
 
 // Reducer
