@@ -116,7 +116,7 @@ class MenuScreen extends React.Component {
               marginLeft: FormSettings.textMarginLeft,
             }}
           >
-            MenuThis!
+            Make a Plan
           </Text>
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
