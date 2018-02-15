@@ -46,10 +46,12 @@ describe("Generic Utilities", () => {
     expect(timeObj).toEqual(expectedTimeObj);
   });
   test("it returns the friendly time for a given timestamp", () => {
-    const timestamp = 1507134600000;
+    let timestamp = 1518714394593;
+    expect(getFriendlyTime(timestamp)).toBe("9:06am");
+    timestamp = 1507134600000;
     expect(getFriendlyTime(timestamp)).toBe("9:30am");
-    const timestamp2 = 1507165200000;
-    expect(getFriendlyTime(timestamp2)).toBe("6pm");
+    timestamp = 1507165200000;
+    expect(getFriendlyTime(timestamp)).toBe("6pm");
   });
   test("it returns a dayAndNodes object for a given dateKey", () => {
     expect(

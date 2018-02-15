@@ -1,6 +1,8 @@
 export const PREV = "prev";
 export const NEXT = "next";
 
+// TODO: update all uses of "date" as a variable name to "dateObj"!!!
+
 // useful array with days in order of JS "day"
 export const DOW = [
   "Sunday",
@@ -126,14 +128,15 @@ export function getFriendlyDate(timestamp) {
 }
 
 export function getFriendlyTime(timestamp) {
+  if (!timestamp) return null;
   const date = new Date(timestamp);
   let hours = date.getHours();
-  let minutes = date.getMinutes();
+  let minutes = ("0" + date.getMinutes()).slice(-2);
   // let { hours, minutes } = timeObj;
-  if (hours === 0 && minutes === 0) {
+  if (hours === 0 && minutes === "00") {
     return "Midnight";
   }
-  if (hours === 12 && minutes === 0) {
+  if (hours === 12 && minutes === "00") {
     return "Noon";
   }
   let ampm = "am";
@@ -142,7 +145,7 @@ export function getFriendlyTime(timestamp) {
     hours = hours - 12;
   }
   if (hours === 0) hours = "12";
-  minutes = minutes === 0 ? "" : `:${minutes}`;
+  minutes = minutes === "00" ? "" : `:${minutes}`;
 
   return `${hours}${minutes}${ampm}`;
 }

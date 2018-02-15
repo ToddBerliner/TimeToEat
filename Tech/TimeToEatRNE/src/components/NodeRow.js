@@ -39,8 +39,15 @@ const NodeRow = props => {
         <Text style={styles.nodeName}>{props.name}</Text>
         <Text>{props.time}</Text>
       </View>
+      <View style={styles.nodeEatenTimeBlock}>
+        <Text style={styles.nodeEatenTime}>{props.completedTime}</Text>
+      </View>
     </View>
   );
+  // Add DatePicker with onDateChange which must be passed down
+  // from MapScreen through NodeRows to here
+  // MapScreen.onDateChange must translate the date into timestamp and call
+  // tapNode(nodeId, timestamp)
 };
 
 const styles = StyleSheet.create({
@@ -49,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     height: 80,
-    paddingLeft: 14
+    paddingLeft: 14,
   },
   nodeRowSelected: {
     backgroundColor: "rgba(216,216,216,40)",
@@ -57,12 +64,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     height: 80,
-    paddingLeft: 14
+    paddingLeft: 14,
   },
   circleTouchable: {
     width: 60,
     height: 60,
-    borderRadius: 30
+    borderRadius: 30,
   },
   circle: {
     width: 60,
@@ -73,7 +80,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   circleFill: {
     width: 52,
@@ -81,21 +88,31 @@ const styles = StyleSheet.create({
     borderRadius: 26,
     backgroundColor: "black",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   nodeIcon: {
     color: "white",
     backgroundColor: "transparent",
     textAlign: "center",
     textAlignVertical: "bottom",
-    includeFontPadding: false
+    includeFontPadding: false,
   },
   nodeNameBlock: {
-    marginLeft: 14
+    marginLeft: 14,
+    flex: 1,
   },
   nodeName: {
-    fontSize: 24
-  }
+    fontSize: 24,
+  },
+  nodeEatenTimeBlock: {
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  nodeEatenTime: {
+    fontSize: 20,
+    marginRight: 14,
+    color: "#969696",
+  },
 });
 
 export default NodeRow;

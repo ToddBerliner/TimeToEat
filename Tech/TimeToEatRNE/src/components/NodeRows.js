@@ -7,7 +7,7 @@ import {
   CHECKED,
   MISSED,
   PLAN,
-  OFFPLAN
+  OFFPLAN,
 } from "../store/nodes/reducer";
 import { getFriendlyTime } from "../utils";
 
@@ -44,11 +44,15 @@ const NodeRows = props => {
           status = CHECKED;
         }
 
+        console.log(node.completedTime);
+        console.log(getFriendlyTime(node.completedTime));
+
         rows.push(
           <NodeRow
             key={node.id}
             name={node.name}
             time={getFriendlyTime(node.time)}
+            completedTime={getFriendlyTime(node.completedTime)}
             status={status}
             selected={node.id === selectedNodeId}
             id={node.id}
@@ -62,12 +66,12 @@ const NodeRows = props => {
                 props.onTapAndHold(node.id);
               }
             }}
-          />
+          />,
         );
         break;
       case OFFPLAN:
         rows.push(
-          <SnackNodeRow key={node.id} time={getFriendlyTime(node.time)} />
+          <SnackNodeRow key={node.id} time={getFriendlyTime(node.time)} />,
         );
       default:
         break;
@@ -82,8 +86,8 @@ const styles = StyleSheet.create({
     backgroundColor: "whitesmoke",
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-around"
-  }
+    justifyContent: "space-around",
+  },
 });
 
 export default NodeRows;
