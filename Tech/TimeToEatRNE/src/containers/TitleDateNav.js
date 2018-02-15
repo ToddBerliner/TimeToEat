@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import TitleDate from "../components/TitleDate";
-import { View, TouchableHighlight, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { selectDay } from "../store/uiState/reducer";
 import { getDateKey, getAdjacentDateKey, PREV, NEXT } from "../utils";
@@ -20,16 +20,16 @@ class TitleDateNav extends Component {
     return (
       <View style={styles.titleRowCenter}>
         <View style={styles.titleLeftArrow}>
-          <TouchableHighlight onPress={this._selectDate.bind(this, PREV)}>
+          <TouchableOpacity onPress={this._selectDate.bind(this, PREV)}>
             <Icon name="ios-arrow-back" size={24} />
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
         <TitleDate dayId={this.props.dayId} />
         <View style={styles.titleRightArrow}>
           {!this.props.isToday && (
-            <TouchableHighlight onPress={this._selectDate.bind(this, NEXT)}>
+            <TouchableOpacity onPress={this._selectDate.bind(this, NEXT)}>
               <Icon name="ios-arrow-forward" size={24} />
-            </TouchableHighlight>
+            </TouchableOpacity>
           )}
         </View>
       </View>
@@ -43,15 +43,15 @@ const styles = StyleSheet.create({
     height: 36,
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   titleLeftArrow: {
     width: 15,
-    alignItems: "flex-end"
+    alignItems: "flex-end",
   },
   titleRightArrow: {
-    width: 15
-  }
+    width: 15,
+  },
 });
 
 const mapStateToProps = state => {
@@ -59,7 +59,7 @@ const mapStateToProps = state => {
   const isToday = dayId === getDateKey();
   return {
     dayId,
-    isToday
+    isToday,
   };
 };
 
@@ -68,7 +68,7 @@ const mapDispatchToProps = dispatch => {
     selectDate: (dayId, dir) => {
       const newDayId = getAdjacentDateKey(dayId, dir);
       dispatch(selectDay(newDayId));
-    }
+    },
   };
 };
 

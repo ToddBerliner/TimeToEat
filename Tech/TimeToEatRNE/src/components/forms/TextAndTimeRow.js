@@ -21,7 +21,7 @@ class TextAndTimeRow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPickerShowing: true,
+      isPickerShowing: false,
     };
   }
   getPicker(date, onDateChange) {

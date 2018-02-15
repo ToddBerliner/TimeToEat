@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   Alert,
   Button,
 } from "react-native";
@@ -42,22 +42,22 @@ class MapScreen extends Component {
         paddingLeft: 12,
       },
       headerLeft: (
-        <TouchableHighlight
+        <TouchableOpacity
           onPress={() => {
             navigate("Menu");
           }}
         >
           <Icon name="ios-contact" size={24} />
-        </TouchableHighlight>
+        </TouchableOpacity>
       ),
       headerRight: (
-        <TouchableHighlight
+        <TouchableOpacity
           onPress={() => {
             navigate("Metrics");
           }}
         >
           <Icon name="ios-pulse" size={24} />
-        </TouchableHighlight>
+        </TouchableOpacity>
       ),
     };
   };

@@ -10,7 +10,8 @@ import {
   getTimestampFromTimeObj,
   getDayIdsBetweenDayIds,
   createDayAndNodes,
-  createSnackNode
+  createSnackNode,
+  getTimeObjFromDate,
 } from "./";
 import * as daysFixtures from "../store/days/fixtures";
 import * as nodesFixtures from "../store/nodes/fixtures";
@@ -30,10 +31,19 @@ describe("Generic Utilities", () => {
     const dateKey = getDateKey(new Date(2017, 1, 1));
     const timeObj = {
       hours: 4,
-      minutes: 30
+      minutes: 30,
     };
     const timestamp = getTimestampFromTimeObj(dateKey, timeObj);
     expect(timestamp).toBe(1485952200000);
+  });
+  test("it returns a time object from a javascript date object", () => {
+    const date = new Date("2018-02-16T03:15:00.000Z");
+    const expectedTimeObj = {
+      hours: 19,
+      minutes: 15,
+    };
+    const timeObj = getTimeObjFromDate(date);
+    expect(timeObj).toEqual(expectedTimeObj);
   });
   test("it returns the friendly time for a given timestamp", () => {
     const timestamp = 1507134600000;
@@ -43,10 +53,10 @@ describe("Generic Utilities", () => {
   });
   test("it returns a dayAndNodes object for a given dateKey", () => {
     expect(
-      createDayAndNodes(daysFixtures.dateKeyMonday, daysFixtures.planDayMonday)
+      createDayAndNodes(daysFixtures.dateKeyMonday, daysFixtures.planDayMonday),
     ).toEqual({
       day: daysFixtures.expectedDayMonday,
-      nodes: nodesFixtures.expectedNodesMonday
+      nodes: nodesFixtures.expectedNodesMonday,
     });
   });
 });
@@ -74,7 +84,7 @@ describe("Days Utilities", () => {
       getDateKey(new Date(2017, 1, 27)),
       getDateKey(new Date(2017, 1, 28)),
       getDateKey(new Date(2017, 2, 1)),
-      getDateKey(new Date(2017, 2, 2))
+      getDateKey(new Date(2017, 2, 2)),
     ];
     expect(getDayIdsBetweenDayIds(dayId1, dayId2)).toEqual(expectedDayIds);
   });
@@ -93,7 +103,7 @@ describe("Days Utilities", () => {
     const day = createDayFromPlanDay(
       daysFixtures.dateKeyMonday,
       daysFixtures.planDayMonday,
-      nodeIdsArr
+      nodeIdsArr,
     );
     expect(day).toEqual(daysFixtures.expectedDayMonday);
   });
@@ -103,14 +113,14 @@ describe("Nodes Utilities", () => {
   test("it returns an array of nodes without mutating the planDay it' derived from ", () => {
     const nodes = createNodesFromPlanDay(
       daysFixtures.dateKeyMonday,
-      daysFixtures.planDayMonday
+      daysFixtures.planDayMonday,
     );
     expect(nodes).toEqual(nodesFixtures.expectedNodesMonday);
   });
   test("it returns a snack node for a given day and timestamp", () => {
     const snackNode = createSnackNode(
       daysFixtures.dateKeyMonday,
-      daysFixtures.snackTimestampMonday
+      daysFixtures.snackTimestampMonday,
     );
     expect(snackNode).toEqual(nodesFixtures.expectedSnackNodeMonday);
   });

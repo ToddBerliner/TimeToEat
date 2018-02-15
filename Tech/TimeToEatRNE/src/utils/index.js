@@ -103,6 +103,17 @@ export function getTimestampFromTimeObj(dateKey, timeObj) {
   }
 }
 
+export function getTimeObjFromDate(date) {
+  try {
+    return {
+      hours: date.getHours(),
+      minutes: date.getMinutes(),
+    };
+  } catch (err) {
+    return undefined;
+  }
+}
+
 export function getFriendlyDate(timestamp) {
   if (typeof timestamp === "string") {
     timestamp = parseInt(timestamp, 10);

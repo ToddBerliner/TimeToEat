@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  TouchableHighlight,
-} from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import DateBackButton from "../components/DateBackButton";
 
 class MetricsScreen extends React.Component {

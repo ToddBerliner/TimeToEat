@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  TouchableHighlight,
-} from "react-native";
+import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 const wp0 = require("../../assets/images/wp0.png");
 const wp1 = require("../../assets/images/wp1.png");
 const wp2 = require("../../assets/images/wp2.png");
@@ -20,7 +14,7 @@ const slices = [wp0, wp1, wp2, wp3, wp4, wp5, wp6, wp7, wp8];
 const WaterPie = props => {
   return (
     <View style={styles.waterPieWrap}>
-      <TouchableHighlight
+      <TouchableOpacity
         onPress={() => {
           if (props.waterCount < 8) {
             props.onTap();
@@ -34,7 +28,7 @@ const WaterPie = props => {
         style={styles.waterPieTouchable}
       >
         <Image source={slices[props.waterCount]} style={styles.waterPieImage} />
-      </TouchableHighlight>
+      </TouchableOpacity>
       <Text style={styles.waterPieText}>Water</Text>
     </View>
   );

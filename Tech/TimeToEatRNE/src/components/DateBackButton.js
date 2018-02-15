@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableHighlight, View, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { getFriendlyDate } from "../utils";
 
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 });
 
 const DateBackButton = props => (
-  <TouchableHighlight onPress={() => props.onPress()}>
+  <TouchableOpacity onPress={() => props.onPress()}>
     <View style={styles.titleRowCenter}>
       <View style={styles.titleLeftArrow}>
         <Icon name="ios-arrow-back" size={24} />
@@ -34,7 +34,7 @@ const DateBackButton = props => (
         {getFriendlyDate(props.dayId)}
       </Text>
     </View>
-  </TouchableHighlight>
+  </TouchableOpacity>
 );
 
 export default DateBackButton;

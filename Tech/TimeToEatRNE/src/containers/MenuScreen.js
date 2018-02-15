@@ -4,10 +4,10 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableHighlight,
   Switch,
   TextInput,
   DatePickerIOS,
+  TouchableOpacity,
   ScrollView,
 } from "react-native";
 import { clearSavedState } from "../store/configureStore";
@@ -15,7 +15,12 @@ import DateBackButton from "../components/DateBackButton";
 import { _getWaterTrackingState } from "../store/reducer";
 import { toggleWaterTracking } from "../store/uiState/reducer";
 import { editMeal } from "../store/plan/reducer";
-import { getFriendlyTime, getTimestampFromTimeObj, getDateKey } from "../utils";
+import {
+  getFriendlyTime,
+  getTimestampFromTimeObj,
+  getDateKey,
+  getTimeObjFromDate,
+} from "../utils";
 import Line from "../components/forms/Line";
 import SwitchRow from "../components/forms/SwitchRow";
 import TextAndTimeRow from "../components/forms/TextAndTimeRow";
@@ -50,13 +55,16 @@ class MenuScreen extends React.Component {
   }
 
   handleChange(mealIdx, field, event) {
+    let value = null;
     if (field === "time") {
-      console.log("time change");
-      console.log(event);
-      return;
+      value = getTimeObjFromDate(event);
     }
-    const { text } = event.nativeEvent;
-    this.props.editMeal(mealIdx, field, text);
+    if (field === "name") {
+      value = event.nativeEvent.text;
+    }
+    if (value) {
+      this.props.editMeal(mealIdx, field, value);
+    }
   }
 
   render() {
@@ -100,7 +108,7 @@ class MenuScreen extends React.Component {
           paddingTop: 20,
         }}
       >
-        <TouchableHighlight onPress={clearSavedState}>
+        <TouchableOpacity onPress={clearSavedState}>
           <Text
             style={{
               fontFamily: "fugaz-one-regular",
@@ -110,7 +118,7 @@ class MenuScreen extends React.Component {
           >
             MenuThis!
           </Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <View style={SectionStyles.container}>
             <View>
