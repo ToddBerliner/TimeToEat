@@ -92,7 +92,9 @@ class MapScreen extends Component {
           <NodeRows
             dayId={this.props.dayId}
             nodes={this.props.nodes}
-            onTap={nodeId => this.props.tapNode(nodeId, new Date().getTime())}
+            onTap={(nodeId, timestamp = new Date().getTime()) => {
+              this.props.tapNode(nodeId, timestamp);
+            }}
             onTapAndHold={nodeId =>
               this.props.tapAndHoldNode(nodeId, new Date().getTime())
             }

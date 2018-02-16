@@ -44,15 +44,12 @@ const NodeRows = props => {
           status = CHECKED;
         }
 
-        console.log(node.completedTime);
-        console.log(getFriendlyTime(node.completedTime));
-
         rows.push(
           <NodeRow
             key={node.id}
             name={node.name}
-            time={getFriendlyTime(node.time)}
-            completedTime={getFriendlyTime(node.completedTime)}
+            time={node.time}
+            completedTime={node.completedTime}
             status={status}
             selected={node.id === selectedNodeId}
             id={node.id}
@@ -61,6 +58,7 @@ const NodeRows = props => {
                 props.onTap(node.id);
               }
             }}
+            onDateChange={time => props.onTap(node.id, time)}
             onTapAndHold={() => {
               if (node.completedTime !== null) {
                 props.onTapAndHold(node.id);

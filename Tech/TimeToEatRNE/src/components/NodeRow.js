@@ -1,56 +1,93 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  DatePickerIOS,
+} from "react-native";
+import { getFriendlyTime } from "../utils";
 import { CHECKED, MISSED } from "../store/nodes/reducer";
 import Icon from "react-native-vector-icons/Ionicons";
 
-const NodeRow = props => {
-  let circleFillJsx;
-  switch (props.status) {
-    case CHECKED:
-      circleFillJsx = (
-        <View style={styles.circleFill}>
-          <Icon name="ios-checkmark" style={styles.nodeIcon} size={56} />
-        </View>
-      );
-      break;
-    case MISSED:
-      circleFillJsx = (
-        <View style={styles.circleFill}>
-          <Icon name="ios-close" style={styles.nodeIcon} size={56} />
-        </View>
-      );
-      break;
-    default:
-      circleFillJsx = null;
+class NodeRow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isPickerShowing: false };
   }
 
-  return (
-    <View style={props.selected ? styles.nodeRowSelected : styles.nodeRow}>
-      <TouchableHighlight
-        onPress={props.onTap}
-        onLongPress={props.onTapAndHold}
-        style={styles.circleTouchable}
-      >
-        <View style={styles.circle} onClick={props.onClick}>
-          {circleFillJsx}
+  render() {
+    let circleFillJsx;
+    const { props } = this;
+    switch (props.status) {
+      case CHECKED:
+        circleFillJsx = (
+          <View style={styles.circleFill}>
+            <Icon name="ios-checkmark" style={styles.nodeIcon} size={56} />
+          </View>
+        );
+        break;
+      case MISSED:
+        circleFillJsx = (
+          <View style={styles.circleFill}>
+            <Icon name="ios-close" style={styles.nodeIcon} size={56} />
+          </View>
+        );
+        break;
+      default:
+        circleFillJsx = null;
+    }
+
+    return (
+      <View style={styles.nodeRowWrap}>
+        <View style={props.selected ? styles.nodeRowSelected : styles.nodeRow}>
+          <TouchableOpacity
+            onPress={props.onTap}
+            onLongPress={props.onTapAndHold}
+            style={styles.circleTouchable}
+          >
+            <View style={styles.circle} onClick={props.onClick}>
+              {circleFillJsx}
+            </View>
+          </TouchableOpacity>
+          <View style={styles.nodeNameBlock}>
+            <Text style={styles.nodeName}>{props.name}</Text>
+            <Text>{getFriendlyTime(props.time)}</Text>
+          </View>
+          <View style={styles.nodeEatenTimeBlock}>
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({ isPickerShowing: !this.state.isPickerShowing });
+              }}
+            >
+              <Text style={styles.nodeEatenTime}>
+                {getFriendlyTime(props.completedTime)}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </TouchableHighlight>
-      <View style={styles.nodeNameBlock}>
-        <Text style={styles.nodeName}>{props.name}</Text>
-        <Text>{props.time}</Text>
+        {this.state.isPickerShowing ? (
+          <DatePickerIOS
+            mode="time"
+            onDateChange={event => {
+              props.onDateChange(event.getTime());
+            }}
+            date={new Date(props.completedTime)}
+          />
+        ) : null}
       </View>
-      <View style={styles.nodeEatenTimeBlock}>
-        <Text style={styles.nodeEatenTime}>{props.completedTime}</Text>
-      </View>
-    </View>
-  );
-  // Add DatePicker with onDateChange which must be passed down
-  // from MapScreen through NodeRows to here
-  // MapScreen.onDateChange must translate the date into timestamp and call
-  // tapNode(nodeId, timestamp)
-};
+    );
+    // Add DatePicker with onDateChange which must be passed down
+    // from MapScreen through NodeRows to here
+    // MapScreen.onDateChange must translate the date into timestamp and call
+    // tapNode(nodeId, timestamp)
+  }
+}
 
 const styles = StyleSheet.create({
+  nodeRowWrap: {
+    display: "flex",
+  },
   nodeRow: {
     flexDirection: "row",
     alignItems: "center",

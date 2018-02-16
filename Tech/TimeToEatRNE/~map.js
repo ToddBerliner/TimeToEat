@@ -44,15 +44,11 @@
             ✔ WATER_TRACKING_TOGGLED => {...uiState, waterTracking: toggleState}
     plan
         Actions
-            ❍ addMeal => dispatch({type: MEAL_ADDED, mealObj})
             ✔ updateMeal => dispatch({type: MEAL_UPDATED, index, mealObj})
-            ❍ removeMeal => dispacth({type: MEAL_REMOVED, index})
         Selectors
             ✔ getPlanDayByDayId => returns a plan day by a dayId
         Reducer
-            ❍ MEAL_ADDED => {...planState, days: newDaysWithNewMeal }
             ✔ MEAL_UPDATED => {...planState, days: newDaysWithUpdatedMeal }
-            ❍ MEAL_REMOVED => {...planState, days: newDaysWIthMealRemoved }
     days
         Actions
             ✔ tapWater => dispatch({type: WATER_ADDED, {dayId: timestamp}})
@@ -68,7 +64,6 @@
     nodes
         Actions
             ✔ tapNode(nodeId) => dispatch({type: NODE_CHECKED, nodeId, timestamp})
-            ❍ updateNodeCompletedTime(nodeId) => dispatch({type: NODE_COMPLETED_TIME_UPDATED, nodeId, timestamp})
             ✔ tapAndHoldNode(nodeId) => dispatch({type: NODE_UNCHECKED, nodeId, timestamp})
             ✔ tapAddSnack(dayId, timestamp) =>
                 // create new snack node createSnackNode(dayId, timestamp)
@@ -80,7 +75,6 @@
             ✔ DAY_AND_NODES_ADDED => {...nodesState, {...nodesById, [[nodeId]: newNode}...]}
             ✔ NODE_CHECKED => {...nodesState, [nodeId]: {...node, compltedTime: timestamp}}
             ✔ NODE_UNCHECKED => {...nodesState, [nodeId]: {...node, compltedTime: null}}
-            ❍ NODE_COMPLETED_TIME_UPDATED => {...nodesState, [nodeId]: {...node, compltedTime: timestamp}}
             ✔ NODE_ADDED => {...nodesState, {...nodeById, [nodeId]: snackNode}}}
 */
 
@@ -121,7 +115,8 @@
                             hours: 7,
                             minutes: null
                         },
-                        items: [items...]
+                        items: [items...],
+                        tracking: true || false
                     }
                 ],
                 water_target: 8
@@ -147,7 +142,8 @@
                 name: 'bfast',
                 time: timestamp,
                 items: [items...],
-                completedTime: actual timestamp
+                completedTime: actual timestamp,
+                tracking: true || false
             }
         }
     }
