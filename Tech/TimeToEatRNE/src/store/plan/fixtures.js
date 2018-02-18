@@ -13,6 +13,7 @@ export const expectedPlanDayWednesday = {
         minutes: 0,
       },
       items: ["Eggs", "Fruit", "Avocado", "Greek Yogurt"],
+      tracking: true,
     },
     {
       name: "Midmorning Snack",
@@ -21,6 +22,7 @@ export const expectedPlanDayWednesday = {
         minutes: 30,
       },
       items: ["Banana", "Cottage Cheese & Fruit", "Protien Snack Bar"],
+      tracking: true,
     },
     {
       name: "Lunch",
@@ -29,6 +31,7 @@ export const expectedPlanDayWednesday = {
         minutes: 30,
       },
       items: ["Canned Tuna", "Green Salad", "Whole Wheat Bread", "Fruit"],
+      tracking: true,
     },
     {
       name: "Afternoon Snack",
@@ -37,6 +40,7 @@ export const expectedPlanDayWednesday = {
         minutes: 0,
       },
       items: ["Fruit & Nuts Mix", "Cheese Stick", "Low Fat Muffin"],
+      tracking: true,
     },
     {
       name: "Dinner",
@@ -45,6 +49,7 @@ export const expectedPlanDayWednesday = {
         minutes: 0,
       },
       items: ["Lean Protien", "Lots of Veggies", "Quinoa"],
+      tracking: true,
     },
   ],
   waterTarget: 8,

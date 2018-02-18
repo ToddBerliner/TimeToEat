@@ -7,6 +7,7 @@ import {
   DatePickerIOS,
   TouchableOpacity,
   TouchableHighlight,
+  Switch,
 } from "react-native";
 import {
   SCStyles,
@@ -45,7 +46,16 @@ class TextAndTimeRow extends React.Component {
     this.setState({ isPickerShowing: !this.state.isPickerShowing });
   }
   render() {
-    const { idx, value, cuteDate, onChange, date, onDateChange } = this.props;
+    const {
+      idx,
+      value,
+      cuteDate,
+      onChange,
+      date,
+      onDateChange,
+      onTrackingchange,
+      tracking,
+    } = this.props;
     const wrapStyle = !this.state.isPickerShowing
       ? { height: FormSettings.defaultCellHeight }
       : null;
@@ -72,6 +82,11 @@ class TextAndTimeRow extends React.Component {
               {cuteDate}
             </Text>
           </TouchableOpacity>
+          <Switch
+            style={SCStyles.switch}
+            value={tracking}
+            onValueChange={onTrackingchange}
+          />
         </View>
         {this.getPicker(date, onDateChange)}
       </View>

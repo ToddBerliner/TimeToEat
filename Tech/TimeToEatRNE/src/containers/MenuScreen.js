@@ -55,12 +55,17 @@ class MenuScreen extends React.Component {
   }
 
   handleChange(mealIdx, field, event) {
+    console.log(mealIdx, field, event);
+
     let value = null;
     if (field === "time") {
       value = getTimeObjFromDate(event);
     }
     if (field === "name") {
       value = event.nativeEvent.text;
+    }
+    if (field === "tracking") {
+      value = event;
     }
     if (value) {
       this.props.editMeal(mealIdx, field, value);
@@ -73,7 +78,7 @@ class MenuScreen extends React.Component {
 
     const meals = [];
     nodes.forEach((node, idx, nodesArr) => {
-      const { name, time } = node;
+      const { name, time, tracking } = node;
       const ts = getTimestampFromTimeObj(getDateKey(), time);
       const cuteDate = getFriendlyTime(ts);
       const date = new Date(ts);
@@ -82,10 +87,12 @@ class MenuScreen extends React.Component {
           key={`timeAndTextRow${idx}`}
           idx={idx}
           value={name}
+          tracking={tracking}
           date={date}
           cuteDate={cuteDate}
           onChange={this.handleChange.bind(this, idx, "name")}
           onDateChange={this.handleChange.bind(this, idx, "time")}
+          onTrackingchange={this.handleChange.bind(this, idx, "tracking")}
         />
       );
       if (idx < nodesArr.length - 1) {
@@ -128,7 +135,7 @@ class MenuScreen extends React.Component {
                 key={"mealsToTrackHelpText"}
                 style={SectionStyles.sectionHelpText}
               >
-                Rename, add or remove meals, and set the time for each.
+                Rename or edit the time for each.
               </Text>
             </View>
           </View>

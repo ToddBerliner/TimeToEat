@@ -183,6 +183,7 @@ export function createNodesFromPlanDay(dateKey, planDay) {
       time: planned_timestamp,
       items: node.items.slice(),
       completedTime: null,
+      tracking: node.tracking,
     });
   });
   return nodes;
