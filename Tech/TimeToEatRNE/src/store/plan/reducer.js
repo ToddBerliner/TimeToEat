@@ -1,17 +1,37 @@
 import Immutable from "seamless-immutable";
 import defaultPlan from "./defaultPlan";
-import { getDow, DOW } from "../../utils/index";
+import { getDow, DOW, getDateKey } from "../../utils";
+import { _getNodeIdByDayIdAndMealIdx } from "../reducer";
+import { NODE_UPDATED } from "../nodes/reducer";
 
 // Action Types & Constants
 export const MEAL_EDITED = "meal_edited";
 
 // Actions
-export const editMeal = (mealIdx, field, value) => ({
-  type: MEAL_EDITED,
-  mealIdx,
-  field,
-  value,
-});
+export const editMeal = (mealIdx, field, value) => {
+  return function(dispatch, getState) {
+    dispatch({
+      type: MEAL_EDITED,
+      mealIdx,
+      field,
+      value,
+    });
+    // get node id
+    const nodeId = _getNodeIdByDayIdAndMealIdx(
+      getState(),
+      getDateKey(),
+      mealIdx,
+    );
+    if (nodeId) {
+      dispatch({
+        type: NODE_UPDATED,
+        nodeId: nodeId,
+        field,
+        value,
+      });
+    }
+  };
+};
 
 // Reducer
 const initialState = Immutable(defaultPlan);

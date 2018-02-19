@@ -55,8 +55,6 @@ class MenuScreen extends React.Component {
   }
 
   handleChange(mealIdx, field, event) {
-    console.log(mealIdx, field, event);
-
     let value = null;
     if (field === "time") {
       value = getTimeObjFromDate(event);
@@ -67,7 +65,7 @@ class MenuScreen extends React.Component {
     if (field === "tracking") {
       value = event;
     }
-    if (value) {
+    if (value !== null) {
       this.props.editMeal(mealIdx, field, value);
     }
   }

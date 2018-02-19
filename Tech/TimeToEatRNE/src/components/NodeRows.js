@@ -43,29 +43,30 @@ const NodeRows = props => {
         if (node.completedTime !== null) {
           status = CHECKED;
         }
-
-        rows.push(
-          <NodeRow
-            key={node.id}
-            name={node.name}
-            time={node.time}
-            completedTime={node.completedTime}
-            status={status}
-            selected={node.id === selectedNodeId}
-            id={node.id}
-            onTap={() => {
-              if (node.completedTime === null) {
-                props.onTap(node.id);
-              }
-            }}
-            onDateChange={time => props.onTap(node.id, time)}
-            onTapAndHold={() => {
-              if (node.completedTime !== null) {
-                props.onTapAndHold(node.id);
-              }
-            }}
-          />,
-        );
+        if (node.tracking) {
+          rows.push(
+            <NodeRow
+              key={node.id}
+              name={node.name}
+              time={node.time}
+              completedTime={node.completedTime}
+              status={status}
+              selected={node.id === selectedNodeId}
+              id={node.id}
+              onTap={() => {
+                if (node.completedTime === null) {
+                  props.onTap(node.id);
+                }
+              }}
+              onDateChange={time => props.onTap(node.id, time)}
+              onTapAndHold={() => {
+                if (node.completedTime !== null) {
+                  props.onTapAndHold(node.id);
+                }
+              }}
+            />,
+          );
+        }
         break;
       case OFFPLAN:
         rows.push(

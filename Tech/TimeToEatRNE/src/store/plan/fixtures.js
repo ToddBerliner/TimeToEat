@@ -1,5 +1,6 @@
 import Immutable from "seamless-immutable";
 import defaultPlan from "./defaultPlan";
+import { MEAL_EDITED } from "./reducer";
 
 export const expectedInitialState = Immutable(defaultPlan);
 
@@ -53,4 +54,11 @@ export const expectedPlanDayWednesday = {
     },
   ],
   waterTarget: 8,
+};
+
+export const mealEditedAction = {
+  type: MEAL_EDITED,
+  mealIdx: 1,
+  field: "name",
+  value: "Foofast",
 };

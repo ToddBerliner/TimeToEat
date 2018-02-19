@@ -3,10 +3,13 @@ import { dateKeyMonday, snackTimestampMonday } from "../days/fixtures";
 import {
   NODE_CHECKED,
   NODE_UNCHECKED,
+  NODE_UPDATED,
   PLAN,
   OFFPLAN,
   NODE_ADDED,
 } from "./reducer";
+import { MEAL_EDITED } from "../plan/reducer";
+import { getDateKey } from "../../utils";
 
 export const expectedInitialState = Immutable({
   nodesById: {},
@@ -62,6 +65,7 @@ export const expectedInitialStateWithMonday = Immutable({
   },
 });
 export const nodeKeyMonday0 = `${dateKeyMonday}_0`;
+export const nodeKeyToday1 = `${getDateKey()}_1`;
 export const expectedSingleNode = Immutable({
   type: PLAN,
   id: `${dateKeyMonday}_1486393200000`,
@@ -141,6 +145,12 @@ export const expectedNodeUnCheckAction = {
 export const expectedSnackTapAction = {
   type: NODE_ADDED,
   node: expectedSnackNodeMonday,
+};
+export const expectedNodeUpdatedAction = {
+  type: NODE_UPDATED,
+  nodeId: nodeKeyToday1,
+  field: "name",
+  value: "Foofast",
 };
 export const expectedStateNodeChecked = Immutable({
   nodesById: {

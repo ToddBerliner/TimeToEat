@@ -8,26 +8,30 @@ import nodes, {
   SNACK_TAPPED,
   tapNode,
   tapAndHoldNode,
-  tapAddSnack
+  tapAddSnack,
 } from "./reducer";
 import * as nodesFixtures from "./fixtures";
 import * as daysFixtures from "../days/fixtures";
 import { expectedMondayDayAndNodesAddedAction } from "../fixtures";
+import { getDateKey } from "../../utils";
 
 describe("nodes Actions", () => {
   it("should dispatch the node checked action", () => {
     expect(tapNode(nodesFixtures.nodeKeyMonday0, 456)).toEqual(
-      nodesFixtures.expectedNodeCheckAction
+      nodesFixtures.expectedNodeCheckAction,
     );
   });
   it("should dispatch the node uncheck action", () => {
     expect(tapAndHoldNode(nodesFixtures.nodeKeyMonday0, 456)).toEqual(
-      nodesFixtures.expectedNodeUnCheckAction
+      nodesFixtures.expectedNodeUnCheckAction,
     );
   });
   it("should dispatch the snack node added action", () => {
     expect(
-      tapAddSnack(daysFixtures.dateKeyMonday, daysFixtures.snackTimestampMonday)
+      tapAddSnack(
+        daysFixtures.dateKeyMonday,
+        daysFixtures.snackTimestampMonday,
+      ),
     ).toEqual(nodesFixtures.expectedSnackTapAction);
   });
 });
@@ -60,6 +64,21 @@ describe("nodes Reducer", () => {
       .expect(nodesFixtures.expectedNodeUnCheckAction)
       .toReturnState(nodesFixtures.expectedStateNodeUnChecked);
   });
+  it("should update today's node when a meal is edited", () => {
+    const initialState = { nodesById: {} };
+    const nodeId = `${getDateKey()}_1`;
+    initialState.nodesById[nodeId] = { name: "bfast" };
+    const immutableInitialState = Immutable.from(initialState);
+    const expectedState = Immutable.setIn(
+      immutableInitialState,
+      ["nodesById", nodeId, "name"],
+      "Foofast",
+    );
+    Reducer(nodes)
+      .withState(immutableInitialState)
+      .expect(nodesFixtures.expectedNodeUpdatedAction)
+      .toReturnState(expectedState);
+  });
 });
 
 describe("nodes Selectors", () => {
@@ -75,7 +94,7 @@ describe("nodes Selectors", () => {
         "1486368000000_1486402200000",
         "1486368000000_1486413000000",
         "1486368000000_1486422000000",
-        "1486368000000_1486432800000"
+        "1486368000000_1486432800000",
       ])
       .toReturn(nodesFixtures.expectedNodesMonday);
   });
@@ -83,7 +102,7 @@ describe("nodes Selectors", () => {
     Selector(getNodeById)
       .expect(
         nodesFixtures.expectedInitialStateWithMonday,
-        "1486368000000_1486393200000"
+        "1486368000000_1486393200000",
       )
       .toReturn(nodesFixtures.expectedSingleNode);
   });

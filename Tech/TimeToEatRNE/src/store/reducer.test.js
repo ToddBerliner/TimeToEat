@@ -1,5 +1,9 @@
 import { Selector, Thunk } from "redux-testkit";
-import { _ensureDaysAndNodes, _getDayById } from "./reducer";
+import {
+  _ensureDaysAndNodes,
+  _getDayById,
+  _getNodeIdByDayIdAndMealIdx,
+} from "./reducer";
 import * as rootFixtures from "./fixtures";
 import * as uiStateFixtures from "./uiState/fixtures";
 import defaultPlan from "./plan/defaultPlan";
@@ -16,7 +20,7 @@ describe("root Actions", () => {
     expect(dispatches.length).toBe(3);
     expect(dispatches[0].isPlainObject()).toBe(true);
     expect(dispatches[0].getAction()).toEqual(
-      rootFixtures.expectedMondayDayAndNodesAddedAction
+      rootFixtures.expectedMondayDayAndNodesAddedAction,
     );
   });
 });
@@ -31,5 +35,10 @@ describe("root Selectors", () => {
     Selector(_getDayById)
       .expect(rootFixtures.stateWithDay, "123")
       .toReturn(daysFixtures.sampleDay);
+  });
+  it("should return the nodeId for a dateKey and mealIdx", () => {
+    Selector(_getNodeIdByDayIdAndMealIdx)
+      .expect(rootFixtures.stateWithMonday, daysFixtures.dateKeyMonday, 0)
+      .toReturn(daysFixtures.mealKeyMonday);
   });
 });

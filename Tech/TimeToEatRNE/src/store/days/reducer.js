@@ -11,19 +11,19 @@ export const tapWater = (dayId, time) => {
   return {
     type: WATER_ADDED,
     dayId,
-    time
+    time,
   };
 };
 export const tapAndHoldWater = dayId => {
   return {
     type: WATER_REMOVED,
-    dayId
+    dayId,
   };
 };
 
 // Reducer
 const initialState = Immutable({
-  daysById: {}
+  daysById: {},
 });
 const dayAdd = (daysById, action) => {
   const key = action.dayAndNodes.day.id;
@@ -43,7 +43,7 @@ const waterAdd = (day, time) => {
     newCompletes.push(time);
     return Immutable({
       ...day,
-      water: { ...day.water, completedTimes: newCompletes }
+      water: { ...day.water, completedTimes: newCompletes },
     });
   } else {
     return day;
@@ -55,7 +55,7 @@ const waterRemove = day => {
   newCompletes.pop();
   return Immutable({
     ...day,
-    water: { ...day.water, completedTimes: newCompletes }
+    water: { ...day.water, completedTimes: newCompletes },
   });
 };
 
@@ -64,7 +64,7 @@ export default function reduce(state = initialState, action = {}) {
     case DAY_AND_NODES_ADDED:
       return Immutable({
         ...state,
-        daysById: dayAdd(state.daysById, action)
+        daysById: dayAdd(state.daysById, action),
       });
     case NODE_ADDED:
       const nodeId = action.node.id;
@@ -78,8 +78,8 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         daysById: {
           ...state.daysById,
-          [dayId]: nodeIdAdd(getDayById(state, dayId), nodeId)
-        }
+          [dayId]: nodeIdAdd(getDayById(state, dayId), nodeId),
+        },
       });
       return state;
     case WATER_ADDED:
@@ -87,8 +87,11 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         daysById: {
           ...state.daysById,
-          [action.dayId]: waterAdd(getDayById(state, action.dayId), action.time)
-        }
+          [action.dayId]: waterAdd(
+            getDayById(state, action.dayId),
+            action.time,
+          ),
+        },
       });
     case WATER_REMOVED:
       return Immutable({
@@ -97,9 +100,9 @@ export default function reduce(state = initialState, action = {}) {
           ...state.daysById,
           [action.dayId]: waterRemove(
             getDayById(state, action.dayId),
-            action.time
-          )
-        }
+            action.time,
+          ),
+        },
       });
     default:
       return state;

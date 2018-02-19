@@ -28,6 +28,7 @@
                 // for each dayId created, disptach({type: DAY_AND_NODES_ADDED, dayAndNodes})
         Selectors
             ✔ _getDayById => calls days.getDayById with appropriate state slice
+            ✔ _getNodeIdByMealIdx(dayId, mealIdx) => returns node id for a given day and mealIdx
         Reducer
     uiState
         Actions
@@ -44,11 +45,13 @@
             ✔ WATER_TRACKING_TOGGLED => {...uiState, waterTracking: toggleState}
     plan
         Actions
-            ✔ updateMeal => dispatch({type: MEAL_UPDATED, index, mealObj})
+            ✔ editMeal =>
+                // dispatch({type: MEAL_EDITED, index, mealObj})
+                // dispatch({type: NODE_UPDATED, nodeId, field, value})
         Selectors
             ✔ getPlanDayByDayId => returns a plan day by a dayId
         Reducer
-            ✔ MEAL_UPDATED => {...planState, days: newDaysWithUpdatedMeal }
+            ✔ MEAL_EDITED => {...planState, days: newDaysWithUpdatedMeal }
     days
         Actions
             ✔ tapWater => dispatch({type: WATER_ADDED, {dayId: timestamp}})
@@ -72,10 +75,11 @@
             ✔ getNodeById(nodeId) => returns the requested node or undefined if it doesn't exist
             ✔ getNodesByIds([nodeIds]) => returns array of the requeted nodes
         Reducer
-            ✔ DAY_AND_NODES_ADDED => {...nodesState, {...nodesById, [[nodeId]: newNode}...]}
-            ✔ NODE_CHECKED => {...nodesState, [nodeId]: {...node, compltedTime: timestamp}}
-            ✔ NODE_UNCHECKED => {...nodesState, [nodeId]: {...node, compltedTime: null}}
-            ✔ NODE_ADDED => {...nodesState, {...nodeById, [nodeId]: snackNode}}}
+            ✔ DAY_AND_NODES_ADDED => {...nodesState, {...nodesById, [[nodeId]: newNode...]}
+            ✔ NODE_CHECKED => {...nodesState, {...nodesById, [nodeId]: {...node, compltedTime: timestamp}}}
+            ✔ NODE_UNCHECKED => {...nodesState, {...nodesById, [nodeId]: {...node, compltedTime: null}}}
+            ✔ NODE_ADDED => {...nodesState, {...nodedById, [nodeId]: snackNode}}}
+            ✔ NODE_UPDATED => {...nodesState, {...nodesById, [nodeId]: editedNode}
 */
 
 // Utilities

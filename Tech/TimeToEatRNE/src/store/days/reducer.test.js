@@ -6,31 +6,31 @@ import days, {
   WATER_ADDED,
   WATER_REMOVED,
   tapWater,
-  tapAndHoldWater
+  tapAndHoldWater,
 } from "./reducer";
 import * as daysFixtures from "./fixtures";
 import * as nodesFixtures from "../nodes/fixtures";
 import { expectedMondayDayAndNodesAddedAction } from "../fixtures";
 
-// describe("days Actions", () => {
-//   it("should dispatch the water add action", () => {
-//     expect(tapWater(daysFixtures.dateKeyMonday, "456")).toEqual(
-//       daysFixtures.expectedWaterAddAction
-//     );
-//   });
-//   it("should dispatch the water removed action", () => {
-//     expect(tapAndHoldWater(daysFixtures.dateKeyMonday, "456")).toEqual(
-//       daysFixtures.expectedWaterRemoveAction
-//     );
-//   });
-// });
+describe("days Actions", () => {
+  it("should dispatch the water add action", () => {
+    expect(tapWater(daysFixtures.dateKeyMonday, "456")).toEqual(
+      daysFixtures.expectedWaterAddAction,
+    );
+  });
+  it("should dispatch the water removed action", () => {
+    expect(tapAndHoldWater(daysFixtures.dateKeyMonday, "456")).toEqual(
+      daysFixtures.expectedWaterRemoveAction,
+    );
+  });
+});
 
 describe("days Reducer", () => {
   // sample state with Monday added
   const expectedSampleStateWithMonday = {
     daysById: {
-      "123": Immutable({ id: "123" })
-    }
+      "123": Immutable({ id: "123" }),
+    },
   };
   expectedSampleStateWithMonday.daysById[daysFixtures.dateKeyMonday] =
     daysFixtures.expectedDayMonday;
@@ -80,25 +80,25 @@ describe("days Reducer", () => {
   });
 });
 
-// describe("days Selectors", () => {
-//   it("should return undefined if selected day doesn't exist", () => {
-//     Selector(getDayById)
-//       .expect(daysFixtures.expectedInitialState, "abc")
-//       .toReturn(undefined);
-//   });
-//   it("should return the selected day for the given dayId", () => {
-//     Selector(getDayById)
-//       .expect(daysFixtures.stateWithDay, "123")
-//       .toReturn(daysFixtures.sampleDay);
-//   });
-//   it("should return and empty array from the initial state which has no days", () => {
-//     Selector(getAllDayIds)
-//       .expect(daysFixtures.expectedInitialState)
-//       .toReturn([]);
-//   });
-//   it("should return the keys of the days piece of state which are the dayIds", () => {
-//     Selector(getAllDayIds)
-//       .expect(daysFixtures.stateWithDay)
-//       .toReturn(["123"]);
-//   });
-// });
+describe("days Selectors", () => {
+  it("should return undefined if selected day doesn't exist", () => {
+    Selector(getDayById)
+      .expect(daysFixtures.expectedInitialState, "abc")
+      .toReturn(undefined);
+  });
+  it("should return the selected day for the given dayId", () => {
+    Selector(getDayById)
+      .expect(daysFixtures.stateWithDay, "123")
+      .toReturn(daysFixtures.sampleDay);
+  });
+  it("should return and empty array from the initial state which has no days", () => {
+    Selector(getAllDayIds)
+      .expect(daysFixtures.expectedInitialState)
+      .toReturn([]);
+  });
+  it("should return the keys of the days piece of state which are the dayIds", () => {
+    Selector(getAllDayIds)
+      .expect(daysFixtures.stateWithDay)
+      .toReturn(["123"]);
+  });
+});

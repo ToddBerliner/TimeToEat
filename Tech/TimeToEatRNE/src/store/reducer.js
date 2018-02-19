@@ -10,7 +10,7 @@ import uiState, {
 } from "./uiState/reducer";
 import plan, { getPlanDayByDayId } from "./plan/reducer";
 import days, { getDayById, getLastDayId } from "./days/reducer";
-import nodes, { getNodesByIds } from "./nodes/reducer";
+import nodes, { getNodesByIds, PLAN } from "./nodes/reducer";
 import { AppNavigator } from "../navigators/AppNavigator";
 import { NavigationActions } from "react-navigation";
 import MapScreen from "../containers/MapScreen";
@@ -73,4 +73,11 @@ export const _getWaterTrackingState = state => {
 };
 export const _getNodesByIds = (state, nodeIdsArr) => {
   return getNodesByIds(state.nodes, nodeIdsArr);
+};
+export const _getNodeIdByDayIdAndMealIdx = (state, dayId, mealIdx) => {
+  const day = _getDayById(state, dayId);
+  if (typeof day === "undefined") return day;
+  const nodes = _getNodesByIds(state, day.nodeIds);
+  const planNodes = nodes.filter(node => node.type === PLAN);
+  return planNodes[mealIdx].id;
 };
