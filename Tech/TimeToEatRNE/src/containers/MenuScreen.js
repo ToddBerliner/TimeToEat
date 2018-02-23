@@ -42,10 +42,7 @@ class MenuScreen extends React.Component {
         paddingLeft: 12,
       },
       headerLeft: (
-        <DateBackButton
-          onPress={() => navigation.navigate("Map")}
-          dayId={dayId}
-        />
+        <DateBackButton onPress={() => navigation.goBack()} dayId={dayId} />
       ),
     };
   };

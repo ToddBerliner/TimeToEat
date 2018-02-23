@@ -13,11 +13,13 @@
     day and node addition)
 */
 
-// show map
-
-// handle node taps
-
-// handle water taps
+// Notifications Plan
+/*
+  Plan reducer will be responsible for scheduling Notifications and updating
+  the scheduling. The notification is scheduled, with a daily interval, and
+  an ID is returned. State will have to include the notification IDs so those
+  should be added to the plan state.
+*/
 
 // Tests
 /*
