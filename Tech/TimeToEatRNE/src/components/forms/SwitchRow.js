@@ -5,19 +5,11 @@ import { FormSettings, SectionStyles, SCStyles } from "../../styles/formStyles";
 class SwitchRow extends React.Component {
   render() {
     return (
-      <View>
-        <Text style={SectionStyles.sectionTitle}>WATER TRACKING</Text>
-        <View style={SectionStyles.sectionWrapper}>
-          <View
-            style={[
-              SCStyles.container,
-              { height: FormSettings.defaultCellHeight },
-            ]}
-          >
-            <Text style={SCStyles.titleStyle}>Track Water</Text>
-            <Switch style={SCStyles.switch} {...this.props} />
-          </View>
-        </View>
+      <View
+        style={[SCStyles.container, { height: FormSettings.defaultCellHeight }]}
+      >
+        <Text style={SCStyles.titleStyle}>{this.props.switchTitle}</Text>
+        <Switch style={SCStyles.switch} {...this.props} />
       </View>
     );
   }

@@ -7,6 +7,7 @@ import {
 import uiState, {
   getSelectedDayId,
   getWaterTrackingState,
+  getNotificationsState,
 } from "./uiState/reducer";
 import plan, { getPlanDayByDayId } from "./plan/reducer";
 import days, { getDayById, getLastDayId } from "./days/reducer";
@@ -70,6 +71,9 @@ export const _getSelectedDayId = state => {
 };
 export const _getWaterTrackingState = state => {
   return getWaterTrackingState(state.uiState);
+};
+export const _getNotificationsState = state => {
+  return getNotificationsState(state.uiState);
 };
 export const _getNodesByIds = (state, nodeIdsArr) => {
   return getNodesByIds(state.nodes, nodeIdsArr);

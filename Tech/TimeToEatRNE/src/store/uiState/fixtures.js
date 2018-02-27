@@ -5,6 +5,7 @@ import { dateKeyMonday } from "../days/fixtures";
 export const expectedInitialState = Immutable({
   selectedDayId: null,
   waterTracking: true,
+  notifications: true,
 });
 
 export const expectedSampleDaySelected = {

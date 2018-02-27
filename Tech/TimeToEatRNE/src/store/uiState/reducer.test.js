@@ -6,10 +6,13 @@ import * as daysFixtures from "../days/fixtures";
 import uiState, {
   DAY_SELECTED,
   WATER_TRACKING_TOGGLED,
+  NOTIFICATIONS_TOGGLED,
   selectDay,
   getSelectedDayId,
   toggleWaterTracking,
+  toggleNotifications,
   getWaterTrackingState,
+  getNotificationsState,
 } from "./reducer";
 import { getDateKey } from "../../utils";
 
@@ -43,7 +46,7 @@ describe("uiState Actions", () => {
       uiStateFixtures.expectedSampleDaySelected,
     );
   });
-  if (
+  it(
     ("should dispatch the water toggled action",
     () => {
       const waterTrackingState = false;
@@ -54,8 +57,18 @@ describe("uiState Actions", () => {
       expect(toggleWaterTracking(waterTrackingState)).toEqual(
         expectedToggleWaterTrackingAction,
       );
-    })
+    }),
   );
+  it("should dispatch the notification toggled action", () => {
+    const notificationState = false;
+    const expectedToggleNotificationAction = {
+      type: NOTIFICATIONS_TOGGLED,
+      notificationState: notificationState,
+    };
+    expect(toggleNotifications(notificationState)).toEqual(
+      expectedToggleNotificationAction,
+    );
+  });
 });
 
 describe("uiState Selectors", () => {
@@ -78,6 +91,11 @@ describe("uiState Selectors", () => {
       .expect(uiStateFixtures.expectedInitialState)
       .toReturn(true);
   });
+  it("should return true if notifications are on", () => {
+    Selector(getNotificationsState)
+      .expect(uiStateFixtures.expectedInitialState)
+      .toReturn(true);
+  });
 });
 
 describe("uiState Reducer", () => {
@@ -94,6 +112,7 @@ describe("uiState Reducer", () => {
     const expectedState = {
       selectedDayId: "123",
       waterTracking: true,
+      notifications: true,
     };
     Reducer(uiState)
       .expect({ type: DAY_SELECTED, dayId })
@@ -103,6 +122,7 @@ describe("uiState Reducer", () => {
     const expectedState = {
       selectedDayId: null,
       waterTracking: false,
+      notifications: true,
     };
     Reducer(uiState)
       .expect({ type: WATER_TRACKING_TOGGLED, trackingState: false })

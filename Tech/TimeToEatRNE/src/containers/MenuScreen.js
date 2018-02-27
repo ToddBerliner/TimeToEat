@@ -12,8 +12,14 @@ import {
 } from "react-native";
 import { clearSavedState } from "../store/configureStore";
 import DateBackButton from "../components/DateBackButton";
-import { _getWaterTrackingState } from "../store/reducer";
-import { toggleWaterTracking } from "../store/uiState/reducer";
+import {
+  _getWaterTrackingState,
+  _getNotificationsState,
+} from "../store/reducer";
+import {
+  toggleWaterTracking,
+  toggleNotifications,
+} from "../store/uiState/reducer";
 import { editMeal } from "../store/plan/reducer";
 import {
   getFriendlyTime,
@@ -51,6 +57,10 @@ class MenuScreen extends React.Component {
     this.props.toggleWater(waterToggleState);
   }
 
+  handleToggleNotifications(notificationsState) {
+    this.props.toggleNotifications(notificationsState);
+  }
+
   handleChange(mealIdx, field, event) {
     let value = null;
     if (field === "time") {
@@ -68,7 +78,7 @@ class MenuScreen extends React.Component {
   }
 
   render() {
-    const { waterTracking, plan } = this.props;
+    const { waterTracking, plan, notifications } = this.props;
     const { nodes } = plan.days.Monday;
 
     const meals = [];
@@ -135,11 +145,20 @@ class MenuScreen extends React.Component {
             </View>
           </View>
           <View style={SectionStyles.container}>
-            <SwitchRow
-              title="Track Water"
-              onValueChange={this.handleToggleWater.bind(this)}
-              value={waterTracking}
-            />
+            <Text style={SectionStyles.sectionTitle}>TIME TO EAT SETTINGS</Text>
+            <View style={SectionStyles.sectionWrapper}>
+              <SwitchRow
+                switchTitle="Track Water"
+                onValueChange={this.handleToggleWater.bind(this)}
+                value={waterTracking}
+              />
+              <Line marginLeft={FormSettings.textMarginLeft} />
+              <SwitchRow
+                switchTitle="Notifications"
+                onValueChange={this.handleToggleNotifications.bind(this)}
+                value={notifications}
+              />
+            </View>
             <View style={{ height: 15 }} />
           </View>
         </View>
@@ -150,14 +169,18 @@ class MenuScreen extends React.Component {
 
 const mapStateToProps = state => {
   const waterTracking = _getWaterTrackingState(state);
+  const notifications = _getNotificationsState(state);
   const { plan } = state;
-  return { waterTracking, plan };
+  return { waterTracking, notifications, plan };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     toggleWater: waterToggleState => {
       dispatch(toggleWaterTracking(waterToggleState));
+    },
+    toggleNotifications: notificationsState => {
+      dispatch(toggleNotifications(notificationsState));
     },
     editMeal: (mealIdx, field, value) => {
       dispatch(editMeal(mealIdx, field, value));

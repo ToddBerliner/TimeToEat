@@ -3,6 +3,7 @@ import {
   _ensureDaysAndNodes,
   _getDayById,
   _getNodeIdByDayIdAndMealIdx,
+  _getNotificationsState,
 } from "./reducer";
 import * as rootFixtures from "./fixtures";
 import * as uiStateFixtures from "./uiState/fixtures";
@@ -40,5 +41,10 @@ describe("root Selectors", () => {
     Selector(_getNodeIdByDayIdAndMealIdx)
       .expect(rootFixtures.stateWithMonday, daysFixtures.dateKeyMonday, 0)
       .toReturn(daysFixtures.mealKeyMonday);
+  });
+  it("should return the notificaiton state", () => {
+    Selector(_getNotificationsState)
+      .expect(rootFixtures.expectedInitialState)
+      .toReturn(true);
   });
 });
