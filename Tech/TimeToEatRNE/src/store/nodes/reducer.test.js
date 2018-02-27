@@ -64,7 +64,7 @@ describe("nodes Reducer", () => {
       .expect(nodesFixtures.expectedNodeUnCheckAction)
       .toReturnState(nodesFixtures.expectedStateNodeUnChecked);
   });
-  it("should update today's node when a meal is edited", () => {
+  it("should update today's node when a meal name is edited", () => {
     const initialState = { nodesById: {} };
     const nodeId = `${getDateKey()}_1`;
     initialState.nodesById[nodeId] = { name: "bfast" };
@@ -77,6 +77,27 @@ describe("nodes Reducer", () => {
     Reducer(nodes)
       .withState(immutableInitialState)
       .expect(nodesFixtures.expectedNodeUpdatedAction)
+      .toReturnState(expectedState);
+  });
+  it("should update today's node time when a meal time is edited", () => {
+    const initialState = { nodesById: {} };
+    const nodeId = `${getDateKey()}_1`;
+    let nodeTime = new Date();
+    nodeTime.setHours(0);
+    nodeTime.setMinutes(30);
+    nodeTime.setSeconds(0);
+    nodeTime.setMilliseconds(0);
+    nodeTime = nodeTime.getTime();
+    initialState.nodesById[nodeId] = { time: new Date().getTime() };
+    const immutableInitialState = Immutable.from(initialState);
+    const expectedState = Immutable.setIn(
+      immutableInitialState,
+      ["nodesById", nodeId, "time"],
+      nodeTime,
+    );
+    Reducer(nodes)
+      .withState(immutableInitialState)
+      .expect(nodesFixtures.expectedNodeTimeUpdatedAction)
       .toReturnState(expectedState);
   });
 });

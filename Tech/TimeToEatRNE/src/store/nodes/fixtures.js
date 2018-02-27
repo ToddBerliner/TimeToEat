@@ -152,6 +152,12 @@ export const expectedNodeUpdatedAction = {
   field: "name",
   value: "Foofast",
 };
+export const expectedNodeTimeUpdatedAction = {
+  type: NODE_UPDATED,
+  nodeId: nodeKeyToday1,
+  field: "time",
+  value: { hours: 0, minutes: 30 },
+};
 export const expectedStateNodeChecked = Immutable({
   nodesById: {
     "1486368000000_0": {

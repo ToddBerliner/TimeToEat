@@ -1,7 +1,11 @@
 import Immutable from "seamless-immutable";
 import { DAY_AND_NODES_ADDED } from "../reducer";
 import { _getNodeIdByDayIdAndMealIdx } from "../reducer";
-import { createSnackNode } from "../../utils";
+import {
+  createSnackNode,
+  getTimestampFromTimeObj,
+  getDateKey,
+} from "../../utils";
 
 // Node Statuses
 export const CHECKED = "checked";
@@ -89,6 +93,9 @@ export default function reduce(state = initialState, action = {}) {
       const newNodeKey = newNode.id;
       return Immutable.setIn(state, ["nodesById", newNodeKey], newNode);
     case NODE_UPDATED:
+      if (action.field === "time") {
+        action.value = getTimestampFromTimeObj(getDateKey(), action.value);
+      }
       return Immutable.setIn(
         state,
         ["nodesById", action.nodeId, action.field],
