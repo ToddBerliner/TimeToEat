@@ -91,10 +91,10 @@ describe("uiState Selectors", () => {
       .expect(uiStateFixtures.expectedInitialState)
       .toReturn(true);
   });
-  it("should return true if notifications are on", () => {
+  it("should return flase if notifications are off", () => {
     Selector(getNotificationsState)
       .expect(uiStateFixtures.expectedInitialState)
-      .toReturn(true);
+      .toReturn(false);
   });
 });
 
@@ -112,7 +112,7 @@ describe("uiState Reducer", () => {
     const expectedState = {
       selectedDayId: "123",
       waterTracking: true,
-      notifications: true,
+      notifications: false,
     };
     Reducer(uiState)
       .expect({ type: DAY_SELECTED, dayId })
@@ -122,7 +122,7 @@ describe("uiState Reducer", () => {
     const expectedState = {
       selectedDayId: null,
       waterTracking: false,
-      notifications: true,
+      notifications: false,
     };
     Reducer(uiState)
       .expect({ type: WATER_TRACKING_TOGGLED, trackingState: false })

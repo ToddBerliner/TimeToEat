@@ -20,7 +20,7 @@ import {
   toggleWaterTracking,
   toggleNotifications,
 } from "../store/uiState/reducer";
-import { editMeal } from "../store/plan/reducer";
+import { editMeal, NAME, TIME, TRACKING } from "../store/plan/reducer";
 import {
   getFriendlyTime,
   getTimestampFromTimeObj,
@@ -63,13 +63,13 @@ class MenuScreen extends React.Component {
 
   handleChange(mealIdx, field, event) {
     let value = null;
-    if (field === "time") {
+    if (field === TIME) {
       value = getTimeObjFromDate(event);
     }
-    if (field === "name") {
+    if (field === NAME) {
       value = event.nativeEvent.text;
     }
-    if (field === "tracking") {
+    if (field === TRACKING) {
       value = event;
     }
     if (value !== null) {
@@ -95,9 +95,9 @@ class MenuScreen extends React.Component {
           tracking={tracking}
           date={date}
           cuteDate={cuteDate}
-          onChange={this.handleChange.bind(this, idx, "name")}
-          onDateChange={this.handleChange.bind(this, idx, "time")}
-          onTrackingchange={this.handleChange.bind(this, idx, "tracking")}
+          onChange={this.handleChange.bind(this, idx, NAME)}
+          onDateChange={this.handleChange.bind(this, idx, TIME)}
+          onTrackingchange={this.handleChange.bind(this, idx, TRACKING)}
         />
       );
       if (idx < nodesArr.length - 1) {

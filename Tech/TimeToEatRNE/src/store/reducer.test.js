@@ -4,12 +4,14 @@ import {
   _getDayById,
   _getNodeIdByDayIdAndMealIdx,
   _getNotificationsState,
+  _getMealByMealIdx,
 } from "./reducer";
 import * as rootFixtures from "./fixtures";
 import * as uiStateFixtures from "./uiState/fixtures";
 import defaultPlan from "./plan/defaultPlan";
 import * as daysFixtures from "./days/fixtures";
 import * as nodesFixtures from "./nodes/fixtures";
+import * as planFixtures from "./plan/fixtures";
 
 describe("root Actions", () => {
   it("should dispatch the DAY_AND_NODES_ADDED for each dayId", () => {
@@ -45,6 +47,11 @@ describe("root Selectors", () => {
   it("should return the notificaiton state", () => {
     Selector(_getNotificationsState)
       .expect(rootFixtures.expectedInitialState)
-      .toReturn(true);
+      .toReturn(false);
+  });
+  it("shoudl return the meal for a given mealIdx", () => {
+    Selector(_getMealByMealIdx)
+      .expect(rootFixtures.expectedInitialState, 0)
+      .toReturn(planFixtures.expectedMeal0);
   });
 });

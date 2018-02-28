@@ -9,7 +9,7 @@ import uiState, {
   getWaterTrackingState,
   getNotificationsState,
 } from "./uiState/reducer";
-import plan, { getPlanDayByDayId } from "./plan/reducer";
+import plan, { getPlanDayByDayId, getMealByMealIdx } from "./plan/reducer";
 import days, { getDayById, getLastDayId } from "./days/reducer";
 import nodes, { getNodesByIds, PLAN } from "./nodes/reducer";
 import { AppNavigator } from "../navigators/AppNavigator";
@@ -84,4 +84,7 @@ export const _getNodeIdByDayIdAndMealIdx = (state, dayId, mealIdx) => {
   const nodes = _getNodesByIds(state, day.nodeIds);
   const planNodes = nodes.filter(node => node.type === PLAN);
   return planNodes[mealIdx].id;
+};
+export const _getMealByMealIdx = (state, mealIdx) => {
+  return getMealByMealIdx(state.plan, mealIdx);
 };

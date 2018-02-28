@@ -11,7 +11,7 @@ export const buildDay = dayOfWeek => ({
         minutes: 0,
       },
       items: ["Eggs", "Fruit", "Avocado", "Greek Yogurt"],
-      tracking: true,
+      tracking: false,
     },
     {
       name: "Midmorning Snack",
@@ -20,7 +20,7 @@ export const buildDay = dayOfWeek => ({
         minutes: 30,
       },
       items: ["Banana", "Cottage Cheese & Fruit", "Protien Snack Bar"],
-      tracking: true,
+      tracking: false,
     },
     {
       name: "Lunch",
@@ -29,7 +29,7 @@ export const buildDay = dayOfWeek => ({
         minutes: 30,
       },
       items: ["Canned Tuna", "Green Salad", "Whole Wheat Bread", "Fruit"],
-      tracking: true,
+      tracking: false,
     },
     {
       name: "Afternoon Snack",
@@ -38,7 +38,7 @@ export const buildDay = dayOfWeek => ({
         minutes: 0,
       },
       items: ["Fruit & Nuts Mix", "Cheese Stick", "Low Fat Muffin"],
-      tracking: true,
+      tracking: false,
     },
     {
       name: "Dinner",
@@ -47,7 +47,7 @@ export const buildDay = dayOfWeek => ({
         minutes: 0,
       },
       items: ["Lean Protien", "Lots of Veggies", "Quinoa"],
-      tracking: true,
+      tracking: false,
     },
   ],
   waterTarget: 8,
@@ -58,6 +58,7 @@ const buildDefaultPlanState = () => {
   // define initial state
   const defaultPlanState = {
     days: {},
+    notifications: [null, null, null, null, null],
   };
   DOW.forEach(day => {
     defaultPlanState.days[day] = buildDay(day);

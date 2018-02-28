@@ -19,6 +19,8 @@
   the scheduling. The notification is scheduled, with a daily interval, and
   an ID is returned. State will have to include the notification IDs so those
   should be added to the plan state.
+
+  https://snack.expo.io/SyChaK8Hb
 */
 
 // Tests
@@ -31,29 +33,40 @@
         Selectors
             ✔ _getDayById => calls days.getDayById with appropriate state slice
             ✔ _getNodeIdByMealIdx(dayId, mealIdx) => returns node id for a given day and mealIdx
+            ❍ _getMealByMealIdx(mealIdx) => returns a meal from the plan by mealIdx
         Reducer
     uiState
         Actions
             ✔ selectDay =>
                 // tap on day in calendar, navigate with arrows on map screen
                 // if necessary, create day and dispatch({type: DAY_AND_NODES_ADDED, dayAndNodes)
-                // dispatch({type: DAY_SELECTED, dayId})
+                => dispatch({type: DAY_SELECTED, dayId})
             ✔ toggleWaterTracking => dispatch({type: WATER_TRACKING_TOGGLED, BOOLEAN(tracking status)})
+            ✔ toggleNotifications => dispatch({type: NOTIFICATIONS_TOGGLED, BOOLEAN(notification status)})
         Selectors
             ✔ getSelectedDayId => return the selected day id || today
             ✔ getWaterTrackingState => return the water tracking state
+            ✔ getNotificationsState => return the notification state
         Reducer
             ✔ DAY_SELECTED => returns {...uiState, selectedDay: dayId}
             ✔ WATER_TRACKING_TOGGLED => {...uiState, waterTracking: toggleState}
+            ✔ NOTIFICATIONS_TOGGLED => {...uiState, notificationTracking: toggleState}
     plan
         Actions
-            ✔ editMeal =>
-                // dispatch({type: MEAL_EDITED, index, mealObj})
-                // dispatch({type: NODE_UPDATED, nodeId, field, value})
+            ❍ editMeal =>
+                // check if change is time or tracking. If time or turning off
+                // tracking, cancel existing notification and schedule new one;
+                // if turning tracking off, just cancel existing; if turning
+                // tracking on, scheduled new on
+                => dispatch({type: NOTIFICATION_UPDATED, mealIdx, notificaitonId})
+                => dispatch({type: MEAL_EDITED, mealIdx, mealObj})
+                => dispatch({type: NODE_UPDATED, nodeId, field, value}) <handled by nodes reducer>
         Selectors
             ✔ getPlanDayByDayId => returns a plan day by a dayId
+            ❍ getMealByMealIdx => returns a meal from the plan by mealIdx
         Reducer
-            ✔ MEAL_EDITED => {...planState, days: newDaysWithUpdatedMeal }
+            ✔ MEAL_EDITED => {...planState, days: newDaysWithUpdatedMeal}
+            ❍ NOTIFICATION_UPDATED => {...planState, {...notifications, [mealIdx]: notificationId || null}}
     days
         Actions
             ✔ tapWater => dispatch({type: WATER_ADDED, {dayId: timestamp}})
@@ -72,7 +85,7 @@
             ✔ tapAndHoldNode(nodeId) => dispatch({type: NODE_UNCHECKED, nodeId, timestamp})
             ✔ tapAddSnack(dayId, timestamp) =>
                 // create new snack node createSnackNode(dayId, timestamp)
-                // dispatch({type: NODE_ADDED, snackNode})
+                => dispatch({type: NODE_ADDED, snackNode})
         Selectors
             ✔ getNodeById(nodeId) => returns the requested node or undefined if it doesn't exist
             ✔ getNodesByIds([nodeIds]) => returns array of the requeted nodes
@@ -86,71 +99,76 @@
 
 // Utilities
 /*
-    ✔ getDow => return string for javascript day
-    ✔ getMonth => return string for javascript month
-    ✔ getTimestampFromTimeObj => returns a timestamp from a plan day time obj
-    ✔ createDayAndNodes => returns a day object and nodes for a dayId from a given planDay
-    plan
-    days
-        ✔ getDateKey => return a date's 00:00:00 timestamp
-        ✔ createDayFromPlanDay => returns a day object from a plan day
-        ✔ getDayIdsBetweenDayIds => returns an array of dayIds between the dates
-    nodes
-        ✔ createNodesFromPlanDay => returns an array of nodes from a plan day
-        createSnackNode => returns a node object for a given dayId and timestamp
-        ? getNodeKey => return the dateKey_nodePositionIndex
-        ? getCurrentNode => return the node that should be highlighted
-        ? getNodeEndBoundaryTime => return the time the node becomes 'missed'
-        ✔ getFriendlyNodeTime => return the cute time
-        (sortNodes - not needed since day.nodes is an array with the id in the correct order)
-        (getNodeTime - not needed since node time will be timestamp)
+  ✔ getDow => return string for javascript day
+  ✔ getMonth => return string for javascript month
+  ✔ getTimestampFromTimeObj => returns a timestamp from a plan day time obj
+  ✔ createDayAndNodes => returns a day object and nodes for a dayId from a given planDay
+  plan
+    ? cancelNotificationAsync => cancels a notification, returns ?
+    ? scheduleNotificationAsycn => schedules notification, returns ID
+  days
+    ✔ getDateKey => return a date's 00:00:00 timestamp
+    ✔ createDayFromPlanDay => returns a day object from a plan day
+    ✔ getDayIdsBetweenDayIds => returns an array of dayIds between the dates
+  nodes
+    ✔ createNodesFromPlanDay => returns an array of nodes from a plan day
+    ✔ createSnackNode => returns a node object for a given dayId and timestamp
+    ? getNodeKey => return the dateKey_nodePositionIndex
+    ? getCurrentNode => return the node that should be highlighted
+    ? getNodeEndBoundaryTime => return the time the node becomes 'missed'
+    ✔ getFriendlyNodeTime => return the cute time
+    (sortNodes - not needed since day.nodes is an array with the id in the correct order)
+    (getNodeTime - not needed since node time will be timestamp)
 */
 
 // State Shape
 /*
-    uiState: {
-        selectedDay: dayId
+  uiState: {
+    selectedDay: dayId
+  }
+  plan: {
+    notifications: [
+      [mealIdx]: notificationId || null (if tracking is false)
+    ],
+    days: [
+      [dayKey = day name (eg monday)]: {
+        nodes: [
+          {
+            name: 'Bfast',
+            time: {
+              hours: 7,
+              minutes: null
+            },
+            items: [items...],
+            tracking: true || false
+          }
+        ],
+        water_target: 8
+      }
+    ]
+  }
+  days: {
+    daysById: {
+      [dayKey = timestamp at 00:00:00]: {
+        water: {
+          completedTimes: [timestamps...],
+          target: 8
+        },
+        nodesIds: [nodeIds...],
+        offPlanNodeIds: [nodeIds...]
+      }
     }
-    plan: {
-        days: [
-            [dayKey = day name (eg monday)]: {
-                nodes: [
-                    {
-                        name: 'Bfast',
-                        time: {
-                            hours: 7,
-                            minutes: null
-                        },
-                        items: [items...],
-                        tracking: true || false
-                    }
-                ],
-                water_target: 8
-            }
-        ]
+  }
+  nodes: {
+    nodesById: {
+      [nodeKey = dayKey_timestamp]: {
+        type: 'plan' || 'offplan'
+        name: 'bfast',
+        time: timestamp,
+        items: [items...],
+        completedTime: actual timestamp,
+        tracking: true || false
+      }
     }
-    days: {
-        daysById: {
-            [dayKey = timestamp at 00:00:00]: {
-                water: {
-                    completedTimes: [timestamps...],
-                    target: 8
-                },
-                nodesIds: [nodeIds...],
-                offPlanNodeIds: [nodeIds...]
-            }
-        }
-    }
-    nodes: {
-        nodesById: {
-            [nodeKey = dayKey_timestamp]: {
-                type: 'plan' || 'offplan'
-                name: 'bfast',
-                time: timestamp,
-                items: [items...],
-                completedTime: actual timestamp,
-                tracking: true || false
-            }
-        }
-    }
+  }
 */

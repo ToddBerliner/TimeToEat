@@ -24,7 +24,7 @@ export const expectedInitialStateWithMonday = Immutable({
       time: 1486393200000, // 7am
       items: ["Eggs", "Fruit", "Avocado", "Greek Yogurt"],
       completedTime: null,
-      tracking: true,
+      tracking: false,
     },
     "1486368000000_1486402200000": {
       type: PLAN,
@@ -33,7 +33,7 @@ export const expectedInitialStateWithMonday = Immutable({
       time: 1486402200000, // 9:30am
       items: ["Banana", "Cottage Cheese & Fruit", "Protien Snack Bar"],
       completedTime: null,
-      tracking: true,
+      tracking: false,
     },
     "1486368000000_1486413000000": {
       type: PLAN,
@@ -42,7 +42,7 @@ export const expectedInitialStateWithMonday = Immutable({
       time: 1486413000000, //12:30pm
       items: ["Canned Tuna", "Green Salad", "Whole Wheat Bread", "Fruit"],
       completedTime: null,
-      tracking: true,
+      tracking: false,
     },
     "1486368000000_1486422000000": {
       type: PLAN,
@@ -51,7 +51,7 @@ export const expectedInitialStateWithMonday = Immutable({
       time: 1486422000000, // 3pm
       items: ["Fruit & Nuts Mix", "Cheese Stick", "Low Fat Muffin"],
       completedTime: null,
-      tracking: true,
+      tracking: false,
     },
     "1486368000000_1486432800000": {
       type: PLAN,
@@ -60,7 +60,7 @@ export const expectedInitialStateWithMonday = Immutable({
       time: 1486432800000, // 6pm
       items: ["Lean Protien", "Lots of Veggies", "Quinoa"],
       completedTime: null,
-      tracking: true,
+      tracking: false,
     },
   },
 });
@@ -73,7 +73,7 @@ export const expectedSingleNode = Immutable({
   time: 1486393200000,
   items: ["Eggs", "Fruit", "Avocado", "Greek Yogurt"],
   completedTime: null,
-  tracking: true,
+  tracking: false,
 });
 export const expectedSnackNodeMonday = {
   type: OFFPLAN,
@@ -89,7 +89,7 @@ export const expectedNodesMonday = Immutable([
     time: 1486393200000,
     items: ["Eggs", "Fruit", "Avocado", "Greek Yogurt"],
     completedTime: null,
-    tracking: true,
+    tracking: false,
   },
   {
     type: PLAN,
@@ -98,7 +98,7 @@ export const expectedNodesMonday = Immutable([
     time: 1486402200000,
     items: ["Banana", "Cottage Cheese & Fruit", "Protien Snack Bar"],
     completedTime: null,
-    tracking: true,
+    tracking: false,
   },
   {
     type: PLAN,
@@ -107,7 +107,7 @@ export const expectedNodesMonday = Immutable([
     time: 1486413000000,
     items: ["Canned Tuna", "Green Salad", "Whole Wheat Bread", "Fruit"],
     completedTime: null,
-    tracking: true,
+    tracking: false,
   },
   {
     type: PLAN,
@@ -116,7 +116,7 @@ export const expectedNodesMonday = Immutable([
     time: 1486422000000,
     items: ["Fruit & Nuts Mix", "Cheese Stick", "Low Fat Muffin"],
     completedTime: null,
-    tracking: true,
+    tracking: false,
   },
   {
     type: PLAN,
@@ -125,7 +125,7 @@ export const expectedNodesMonday = Immutable([
     time: 1486432800000,
     items: ["Lean Protien", "Lots of Veggies", "Quinoa"],
     completedTime: null,
-    tracking: true,
+    tracking: false,
   },
 ]);
 export const expectedStateWithMondayWithSnack = expectedInitialStateWithMonday.setIn(
@@ -158,6 +158,12 @@ export const expectedNodeTimeUpdatedAction = {
   field: "time",
   value: { hours: 0, minutes: 30 },
 };
+export const expectedNodeTrackingUpdatedAction = {
+  type: NODE_UPDATED,
+  nodeId: nodeKeyToday1,
+  field: "tracking",
+  value: true,
+};
 export const expectedStateNodeChecked = Immutable({
   nodesById: {
     "1486368000000_0": {
@@ -167,7 +173,7 @@ export const expectedStateNodeChecked = Immutable({
       time: 1486393200000,
       items: ["Eggs", "Fruit", "Avocado", "Greek Yogurt"],
       completedTime: 456,
-      tracking: true,
+      tracking: false,
     },
   },
 });
@@ -180,7 +186,7 @@ export const expectedStateNodeUnChecked = Immutable({
       time: 1486393200000,
       items: ["Eggs", "Fruit", "Avocado", "Greek Yogurt"],
       completedTime: null,
-      tracking: true,
+      tracking: false,
     },
   },
 });

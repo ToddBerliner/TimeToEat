@@ -35,7 +35,7 @@ export const toggleNotifications = notificationState => {
 const initialState = Immutable({
   selectedDayId: null,
   waterTracking: true,
-  notifications: true,
+  notifications: false,
 });
 
 export default function reduce(state = initialState, action = {}) {

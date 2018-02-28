@@ -100,6 +100,21 @@ describe("nodes Reducer", () => {
       .expect(nodesFixtures.expectedNodeTimeUpdatedAction)
       .toReturnState(expectedState);
   });
+  it("should update today's node tracking when a meal's tracking is edited", () => {
+    const initialState = { nodesById: {} };
+    const nodeId = `${getDateKey()}_1`;
+    initialState.nodesById[nodeId] = { tracking: false };
+    const immutableInitialState = Immutable.from(initialState);
+    const expectedState = Immutable.setIn(
+      immutableInitialState,
+      ["nodesById", nodeId, "tracking"],
+      true,
+    );
+    Reducer(nodes)
+      .withState(immutableInitialState)
+      .expect(nodesFixtures.expectedNodeTrackingUpdatedAction)
+      .toReturnState(expectedState);
+  });
 });
 
 describe("nodes Selectors", () => {
