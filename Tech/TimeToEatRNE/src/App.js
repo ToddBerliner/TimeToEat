@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import configureStore, {
   getSavedState,
-  clearSavedState
+  clearSavedState,
 } from "./store/configureStore";
 import MapScreen from "./containers/MapScreen";
 import { Text, Image, View, ActivityIndicator } from "react-native";
@@ -14,7 +14,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       isStoreLoading: false,
-      store: null
+      store: null,
     };
   }
 
@@ -24,7 +24,7 @@ export default class App extends React.Component {
         const store = configureStore(values);
         this.setState({
           isStoreLoading: false,
-          store
+          store,
         });
       })
       .catch(err => {
@@ -33,7 +33,7 @@ export default class App extends React.Component {
         const store = configureStore();
         this.setState({
           isStoreLoading: false,
-          store
+          store,
         });
       });
     // set the loading state

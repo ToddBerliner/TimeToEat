@@ -4,7 +4,9 @@ import plan, {
   editMeal,
   getPlanDayByDayId,
   getMealByMealIdx,
+  getNotificationIdByMealIdx,
   MEAL_EDITED,
+  NOTIFICATION_UPDATED,
 } from "./reducer";
 import { dateKeyWednesday } from "../days/fixtures";
 import {
@@ -14,11 +16,15 @@ import {
   mealEditedNameAction,
   mealEditedTimeAction,
   mealEditedTrackingAction,
+  mealEditedNotificationAction,
+  mealEditedNotificationOffAction,
+  expectedStateWithNotificationIds,
 } from "./fixtures";
 import {
   expectedNodeUpdatedAction,
   expectedNodeTimeUpdatedAction,
   expectedNodeTrackingUpdatedAction,
+  expectedNodeTrackingOffUpdatedAction,
 } from "../nodes/fixtures";
 import { stateWithMonday, stateWithToday } from "../fixtures";
 
@@ -32,24 +38,26 @@ describe("plan Actions", () => {
     expect(dispatches[1].getAction()).toEqual(expectedNodeUpdatedAction);
   });
   it("should return thunk with 3 actions for time change", () => {
+    // must set mealIdx tracking to true
+    stateWithToday.plan.days["Monday"].nodes[1].tracking = true;
     const dispatches = Thunk(editMeal)
       .withState(stateWithToday)
       .execute(1, "time", { hours: 0, minutes: 30 });
     expect(dispatches.length).toBe(3);
-    expect(dispatches[0].getAction()).toEqual(mealEditedTimeAction);
-    expect(dispatches[1].getAction()).toEqual(expectedNodeTimeUpdatedAction);
-    expect(dispatches[2].getAction()).toEqual(mealEditedNotificationAction);
+    expect(dispatches[0].getAction()).toEqual(mealEditedNotificationAction);
+    expect(dispatches[1].getAction()).toEqual(mealEditedTimeAction);
+    expect(dispatches[2].getAction()).toEqual(expectedNodeTimeUpdatedAction);
   });
   it("should return thunk with 3 actions for tracking change to false", () => {
     const dispatches = Thunk(editMeal)
       .withState(stateWithToday)
-      .execute(1, "tracking", true);
+      .execute(1, "tracking", false);
     expect(dispatches.length).toBe(3);
-    expect(dispatches[0].getAction()).toEqual(mealEditedTrackingAction);
-    expect(dispatches[1].getAction()).toEqual(
-      expectedNodeTrackingUpdatedAction,
+    expect(dispatches[0].getAction()).toEqual(mealEditedNotificationOffAction);
+    expect(dispatches[1].getAction()).toEqual(mealEditedTrackingAction);
+    expect(dispatches[2].getAction()).toEqual(
+      expectedNodeTrackingOffUpdatedAction,
     );
-    expect(dispatches[2].getAction()).toEqual(mealEditedNotificationOffAction);
   });
 });
 
@@ -103,6 +111,18 @@ describe("plan Reducer", () => {
       })
       .toReturnState(expectedState);
   });
+  it("should add set the notification id for a given mealIdx", () => {
+    Reducer(plan)
+      .withState(expectedInitialState)
+      .expect(mealEditedNotificationAction)
+      .toReturnState(expectedStateWithNotificationIds);
+  });
+  it("should remove the notification id for a given mealIdx", () => {
+    Reducer(plan)
+      .withState(expectedStateWithNotificationIds)
+      .expect(mealEditedNotificationOffAction)
+      .toReturnState(expectedInitialState);
+  });
 });
 
 describe("plan Selectors", () => {
@@ -115,5 +135,16 @@ describe("plan Selectors", () => {
     Selector(getMealByMealIdx)
       .expect(expectedInitialState, 0)
       .toReturn(expectedMeal0);
+  });
+  it("should return a notification id for a mealIdx", () => {
+    // add a getNotificationId
+    const expectedInitialStateWithNotifications = Immutable.set(
+      expectedInitialState,
+      "notifications",
+      [null, "123"],
+    );
+    Selector(getNotificationIdByMealIdx)
+      .expect(expectedInitialStateWithNotifications, 1)
+      .toReturn("123");
   });
 });

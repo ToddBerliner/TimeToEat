@@ -1,3 +1,5 @@
+import { Notifications } from "expo";
+
 export const PREV = "prev";
 export const NEXT = "next";
 
@@ -72,7 +74,7 @@ export function getYesterdayDateKey() {
   return getDateKey(yesterday);
 }
 
-function addDays(date = new Date(), days = 1) {
+export function addDays(date = new Date(), days = 1) {
   const result = new Date(date);
   result.setDate(result.getDate() + days);
   return result;
@@ -116,6 +118,20 @@ export function getTimeObjFromDate(date) {
   }
 }
 
+export function getNotificationTimeFromTimeObj(timeObj) {
+  try {
+    const timestamp = getTimestampFromTimeObj(getDateKey(), timeObj);
+    if (timestamp < new Date().getTime()) {
+      const tomorrow = addDays(new Date(timestamp));
+      return tomorrow.getTime();
+    } else {
+      return timestamp;
+    }
+  } catch (err) {
+    return undefined;
+  }
+}
+
 export function getFriendlyDate(timestamp) {
   if (typeof timestamp === "string") {
     timestamp = parseInt(timestamp, 10);
@@ -140,7 +156,7 @@ export function getFriendlyTime(timestamp) {
     return "Noon";
   }
   let ampm = "am";
-  if (hours > 12) {
+  if (hours >= 12) {
     ampm = "pm";
     hours = hours - 12;
   }
@@ -196,4 +212,16 @@ export function createSnackNode(dateKey, timestamp) {
     time: timestamp,
     completedTime: timestamp,
   };
+}
+
+export function sendImmediateNotification() {
+  const localNotification = {
+    title: "Notify!",
+    body: "Oh hell yea...",
+    data: { title: "Notify!", body: "Oh hell yea...", type: "immediate" },
+  };
+  console.log("Scheduling immediate notification:", { localNotification });
+  Notifications.presentLocalNotificationAsync(localNotification)
+    .then(id => console.log(`Immediate notification scheduled ${id}`))
+    .catch(err => console.log(err));
 }

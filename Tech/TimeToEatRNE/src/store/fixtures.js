@@ -5,6 +5,7 @@ import * as uiStateFixtures from "./uiState/fixtures";
 import defaultPlan from "./plan/defaultPlan";
 import * as daysFixtures from "./days/fixtures";
 import * as nodesFixtures from "./nodes/fixtures";
+import * as planFixtures from "./plan/fixtures";
 import { PLAN } from "./nodes/reducer";
 
 import { getDateKey } from "../utils";
@@ -33,10 +34,15 @@ export const stateWithMonday = {
   nodes: nodesFixtures.expectedInitialStateWithMonday,
 };
 
+export const stateWithNotifications = {
+  plan: planFixtures.expectedStateWithNotificationIds,
+};
+
 const today = getDateKey();
 const todayBreakfast = `${today}_0`;
 const todayLunch = `${today}_1`;
 const todayState = {
+  plan: defaultPlan,
   days: { daysById: {} },
   nodes: { nodesById: {} },
 };
@@ -48,10 +54,19 @@ todayState.nodes.nodesById[todayBreakfast] = {
   id: todayBreakfast,
   type: PLAN,
   name: "bfast",
+  time: 1486393200000,
+  items: ["Eggs", "Fruit", "Avocado", "Greek Yogurt"],
+  completedTime: null,
+  tracking: false,
 };
 todayState.nodes.nodesById[todayLunch] = {
   id: todayLunch,
   type: PLAN,
   name: "lunch",
+  time: 1486413000000,
+  items: ["Canned Tuna", "Green Salad", "Whole Wheat Bread", "Fruit"],
+  completedTime: null,
+  tracking: false,
 };
+todayState.plan.notifications = [null, "123"];
 export const stateWithToday = todayState;

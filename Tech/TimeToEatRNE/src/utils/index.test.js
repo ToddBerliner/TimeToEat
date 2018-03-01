@@ -12,6 +12,8 @@ import {
   createDayAndNodes,
   createSnackNode,
   getTimeObjFromDate,
+  getNotificationTimeFromTimeObj,
+  addDays,
 } from "./";
 import * as daysFixtures from "../store/days/fixtures";
 import * as nodesFixtures from "../store/nodes/fixtures";
@@ -60,6 +62,28 @@ describe("Generic Utilities", () => {
       day: daysFixtures.expectedDayMonday,
       nodes: nodesFixtures.expectedNodesMonday,
     });
+  });
+  test("it returns the correct times for scheduling a notification", () => {
+    const past = new Date(new Date().getTime() - 1000 * 60 * 55);
+    past.setMinutes(0);
+    past.setSeconds(0);
+    past.setMilliseconds(0);
+    const timeObjPast = getTimeObjFromDate(past);
+    const expectedTimePast = addDays(past).getTime();
+
+    const future = new Date(new Date().getTime() + 1000 * 60 * 55);
+    future.setMinutes(0);
+    future.setSeconds(0);
+    future.setMilliseconds(0);
+    const timeObjFuture = getTimeObjFromDate(future);
+    const expectedTimeFuture = future.getTime();
+
+    expect(getNotificationTimeFromTimeObj(timeObjPast)).toEqual(
+      expectedTimePast,
+    );
+    expect(getNotificationTimeFromTimeObj(timeObjFuture)).toEqual(
+      expectedTimeFuture,
+    );
   });
 });
 

@@ -25,11 +25,16 @@ import {
   getDateKey,
   getAdjacentDateKey,
   getFriendlyDate,
+  sendImmediateNotification,
   PREV,
   NEXT,
 } from "../utils";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StackNavigator } from "react-navigation";
+import { Notifications, Permissions, Constants } from "expo";
+
+import Notification from "react-native-in-app-notification";
+const notificationIcon = require("../../assets/images/notification_icon.png");
 
 // MapScreen is a route in the App
 class MapScreen extends Component {
@@ -79,7 +84,24 @@ class MapScreen extends Component {
   componentDidMount() {
     // start timer to check for new day
     this.timer = setInterval(() => this.checkTime(), 1000);
+    Notifications.addListener(this._handleNotification);
+    /*
+      first time - got permission request
+      - tapped Dont Allow
+      -- got denied as status
+      - reloaded
+      -- still got denied as status
+      - turned on permission in settings
+      -- got granted
+    */
   }
+
+  _handleNotification = ({ origin, data }) => {
+    this.notification.show({
+      title: data.title,
+      body: data.body,
+    });
+  };
 
   componentWillUnmount() {
     clearInterval(this.timer);
@@ -118,6 +140,13 @@ class MapScreen extends Component {
             />
           ) : null}
         </View>
+        <Notification
+          closeInterval={10000}
+          iconApp={notificationIcon}
+          ref={ref => {
+            this.notification = ref;
+          }}
+        />
       </View>
     );
   }

@@ -164,6 +164,12 @@ export const expectedNodeTrackingUpdatedAction = {
   field: "tracking",
   value: true,
 };
+export const expectedNodeTrackingOffUpdatedAction = {
+  type: NODE_UPDATED,
+  nodeId: nodeKeyToday1,
+  field: "tracking",
+  value: false,
+};
 export const expectedStateNodeChecked = Immutable({
   nodesById: {
     "1486368000000_0": {

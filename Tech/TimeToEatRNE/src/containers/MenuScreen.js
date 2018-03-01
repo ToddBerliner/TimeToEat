@@ -37,6 +37,7 @@ import {
   DPStyles,
   TIStyles,
 } from "../styles/formStyles";
+import { Notifications, Permissions } from "expo";
 
 class MenuScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => {
@@ -52,6 +53,11 @@ class MenuScreen extends React.Component {
       ),
     };
   };
+
+  constructor(props) {
+    super(props);
+    this.state = { notificationStatus: false };
+  }
 
   handleToggleWater(waterToggleState) {
     this.props.toggleWater(waterToggleState);
@@ -76,6 +82,12 @@ class MenuScreen extends React.Component {
       this.props.editMeal(mealIdx, field, value);
     }
   }
+
+  // async componentWillMount() {
+  //   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+  //   console.log(status);
+  //   this.setState({}"notificationStatus": status === "granted"});
+  // }
 
   render() {
     const { waterTracking, plan, notifications } = this.props;

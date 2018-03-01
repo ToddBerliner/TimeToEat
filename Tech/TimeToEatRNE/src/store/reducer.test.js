@@ -5,6 +5,7 @@ import {
   _getNodeIdByDayIdAndMealIdx,
   _getNotificationsState,
   _getMealByMealIdx,
+  _getNotificationIdByMealIdx,
 } from "./reducer";
 import * as rootFixtures from "./fixtures";
 import * as uiStateFixtures from "./uiState/fixtures";
@@ -53,5 +54,10 @@ describe("root Selectors", () => {
     Selector(_getMealByMealIdx)
       .expect(rootFixtures.expectedInitialState, 0)
       .toReturn(planFixtures.expectedMeal0);
+  });
+  it("should return the notificationId for a given mealIdx", () => {
+    Selector(_getNotificationIdByMealIdx)
+      .expect(rootFixtures.stateWithNotifications, 1)
+      .toReturn("123");
   });
 });

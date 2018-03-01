@@ -4,6 +4,12 @@ import { MEAL_EDITED, NOTIFICATION_UPDATED } from "./reducer";
 
 export const expectedInitialState = Immutable(defaultPlan);
 
+export const expectedStateWithNotificationIds = Immutable.set(
+  expectedInitialState,
+  "notifications",
+  [null, "123", null, null, null],
+);
+
 export const expectedMeal0 = {
   name: "Breakfast",
   time: {
@@ -76,13 +82,13 @@ export const mealEditedTrackingAction = {
   type: MEAL_EDITED,
   mealIdx: 1,
   field: "tracking",
-  value: true,
+  value: false,
 };
 
 export const mealEditedNotificationAction = {
   type: NOTIFICATION_UPDATED,
   mealIdx: 1,
-  notificationId: 123,
+  notificationId: "123",
 };
 
 export const mealEditedNotificationOffAction = {

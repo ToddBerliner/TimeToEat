@@ -33,7 +33,7 @@
         Selectors
             ✔ _getDayById => calls days.getDayById with appropriate state slice
             ✔ _getNodeIdByMealIdx(dayId, mealIdx) => returns node id for a given day and mealIdx
-            ❍ _getMealByMealIdx(mealIdx) => returns a meal from the plan by mealIdx
+            ✔ _getMealByMealIdx(mealIdx) => returns a meal from the plan by mealIdx
         Reducer
     uiState
         Actions
@@ -53,7 +53,7 @@
             ✔ NOTIFICATIONS_TOGGLED => {...uiState, notificationTracking: toggleState}
     plan
         Actions
-            ❍ editMeal =>
+            ✔ editMeal =>
                 // check if change is time or tracking. If time or turning off
                 // tracking, cancel existing notification and schedule new one;
                 // if turning tracking off, just cancel existing; if turning
@@ -63,7 +63,7 @@
                 => dispatch({type: NODE_UPDATED, nodeId, field, value}) <handled by nodes reducer>
         Selectors
             ✔ getPlanDayByDayId => returns a plan day by a dayId
-            ❍ getMealByMealIdx => returns a meal from the plan by mealIdx
+            ✔ getMealByMealIdx => returns a meal from the plan by mealIdx
         Reducer
             ✔ MEAL_EDITED => {...planState, days: newDaysWithUpdatedMeal}
             ❍ NOTIFICATION_UPDATED => {...planState, {...notifications, [mealIdx]: notificationId || null}}
@@ -124,7 +124,9 @@
 // State Shape
 /*
   uiState: {
-    selectedDay: dayId
+    selectedDay: dayId,
+    notifications: true || false,
+    waterTracking: true || false,
   }
   plan: {
     notifications: [
