@@ -14,6 +14,7 @@ import {
 } from "../reducer";
 import { NODE_UPDATED } from "../nodes/reducer";
 import { Notifications } from "expo";
+const notificationIcon = require("../../../assets/images/notification_icon.png");
 
 // Action Types & Constants
 export const MEAL_EDITED = "meal_edited";
@@ -30,6 +31,12 @@ export const editMeal = (mealIdx, field, value) => {
     if (field === TIME || field === TRACKING) {
       // get the meal in the plan
       const meal = _getMealByMealIdx(getState(), mealIdx);
+      // get and clear the existing notification
+      let notificationId = _getNotificationIdByMealIdx(getState(), mealIdx);
+      if (notificationId !== null) {
+        Notifications.cancelScheduledNotificationAsync(notificationId);
+        console.log(`Cleared notification ${notificationId}`);
+      }
       // if time && tracking = true
       if ((field === TIME && meal.tracking) || (field === TRACKING && value)) {
         // schedule notification and distpatch NOTIFICATION_UPDATED action
@@ -40,27 +47,28 @@ export const editMeal = (mealIdx, field, value) => {
         const mealNotification = {
           title: meal.name,
           body: "It's Time to Eat!",
+          data: {
+            title: meal.name,
+            message: "It's Time to Eat!",
+            icon: notificationIcon,
+          },
         };
         const mealNotificationSchedule = {
           time: time,
           repeat: "day",
         };
+        // LEFT OFF HERE - NEED TO CANCEL EXISTING
         Notifications.scheduleLocalNotificationAsync(
           mealNotification,
           mealNotificationSchedule,
         )
           .then(notificationId => {
-            console.log(`Got notification id ${notificationId}`);
+            console.log(`scheduled notification ${notificationId}`);
             dispatch({ type: NOTIFICATION_UPDATED, mealIdx, notificationId });
           })
           .catch(err => console.log(err));
       }
       if (field === TRACKING && !value) {
-        // cancel notification and dispatch NOTIFICATION_UPDATED action
-        let notificationId = _getNotificationIdByMealIdx(getState(), mealIdx);
-        console.log(`should clear ${notificationId}`);
-        Notifications.cancelScheduledNotificationAsync(notificationId);
-        console.log(`Cleared notificaiton ${notificationId}`);
         notificationId = null;
         dispatch({ type: NOTIFICATION_UPDATED, mealIdx, notificationId });
       }

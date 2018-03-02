@@ -43,10 +43,9 @@ describe("plan Actions", () => {
     const dispatches = Thunk(editMeal)
       .withState(stateWithToday)
       .execute(1, "time", { hours: 0, minutes: 30 });
-    expect(dispatches.length).toBe(3);
-    expect(dispatches[0].getAction()).toEqual(mealEditedNotificationAction);
-    expect(dispatches[1].getAction()).toEqual(mealEditedTimeAction);
-    expect(dispatches[2].getAction()).toEqual(expectedNodeTimeUpdatedAction);
+    expect(dispatches.length).toBe(2);
+    expect(dispatches[0].getAction()).toEqual(mealEditedTimeAction);
+    expect(dispatches[1].getAction()).toEqual(expectedNodeTimeUpdatedAction);
   });
   it("should return thunk with 3 actions for tracking change to false", () => {
     const dispatches = Thunk(editMeal)

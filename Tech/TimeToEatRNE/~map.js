@@ -66,7 +66,7 @@
             ✔ getMealByMealIdx => returns a meal from the plan by mealIdx
         Reducer
             ✔ MEAL_EDITED => {...planState, days: newDaysWithUpdatedMeal}
-            ❍ NOTIFICATION_UPDATED => {...planState, {...notifications, [mealIdx]: notificationId || null}}
+            ✔ NOTIFICATION_UPDATED => {...planState, {...notifications, [mealIdx]: notificationId || null}}
     days
         Actions
             ✔ tapWater => dispatch({type: WATER_ADDED, {dayId: timestamp}})

@@ -97,10 +97,9 @@ class MapScreen extends Component {
   }
 
   _handleNotification = ({ origin, data }) => {
-    this.notification.show({
-      title: data.title,
-      body: data.body,
-    });
+    if (origin !== "selected") {
+      this.notification.show({ ...data });
+    }
   };
 
   componentWillUnmount() {
