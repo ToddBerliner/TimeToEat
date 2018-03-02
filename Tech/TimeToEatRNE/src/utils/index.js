@@ -213,15 +213,3 @@ export function createSnackNode(dateKey, timestamp) {
     completedTime: timestamp,
   };
 }
-
-export function sendImmediateNotification() {
-  const localNotification = {
-    title: "Notify!",
-    body: "Oh hell yea...",
-    data: { title: "Notify!", body: "Oh hell yea...", type: "immediate" },
-  };
-  console.log("Scheduling immediate notification:", { localNotification });
-  Notifications.presentLocalNotificationAsync(localNotification)
-    .then(id => console.log(`Immediate notification scheduled ${id}`))
-    .catch(err => console.log(err));
-}
