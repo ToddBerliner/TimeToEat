@@ -58,6 +58,8 @@ describe("plan Actions", () => {
       expectedNodeTrackingOffUpdatedAction,
     );
   });
+  // TODO: figure out how to test the dispatches that happen in the then
+  // handler of scheduling a notification
 });
 
 describe("plan Reducer", () => {

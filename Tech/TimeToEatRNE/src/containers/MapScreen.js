@@ -76,7 +76,10 @@ class MapScreen extends Component {
 
   checkTime() {
     // Load new day when it comes around
-    if (new Date().getTime() === this.state.tomorrow) {
+    if (
+      new Date().getTime() === this.state.tomorrow ||
+      new Date().getTime() > this.state.tomorrow
+    ) {
       this.props.selectDay(this.props.dayId, NEXT);
     }
   }
@@ -97,6 +100,11 @@ class MapScreen extends Component {
   }
 
   _handleNotification = ({ origin, data }) => {
+    console.log(
+      `Handling notification of origin ${origin} with data ${JSON.stringify(
+        data,
+      )}`,
+    );
     if (origin !== "selected") {
       this.notification.show({ ...data });
     }

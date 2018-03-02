@@ -1,7 +1,11 @@
 import Immutable from "seamless-immutable";
 import { getDateKey, getDateFromKey, createDayAndNodes } from "../../utils";
 import { _getDayById, DAY_AND_NODES_ADDED } from "../reducer";
-import { getPlanDayByDayId } from "../plan/reducer";
+import {
+  getPlanDayByDayId,
+  scheduleAllMealNotifications,
+} from "../plan/reducer";
+import { Notifications } from "expo";
 
 // Action Types
 export const DAY_SELECTED = "day_selected";
@@ -28,7 +32,16 @@ export const toggleWaterTracking = trackingState => {
 };
 
 export const toggleNotifications = notificationState => {
-  return { type: NOTIFICATIONS_TOGGLED, notificationState };
+  return function(dispatch, getState) {
+    if (notificationState) {
+      // schedule all notifications
+      scheduleAllMealNotifications(dispatch, getState);
+    } else {
+      Notifications.cancelAllScheduledNotificationsAsync();
+      console.log("Canceled all notifications");
+    }
+    dispatch({ type: NOTIFICATIONS_TOGGLED, notificationState });
+  };
 };
 
 // Reducer

@@ -44,6 +44,7 @@ export const configureStore = (savedState = undefined) => {
   // create the store
   let store = null;
   if (savedState !== undefined) {
+    console.log("Found savedState, creating store.");
     store = createStore(
       rootReducer,
       Immutable(savedState),

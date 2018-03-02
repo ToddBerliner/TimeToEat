@@ -23,6 +23,43 @@ export const NAME = "name";
 export const TIME = "time";
 export const TRACKING = "tracking";
 
+// Methods
+export function scheduleAllMealNotifications(dispatch, getState) {
+  const meals = getMeals(getState().plan);
+  meals.forEach((meal, mealIdx) => {
+    if (meal.tracking) {
+      scheduleMealNotification(mealIdx, meal, dispatch);
+    }
+  });
+}
+export function scheduleMealNotification(mealIdx, meal, dispatch) {
+  // get meals
+  // forEach -> scheduleMeal()
+  // meal, dispatch
+  const mealNotification = {
+    title: meal.name,
+    body: "It's Time to Eat!",
+    data: {
+      title: meal.name,
+      message: "It's Time to Eat!",
+      icon: notificationIcon,
+    },
+  };
+  const mealNotificationSchedule = {
+    time: getNotificationTimeFromTimeObj(meal.time),
+    repeat: "day",
+  };
+  Notifications.scheduleLocalNotificationAsync(
+    mealNotification,
+    mealNotificationSchedule,
+  )
+    .then(notificationId => {
+      console.log(`scheduled notification ${notificationId}`);
+      dispatch({ type: NOTIFICATION_UPDATED, mealIdx, notificationId });
+    })
+    .catch(err => console.log(err));
+}
+
 // Actions
 export const editMeal = (mealIdx, field, value) => {
   return function(dispatch, getState) {
@@ -30,43 +67,21 @@ export const editMeal = (mealIdx, field, value) => {
     // if (field === time || field === tracking)
     if (field === TIME || field === TRACKING) {
       // get the meal in the plan
-      const meal = _getMealByMealIdx(getState(), mealIdx);
+      let meal = _getMealByMealIdx(getState(), mealIdx);
+      meal = Immutable.asMutable(meal, { deep: true });
       // get and clear the existing notification
       let notificationId = _getNotificationIdByMealIdx(getState(), mealIdx);
       if (notificationId !== null) {
         Notifications.cancelScheduledNotificationAsync(notificationId);
         console.log(`Cleared notification ${notificationId}`);
       }
-      // if time && tracking = true
+      // if time && tracking or tracking && tracking, schedule new notification
       if ((field === TIME && meal.tracking) || (field === TRACKING && value)) {
         // schedule notification and distpatch NOTIFICATION_UPDATED action
-        const time =
-          field === TIME
-            ? getNotificationTimeFromTimeObj(value)
-            : getNotificationTimeFromTimeObj(meal.time);
-        const mealNotification = {
-          title: meal.name,
-          body: "It's Time to Eat!",
-          data: {
-            title: meal.name,
-            message: "It's Time to Eat!",
-            icon: notificationIcon,
-          },
-        };
-        const mealNotificationSchedule = {
-          time: time,
-          repeat: "day",
-        };
-        // LEFT OFF HERE - NEED TO CANCEL EXISTING
-        Notifications.scheduleLocalNotificationAsync(
-          mealNotification,
-          mealNotificationSchedule,
-        )
-          .then(notificationId => {
-            console.log(`scheduled notification ${notificationId}`);
-            dispatch({ type: NOTIFICATION_UPDATED, mealIdx, notificationId });
-          })
-          .catch(err => console.log(err));
+        if (field === TIME) {
+          meal.time = value;
+        }
+        scheduleMealNotification(mealIdx, meal, dispatch);
       }
       if (field === TRACKING && !value) {
         notificationId = null;
@@ -128,4 +143,7 @@ export const getMealByMealIdx = (state, mealIdx) => {
 };
 export const getNotificationIdByMealIdx = (state, mealIdx) => {
   return state.notifications[mealIdx];
+};
+export const getMeals = state => {
+  return state.days["Monday"].nodes;
 };
