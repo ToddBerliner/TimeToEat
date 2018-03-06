@@ -51,19 +51,21 @@ class NodeRow extends React.Component {
             </View>
           </TouchableOpacity>
           <View style={styles.nodeNameBlock}>
-            <Text style={styles.nodeName}>{props.name}</Text>
+            <View style={styles.nodeNameRow}>
+              <Text style={styles.nodeName}>{props.name}</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState({
+                    isPickerShowing: !this.state.isPickerShowing,
+                  });
+                }}
+              >
+                <Text style={styles.nodeEatenTime}>
+                  {getFriendlyTime(props.completedTime)}
+                </Text>
+              </TouchableOpacity>
+            </View>
             <Text>{getFriendlyTime(props.time)}</Text>
-          </View>
-          <View style={styles.nodeEatenTimeBlock}>
-            <TouchableOpacity
-              onPress={() => {
-                this.setState({ isPickerShowing: !this.state.isPickerShowing });
-              }}
-            >
-              <Text style={styles.nodeEatenTime}>
-                {getFriendlyTime(props.completedTime)}
-              </Text>
-            </TouchableOpacity>
           </View>
         </View>
         {this.state.isPickerShowing ? (
@@ -141,9 +143,10 @@ const styles = StyleSheet.create({
   nodeName: {
     fontSize: 24,
   },
-  nodeEatenTimeBlock: {
-    alignItems: "center",
-    justifyContent: "flex-end",
+  nodeNameRow: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between",
   },
   nodeEatenTime: {
     fontSize: 20,
