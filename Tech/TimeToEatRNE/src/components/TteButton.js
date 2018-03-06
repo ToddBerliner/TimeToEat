@@ -19,9 +19,12 @@ class TteButton extends Component {
       disabled,
       testID,
       style,
+      secondaryStyle,
     } = this.props;
-    const buttonStyles = [styles.button];
-    const textStyles = [styles.text];
+    const buttonStyles = secondaryStyle
+      ? [styles.secondaryButton]
+      : [styles.button];
+    const textStyles = secondaryStyle ? [styles.secondaryText] : [styles.text];
     // TODO: color control
 
     const accessibilityTraits = ["button"];
@@ -68,6 +71,9 @@ const styles = StyleSheet.create({
       borderRadius: 2,
     },
   }),
+  secondaryButton: Platform.select({
+    ios: {},
+  }),
   text: Platform.select({
     ios: {
       // iOS blue from https://developer.apple.com/ios/human-interface-guidelines/visual-design/color/
@@ -82,6 +88,15 @@ const styles = StyleSheet.create({
       textAlign: "center",
       padding: 8,
       fontWeight: "500",
+    },
+  }),
+  secondaryText: Platform.select({
+    ios: {
+      textAlign: "center",
+      padding: 8,
+      fontSize: 16,
+      fontWeight: "700",
+      color: "#4A4a4a",
     },
   }),
   buttonDisabled: Platform.select({

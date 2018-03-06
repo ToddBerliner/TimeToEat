@@ -33,20 +33,28 @@ class WelcomeScreen extends Component {
     });
   }
 
-  _showAlert() {
+  _showAlert(title = "Notifications Not Allowed", includeCancel = false) {
     const navigate = this.props.navigation.navigate;
-    Alert.alert(
-      "Notifications Not Allowed",
-      "Time to Eat works best with notifications enabled so we can help you stick to your plan. You can turn notifications on anytime in the settings menu.",
-      [
-        {
-          text: "OK",
-          onPress: () => {
-            navigate("Setup");
-          },
+    const buttons = [
+      {
+        text: "OK",
+        onPress: () => {
+          navigate("Setup");
         },
-      ],
-    );
+      },
+    ];
+    if (includeCancel) {
+      buttons.unshift({
+        text: "Cancel",
+        style: "cancel",
+      });
+    }
+    let text =
+      "Time to Eat works best with notifications enabled so we can help you stick to your plan. You can turn notifications on and off anytime in the settings menu.";
+    if (includeCancel) {
+      text = text + "\n\nTap Cancel to go back and Allow Notifications.";
+    }
+    Alert.alert(title, text, buttons);
   }
 
   render() {
@@ -69,6 +77,12 @@ class WelcomeScreen extends Component {
           style={{ width: "80%" }}
           onPress={this._handleAllowNotifications.bind(this)}
           title="Allow Notifications"
+        />
+        <TteButton
+          style={{ marginTop: 10 }}
+          onPress={this._showAlert.bind(this, "Are you sure?", true)}
+          title="No Thanks"
+          secondaryStyle={true}
         />
       </View>
     );
