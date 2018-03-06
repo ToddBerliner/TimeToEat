@@ -64,14 +64,14 @@ describe("Generic Utilities", () => {
     });
   });
   test("it returns the correct times for scheduling a notification", () => {
-    const past = new Date(new Date().getTime() - 1000 * 60 * 55);
+    const past = new Date(new Date().getTime() - 1000 * 60 * 65);
     past.setMinutes(0);
     past.setSeconds(0);
     past.setMilliseconds(0);
     const timeObjPast = getTimeObjFromDate(past);
     const expectedTimePast = addDays(past).getTime();
 
-    const future = new Date(new Date().getTime() + 1000 * 60 * 55);
+    const future = new Date(new Date().getTime() + 1000 * 60 * 65);
     future.setMinutes(0);
     future.setSeconds(0);
     future.setMilliseconds(0);

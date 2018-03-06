@@ -1,18 +1,16 @@
-import React from "react";
+import React, { Component } from "react";
 import { AsyncStorage, StyleSheet } from "react-native";
 import { Provider } from "react-redux";
 import configureStore, {
   getSavedState,
   clearSavedState,
 } from "./src/store/configureStore";
-import MapScreen from "./src/containers/MapScreen";
 
 import { AppLoading, Asset, Font } from "expo";
 import { Ionicons } from "@expo/vector-icons";
+import NavSwitch from "./src/containers/NavSwitch";
 
-import AppWithNavigationState from "./src/navigators/AppNavigator";
-
-export default class App extends React.Component {
+export default class App extends Component {
   state = {
     loaded: false,
     store: null,
@@ -29,9 +27,10 @@ export default class App extends React.Component {
         />
       );
     } else {
+      const { uiState } = store.getState();
       return (
         <Provider store={store}>
-          <AppWithNavigationState />
+          <NavSwitch />
         </Provider>
       );
     }

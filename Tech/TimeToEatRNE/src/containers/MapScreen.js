@@ -31,7 +31,7 @@ import {
 } from "../utils";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StackNavigator } from "react-navigation";
-import { Notifications, Permissions, Constants } from "expo";
+import { Notifications, Permissions } from "expo";
 
 import Notification from "react-native-in-app-notification";
 const notificationIcon = require("../../assets/images/notification_icon.png");
@@ -84,27 +84,13 @@ class MapScreen extends Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // start timer to check for new day
     this.timer = setInterval(() => this.checkTime(), 1000);
     Notifications.addListener(this._handleNotification);
-    /*
-      first time - got permission request
-      - tapped Dont Allow
-      -- got denied as status
-      - reloaded
-      -- still got denied as status
-      - turned on permission in settings
-      -- got granted
-    */
   }
 
   _handleNotification = ({ origin, data }) => {
-    console.log(
-      `Handling notification of origin ${origin} with data ${JSON.stringify(
-        data,
-      )}`,
-    );
     if (origin !== "selected") {
       this.notification.show({ ...data });
     }

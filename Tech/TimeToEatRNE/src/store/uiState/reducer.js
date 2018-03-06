@@ -11,6 +11,7 @@ import { Notifications } from "expo";
 export const DAY_SELECTED = "day_selected";
 export const WATER_TRACKING_TOGGLED = "water_tracking_toggled";
 export const NOTIFICATIONS_TOGGLED = "notifications_toggled";
+export const ONBOARDING_COMPLETED = "onboarding_completed";
 
 // Actions
 export const selectDay = (dayId = getDateKey()) => {
@@ -38,10 +39,13 @@ export const toggleNotifications = notificationState => {
       scheduleAllMealNotifications(dispatch, getState);
     } else {
       Notifications.cancelAllScheduledNotificationsAsync();
-      console.log("Canceled all notifications");
     }
     dispatch({ type: NOTIFICATIONS_TOGGLED, notificationState });
   };
+};
+
+export const completeOnboarding = () => {
+  return { type: ONBOARDING_COMPLETED };
 };
 
 // Reducer
@@ -49,6 +53,7 @@ const initialState = Immutable({
   selectedDayId: null,
   waterTracking: true,
   notifications: false,
+  onboardingComplete: false,
 });
 
 export default function reduce(state = initialState, action = {}) {
@@ -59,6 +64,11 @@ export default function reduce(state = initialState, action = {}) {
       return Immutable({ ...state, waterTracking: action.trackingState });
     case NOTIFICATIONS_TOGGLED:
       return Immutable({ ...state, notifications: action.notificationState });
+    case ONBOARDING_COMPLETED:
+      return Immutable({
+        ...state,
+        onboardingComplete: !state.onboardingComplete,
+      });
     default:
       return state;
   }
@@ -68,3 +78,4 @@ export default function reduce(state = initialState, action = {}) {
 export const getSelectedDayId = state => state.selectedDayId || getDateKey();
 export const getWaterTrackingState = state => state.waterTracking;
 export const getNotificationsState = state => state.notifications;
+export const getOnboardingState = state => state.onboardingComplete;

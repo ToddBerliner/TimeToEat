@@ -56,7 +56,14 @@ class MenuScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { notificationStatus: false };
+    this.state = { notificationsDisabled: false };
+  }
+
+  async componentWillMount() {
+    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    if (status !== "granted") {
+      this.setState({ notificationsDisabled: true });
+    }
   }
 
   handleToggleWater(waterToggleState) {
@@ -83,14 +90,8 @@ class MenuScreen extends React.Component {
     }
   }
 
-  // async componentWillMount() {
-  //   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-  //   console.log(status);
-  //   this.setState({}"notificationStatus": status === "granted"});
-  // }
-
   render() {
-    const { waterTracking, plan, notifications } = this.props;
+    const { waterTracking, plan, notifications, mealsOnly } = this.props;
     const { nodes } = plan.days.Monday;
 
     const meals = [];
@@ -124,58 +125,88 @@ class MenuScreen extends React.Component {
       }
     });
 
-    return (
-      <ScrollView
-        style={{
-          flex: 1,
-          backgroundColor: "rgb(245,245,245)",
-          paddingTop: 20,
-        }}
-      >
-        <TouchableOpacity onPress={clearSavedState}>
-          <Text
-            style={{
-              fontFamily: "fugaz-one-regular",
-              fontSize: 36,
-              marginLeft: FormSettings.textMarginLeft,
-            }}
-          >
-            Make a Plan
-          </Text>
-        </TouchableOpacity>
-        <View style={{ flex: 1 }}>
-          <View style={SectionStyles.container}>
-            <View>
-              <Text style={SectionStyles.sectionTitle}>MEALS TO TRACK</Text>
-              <View style={SectionStyles.sectionWrapper}>{meals}</View>
-              <Text
-                key={"mealsToTrackHelpText"}
-                style={SectionStyles.sectionHelpText}
-              >
-                Rename or edit the time for each.
-              </Text>
-            </View>
-          </View>
-          <View style={SectionStyles.container}>
-            <Text style={SectionStyles.sectionTitle}>TIME TO EAT SETTINGS</Text>
-            <View style={SectionStyles.sectionWrapper}>
-              <SwitchRow
-                switchTitle="Track Water"
-                onValueChange={this.handleToggleWater.bind(this)}
-                value={waterTracking}
-              />
-              <Line marginLeft={FormSettings.textMarginLeft} />
-              <SwitchRow
-                switchTitle="Notifications"
-                onValueChange={this.handleToggleNotifications.bind(this)}
-                value={notifications}
-              />
-            </View>
-            <View style={{ height: 15 }} />
-          </View>
+    if (mealsOnly) {
+      return (
+        <View style={SectionStyles.container}>
+          <Line />
+          <View style={SectionStyles.sectionWrapper}>{meals}</View>
+          <Line />
         </View>
-      </ScrollView>
-    );
+      );
+    } else {
+      return (
+        <ScrollView
+          style={{
+            flex: 1,
+            backgroundColor: "rgb(245,245,245)",
+            paddingTop: 20,
+          }}
+        >
+          <TouchableOpacity onPress={clearSavedState}>
+            <Text
+              style={{
+                fontFamily: "fugaz-one-regular",
+                fontSize: 36,
+                marginLeft: FormSettings.textMarginLeft,
+              }}
+            >
+              Make a Plan
+            </Text>
+          </TouchableOpacity>
+          <View style={{ flex: 1 }}>
+            <View style={SectionStyles.container}>
+              <View>
+                <Text style={SectionStyles.sectionTitle}>MEALS TO TRACK</Text>
+                <View style={SectionStyles.sectionWrapper}>{meals}</View>
+                <Text
+                  key={"mealsToTrackHelpText"}
+                  style={SectionStyles.sectionHelpText}
+                >
+                  Rename or edit the time for each.
+                </Text>
+              </View>
+            </View>
+            <View style={SectionStyles.container}>
+              <Text style={SectionStyles.sectionTitle}>
+                TIME TO EAT SETTINGS
+              </Text>
+              <View style={SectionStyles.sectionWrapper}>
+                <SwitchRow
+                  switchTitle="Track Water"
+                  onValueChange={this.handleToggleWater.bind(this)}
+                  value={waterTracking}
+                />
+                <Line marginLeft={FormSettings.textMarginLeft} />
+                <SwitchRow
+                  switchTitle="Notifications"
+                  onValueChange={this.handleToggleNotifications.bind(this)}
+                  value={notifications}
+                />
+                {this.state.notificationsDisabled && (
+                  <View
+                    style={{
+                      marginTop: 7,
+                      marginLeft: 15,
+                      marginRight: 15,
+                      marginBottom: 15,
+                    }}
+                  >
+                    <Text style={{ fontWeight: "700", marginBottom: 4 }}>
+                      Notifications Are Currently Off
+                    </Text>
+                    <Text>
+                      Notifications are turned off in your Settings. Please go
+                      to Settings > Time to Eat and turn on Notifications.
+                    </Text>
+                  </View>
+                )}
+              </View>
+              <View style={{ height: 15 }} />
+            </View>
+          </View>
+        </ScrollView>
+      );
+    }
   }
 }
 

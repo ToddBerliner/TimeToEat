@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "TimeToEatRNE",
-    "description": "This project is really great.",
+    "name": "TimeToEat",
+    "description": "Make a plan, eat it up. Meal tracking simplified.",
     "slug": "TimeToEatRNE",
     "privacy": "public",
     "sdkVersion": "25.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": ["ios"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,7 +15,7 @@
       "backgroundColor": "#000000"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     }
   }
 }

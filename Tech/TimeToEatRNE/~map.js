@@ -43,14 +43,17 @@
                 => dispatch({type: DAY_SELECTED, dayId})
             ✔ toggleWaterTracking => dispatch({type: WATER_TRACKING_TOGGLED, BOOLEAN(tracking status)})
             ✔ toggleNotifications => dispatch({type: NOTIFICATIONS_TOGGLED, BOOLEAN(notification status)})
+            ✔ completeOnboarding => dispatch({type: ONBOARDING_COMPLETED})
         Selectors
             ✔ getSelectedDayId => return the selected day id || today
             ✔ getWaterTrackingState => return the water tracking state
             ✔ getNotificationsState => return the notification state
+            ✔ getOnboardingState => return onboardingComplete state
         Reducer
             ✔ DAY_SELECTED => returns {...uiState, selectedDay: dayId}
             ✔ WATER_TRACKING_TOGGLED => {...uiState, waterTracking: toggleState}
             ✔ NOTIFICATIONS_TOGGLED => {...uiState, notificationTracking: toggleState}
+            ✔ ONBOARDING_COMPLETED => {...uiState, onboardingComplete: onboardingCompletedState}
     plan
         Actions
             ✔ editMeal =>
@@ -127,6 +130,7 @@
     selectedDay: dayId,
     notifications: true || false,
     waterTracking: true || false,
+    onboardingComplete: true || false,
   }
   plan: {
     notifications: [

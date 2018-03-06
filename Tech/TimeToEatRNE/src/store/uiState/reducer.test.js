@@ -7,12 +7,15 @@ import uiState, {
   DAY_SELECTED,
   WATER_TRACKING_TOGGLED,
   NOTIFICATIONS_TOGGLED,
+  ONBOARDING_COMPLETED,
   selectDay,
   getSelectedDayId,
   toggleWaterTracking,
   toggleNotifications,
+  completeOnboarding,
   getWaterTrackingState,
   getNotificationsState,
+  getOnboardingState,
 } from "./reducer";
 import { getDateKey } from "../../utils";
 
@@ -71,6 +74,9 @@ describe("uiState Actions", () => {
     expect(dispatches.length).toBe(1);
     expect(dispatches[0].getAction()).toEqual(expectedToggleNotificationAction);
   });
+  it("should dispatch the onboardingComplete action", () => {
+    expect(completeOnboarding()).toEqual({ type: ONBOARDING_COMPLETED });
+  });
 });
 
 describe("uiState Selectors", () => {
@@ -98,6 +104,11 @@ describe("uiState Selectors", () => {
       .expect(uiStateFixtures.expectedInitialState)
       .toReturn(false);
   });
+  it("should return false if onboarding is not complete", () => {
+    Selector(getOnboardingState)
+      .expect(uiStateFixtures.expectedInitialState)
+      .toReturn(false);
+  });
 });
 
 describe("uiState Reducer", () => {
@@ -115,6 +126,7 @@ describe("uiState Reducer", () => {
       selectedDayId: "123",
       waterTracking: true,
       notifications: false,
+      onboardingComplete: false,
     };
     Reducer(uiState)
       .expect({ type: DAY_SELECTED, dayId })
@@ -125,9 +137,21 @@ describe("uiState Reducer", () => {
       selectedDayId: null,
       waterTracking: false,
       notifications: false,
+      onboardingComplete: false,
     };
     Reducer(uiState)
       .expect({ type: WATER_TRACKING_TOGGLED, trackingState: false })
+      .toReturnState(expectedState);
+  });
+  it("should return new state with onboardingComplete true", () => {
+    const expectedState = {
+      selectedDayId: null,
+      waterTracking: true,
+      notifications: false,
+      onboardingComplete: true,
+    };
+    Reducer(uiState)
+      .expect({ type: ONBOARDING_COMPLETED })
       .toReturnState(expectedState);
   });
 });

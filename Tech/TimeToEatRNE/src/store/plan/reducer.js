@@ -54,7 +54,6 @@ export function scheduleMealNotification(mealIdx, meal, dispatch) {
     mealNotificationSchedule,
   )
     .then(notificationId => {
-      console.log(`scheduled notification ${notificationId}`);
       dispatch({ type: NOTIFICATION_UPDATED, mealIdx, notificationId });
     })
     .catch(err => console.log(err));
@@ -73,7 +72,6 @@ export const editMeal = (mealIdx, field, value) => {
       let notificationId = _getNotificationIdByMealIdx(getState(), mealIdx);
       if (notificationId !== null) {
         Notifications.cancelScheduledNotificationAsync(notificationId);
-        console.log(`Cleared notification ${notificationId}`);
       }
       // if time && tracking or tracking && tracking, schedule new notification
       if ((field === TIME && meal.tracking) || (field === TRACKING && value)) {

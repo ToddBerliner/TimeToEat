@@ -6,6 +6,7 @@ export const expectedInitialState = Immutable({
   selectedDayId: null,
   waterTracking: true,
   notifications: false,
+  onboardingComplete: false,
 });
 
 export const expectedSampleDaySelected = {
