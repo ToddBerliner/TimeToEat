@@ -77,6 +77,8 @@
         Selectors
             ✔ getDayById(dayId) => returns a day or undefined
             ✔ getDayIds() => returns all the day ids
+            ✔ getMinDate() => returns the minimum date in state
+            ✔ getAllDayIdsInOrder => returns array of ordered dayIds in ASC order
         Reducer
             ✔ DAY_AND_NODES_ADDED => {...daysState, {...daysById, [dayId]: newDay}}
             ✔ WATER_ADDED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp added]}}
@@ -116,6 +118,7 @@
   nodes
     ✔ createNodesFromPlanDay => returns an array of nodes from a plan day
     ✔ createSnackNode => returns a node object for a given dayId and timestamp
+    ✔ getColorFromNodes => returns the color for a set of nodes
     ? getNodeKey => return the dateKey_nodePositionIndex
     ? getCurrentNode => return the node that should be highlighted
     ? getNodeEndBoundaryTime => return the time the node becomes 'missed'
@@ -151,7 +154,7 @@
         ],
         water_target: 8
       }
-    ]
+    ],
   }
   days: {
     daysById: {

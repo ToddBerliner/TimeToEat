@@ -1,4 +1,5 @@
 import { Notifications } from "expo";
+import Colors from "../styles/colors";
 
 export const PREV = "prev";
 export const NEXT = "next";
@@ -40,6 +41,7 @@ export function getMonth(monthIndex) {
 }
 
 export function getDateKey(date = new Date()) {
+  if (!date.getYear()) return undefined;
   const keyMonth = date.getMonth();
   const keyDate = date.getDate();
   const keyYear = date.getFullYear();
@@ -116,6 +118,27 @@ export function getTimeObjFromDate(date) {
   } catch (err) {
     return undefined;
   }
+}
+
+export function getDateKeyForCal(someKindOfDate) {
+  let date = null;
+  if (someKindOfDate.getYear) {
+    date = someKindOfDate;
+  } else if (typeof someKindOfDate === "string") {
+    date = new Date(parseInt(someKindOfDate, 10));
+  } else if (typeof someKindOfDate === "number") {
+    date = new Date(someKindOfDate);
+  }
+
+  if (!date) return undefined;
+
+  const calYear = date.getFullYear();
+  let calMonth = date.getMonth() + 1;
+  calMonth = calMonth < 10 ? `0${calMonth}` : calMonth;
+  let calDate = date.getDate();
+  calDate = calDate < 10 ? `0${calDate}` : calDate;
+
+  return `${calYear}-${calMonth}-${calDate}`;
 }
 
 export function getNotificationTimeFromTimeObj(timeObj) {
@@ -212,4 +235,31 @@ export function createSnackNode(dateKey, timestamp) {
     time: timestamp,
     completedTime: timestamp,
   };
+}
+
+export function getColorFromNodes(nodes) {
+  let trackedCount = 0;
+  let completedCount = 0;
+  // count tracked nodes
+  for (const node of nodes) {
+    // early return if node is snack type
+    if (node.type === "offplan") {
+      return Colors.calRed;
+    }
+    if (node.tracking) {
+      trackedCount++;
+      if (node.completedTime !== null) {
+        completedCount++;
+      }
+    }
+  }
+  // count completed nodes
+  const completedPct = completedCount / trackedCount;
+  if (completedPct === 1) {
+    return Colors.calGreen;
+  }
+  if (completedPct >= 0.5 && completedPct < 1) {
+    return Colors.calYellow;
+  }
+  return Colors.calRed;
 }

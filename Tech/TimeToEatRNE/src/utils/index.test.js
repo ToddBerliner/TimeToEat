@@ -13,8 +13,11 @@ import {
   createSnackNode,
   getTimeObjFromDate,
   getNotificationTimeFromTimeObj,
+  getDateKeyForCal,
   addDays,
+  getColorFromNodes,
 } from "./";
+import Colors from "../styles/colors";
 import * as daysFixtures from "../store/days/fixtures";
 import * as nodesFixtures from "../store/nodes/fixtures";
 
@@ -85,6 +88,15 @@ describe("Generic Utilities", () => {
       expectedTimeFuture,
     );
   });
+  it("returns the date formatted for the react-native-calendar", () => {
+    const dayId = getDateKey(new Date(2018, 0, 1));
+    const ts = new Date(2018, 0, 1).getTime();
+    const dateObj = new Date(2018, 0, 1);
+    const expectedDateString = "2018-01-01";
+    expect(getDateKeyForCal(dayId)).toEqual(expectedDateString);
+    expect(getDateKeyForCal(ts)).toEqual(expectedDateString);
+    expect(getDateKeyForCal(dateObj)).toEqual(expectedDateString);
+  });
 });
 
 describe("Days Utilities", () => {
@@ -149,5 +161,41 @@ describe("Nodes Utilities", () => {
       daysFixtures.snackTimestampMonday,
     );
     expect(snackNode).toEqual(nodesFixtures.expectedSnackNodeMonday);
+  });
+  it("should return red for a set of nodes with a snack node in it", () => {
+    const nodes = [
+      nodesFixtures.checkedTrackedNode,
+      nodesFixtures.uncheckedTrackedNode,
+      nodesFixtures.expectedSnackNodeMonday,
+    ];
+    const nodeColor = getColorFromNodes(nodes);
+    expect(nodeColor).toEqual(Colors.calRed);
+  });
+  it("should return green for a set of nodes with all completes", () => {
+    const nodes = [
+      nodesFixtures.checkedTrackedNode,
+      nodesFixtures.checkedTrackedNode,
+      nodesFixtures.checkedTrackedNode,
+    ];
+    const nodeColor = getColorFromNodes(nodes);
+    expect(nodeColor).toEqual(Colors.calGreen);
+  });
+  it("should return yellow for a set with 2/3 completes", () => {
+    const nodes = [
+      nodesFixtures.checkedTrackedNode,
+      nodesFixtures.checkedTrackedNode,
+      nodesFixtures.uncheckedTrackedNode,
+    ];
+    const nodeColor = getColorFromNodes(nodes);
+    expect(nodeColor).toEqual(Colors.calYellow);
+  });
+  it("should return red for a set with 1/3 completes", () => {
+    const nodes = [
+      nodesFixtures.checkedTrackedNode,
+      nodesFixtures.uncheckedTrackedNode,
+      nodesFixtures.uncheckedTrackedNode,
+    ];
+    const nodeColor = getColorFromNodes(nodes);
+    expect(nodeColor).toEqual(Colors.calRed);
   });
 });

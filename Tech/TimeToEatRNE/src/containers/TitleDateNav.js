@@ -20,14 +20,26 @@ class TitleDateNav extends Component {
     return (
       <View style={styles.titleRowCenter}>
         <View style={styles.titleLeftArrow}>
-          <TouchableOpacity onPress={this._selectDate.bind(this, PREV)}>
-            <Icon name="ios-arrow-back" size={24} />
+          <TouchableOpacity
+            onPress={this._selectDate.bind(this, PREV)}
+            style={{ width: 30 }}
+            hitSlop={{ left: 10, right: 10 }}
+          >
+            <Icon
+              name="ios-arrow-back"
+              size={24}
+              style={{ alignSelf: "flex-end" }}
+            />
           </TouchableOpacity>
         </View>
         <TitleDate dayId={this.props.dayId} />
         <View style={styles.titleRightArrow}>
           {!this.props.isToday && (
-            <TouchableOpacity onPress={this._selectDate.bind(this, NEXT)}>
+            <TouchableOpacity
+              onPress={this._selectDate.bind(this, NEXT)}
+              style={{ width: 30 }}
+              hitSlop={{ left: 10, right: 10 }}
+            >
               <Icon name="ios-arrow-forward" size={24} />
             </TouchableOpacity>
           )}

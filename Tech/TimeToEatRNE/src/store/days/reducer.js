@@ -121,5 +121,19 @@ export const getLastDayId = state => {
   dayIds.sort((a, b) => {
     return parseInt(a, 10) - parseInt(b, 10);
   });
+  return dayIds.pop();
+};
+export const getFirstDayId = state => {
+  const dayIds = getAllDayIds(state);
+  dayIds.sort((a, b) => {
+    return parseInt(a, 10) - parseInt(b, 10);
+  });
   return dayIds.shift();
+};
+export const getAllDayIdsInOrder = state => {
+  const dayIds = Object.keys(state.daysById);
+  let orderedDayIds = dayIds.map(dayId => parseInt(dayId, 10));
+  orderedDayIds.sort();
+  orderedDayIds = orderedDayIds.map(dayId => dayId.toString());
+  return orderedDayIds;
 };

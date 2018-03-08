@@ -81,6 +81,26 @@ export const expectedSnackNodeMonday = {
   time: snackTimestampMonday,
   completedTime: snackTimestampMonday,
 };
+export const checkedTrackedNode = {
+  type: PLAN,
+  completedTime: "123",
+  tracking: true,
+};
+export const uncheckedTrackedNode = {
+  type: PLAN,
+  completedTime: null,
+  tracking: true,
+};
+export const checkedUntrackedNode = {
+  type: PLAN,
+  completedTime: "123",
+  tracking: false,
+};
+export const uncheckedUntrackedNode = {
+  type: PLAN,
+  completedTime: null,
+  tracking: false,
+};
 export const expectedNodesMonday = Immutable([
   {
     type: PLAN,

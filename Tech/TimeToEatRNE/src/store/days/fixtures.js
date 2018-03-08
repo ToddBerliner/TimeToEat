@@ -14,6 +14,13 @@ export const stateWithDay = Immutable({
     "123": sampleDay,
   },
 });
+const dateKeys = {};
+dateKeys[getDateKey(new Date(2018, 1, 1))] = sampleDay;
+dateKeys[getDateKey(new Date(2018, 1, 5))] = sampleDay;
+dateKeys[getDateKey(new Date(2017, 12, 31))] = sampleDay;
+export const stateWithDateKeys = Immutable({
+  daysById: dateKeys,
+});
 export const planDayMonday = Immutable(defaultPlan.days.Monday);
 export const dateKeySunday = getDateKey(new Date(2017, 1, 5));
 export const dateKeyMonday = getDateKey(new Date(2017, 1, 6));

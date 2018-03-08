@@ -3,6 +3,9 @@ import { Reducer, Selector } from "redux-testkit";
 import days, {
   getDayById,
   getAllDayIds,
+  getLastDayId,
+  getFirstDayId,
+  getAllDayIdsInOrder,
   WATER_ADDED,
   WATER_REMOVED,
   tapWater,
@@ -11,6 +14,7 @@ import days, {
 import * as daysFixtures from "./fixtures";
 import * as nodesFixtures from "../nodes/fixtures";
 import { expectedMondayDayAndNodesAddedAction } from "../fixtures";
+import { getDateKey } from "../../utils";
 
 describe("days Actions", () => {
   it("should dispatch the water add action", () => {
@@ -100,5 +104,31 @@ describe("days Selectors", () => {
     Selector(getAllDayIds)
       .expect(daysFixtures.stateWithDay)
       .toReturn(["123"]);
+  });
+  it("should return the max date in state", () => {
+    const expectedDateKey = getDateKey(new Date(2018, 1, 5));
+    Selector(getLastDayId)
+      .expect(daysFixtures.stateWithDateKeys)
+      .toReturn(expectedDateKey);
+  });
+  it("should return the minimum date in state", () => {
+    const expectedDateKey = getDateKey(new Date(2017, 12, 31));
+    Selector(getFirstDayId)
+      .expect(daysFixtures.stateWithDateKeys)
+      .toReturn(expectedDateKey);
+  });
+  it("should return a correctly ASC ordered set of dayIds", () => {
+    const expectedDayIds = [
+      getDateKey(new Date(2018, 1, 1)),
+      getDateKey(new Date(2018, 1, 2)),
+      getDateKey(new Date(2018, 3, 20)),
+    ];
+    const daysState = { daysById: {} };
+    daysState.daysById[getDateKey(new Date(2018, 3, 20))] = "foo";
+    daysState.daysById[getDateKey(new Date(2018, 1, 2))] = "foo";
+    daysState.daysById[getDateKey(new Date(2018, 1, 1))] = "foo";
+    Selector(getAllDayIdsInOrder)
+      .expect(daysState)
+      .toReturn(expectedDayIds);
   });
 });

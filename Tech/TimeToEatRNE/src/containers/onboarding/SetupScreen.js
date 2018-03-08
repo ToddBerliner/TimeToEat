@@ -14,6 +14,8 @@ import MenuScreen from "../MenuScreen";
 import { completeOnboarding } from "../../store/uiState/reducer";
 import TteButton from "../../components/TteButton";
 
+import { clearSavedState } from "../../store/configureStore";
+
 const welcomeIcon = require("../../../assets/images/welcome_icon.png");
 import { obText, obTitle } from "../../styles/styles";
 
@@ -67,7 +69,8 @@ class SetupScreen extends Component {
 
 mapStateToProps = state => {
   const notifications = state.plan.notifications;
-  console.log(notifications);
+  console.log("state in SetupScreen");
+  console.log(state);
   return { notifications };
 };
 

@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, StyleSheet, View, TouchableHighlight } from "react-native";
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 const AddSnack = props => {
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       onPress={props.onTap}
       style={{ borderRadius: 8, paddingLeft: 8 }}
     >
@@ -12,7 +12,7 @@ const AddSnack = props => {
         <Icon name="ios-add-circle-outline" size={36} />
         <Text style={styles.addSnackText}>Add Snack</Text>
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 

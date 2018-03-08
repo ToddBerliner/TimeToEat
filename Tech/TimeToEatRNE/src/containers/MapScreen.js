@@ -51,6 +51,8 @@ class MapScreen extends Component {
           onPress={() => {
             navigate("Menu");
           }}
+          style={{ width: 30 }}
+          hitSlop={{ left: 10, right: 10 }}
         >
           <Icon name="ios-contact" size={24} />
         </TouchableOpacity>
@@ -60,8 +62,10 @@ class MapScreen extends Component {
           onPress={() => {
             navigate("Metrics");
           }}
+          style={{ width: 30 }}
+          hitSlop={{ left: 10, right: 10 }}
         >
-          <Icon name="ios-pulse" size={24} />
+          <Icon name="ios-pulse" size={24} style={{ alignSelf: "flex-end" }} />
         </TouchableOpacity>
       ),
     };
