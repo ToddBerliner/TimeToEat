@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   View,
   Text,
@@ -13,6 +14,7 @@ import { Permissions } from "expo";
 import TteButton from "../../components/TteButton";
 
 import { clearSavedState } from "../../store/configureStore";
+import { toggleNotifications } from "../../store/uiState/reducer";
 
 const welcomeIcon = require("../../../assets/images/welcome_icon.png");
 import { obText, obTitle } from "../../styles/styles";
@@ -26,6 +28,8 @@ class WelcomeScreen extends Component {
     Permissions.askAsync(Permissions.NOTIFICATIONS).then(permission => {
       const { status } = permission;
       if (status === "granted") {
+        this.props.turnOnNotifications();
+        console.log("Turned on notifications");
         this.props.navigation.navigate("Setup");
       } else {
         this._showAlert();
@@ -88,5 +92,9 @@ class WelcomeScreen extends Component {
     );
   }
 }
-
-export default WelcomeScreen;
+const mapDispatchToProps = dispatch => {
+  return {
+    turnOnNotifications: () => dispatch(toggleNotifications(true)),
+  };
+};
+export default connect(null, mapDispatchToProps)(WelcomeScreen);

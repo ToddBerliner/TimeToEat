@@ -69,8 +69,6 @@ class SetupScreen extends Component {
 
 mapStateToProps = state => {
   const notifications = state.plan.notifications;
-  console.log("state in SetupScreen");
-  console.log(state);
   return { notifications };
 };
 
