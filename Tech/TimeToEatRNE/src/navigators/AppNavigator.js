@@ -23,6 +23,7 @@ export const AppNavigator = StackNavigator(
   },
   {
     initialRouteName: "Map",
+    mode: "modal",
   },
 );
 

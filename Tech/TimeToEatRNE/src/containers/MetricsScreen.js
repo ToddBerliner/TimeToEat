@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import DateBackButton from "../components/DateBackButton";
 import { Calendar } from "react-native-calendars";
 import Colors from "../styles/colors";
@@ -12,6 +12,7 @@ import {
 } from "../store/days/reducer";
 import { getNodesByIds, OFFPLAN } from "../store/nodes/reducer";
 import { selectDay } from "../store/uiState/reducer";
+import { FormSettings, SectionStyles } from "../styles/formStyles";
 
 class MetricsScreen extends React.Component {
   /*
@@ -38,8 +39,11 @@ class MetricsScreen extends React.Component {
         paddingRight: 12,
         paddingLeft: 12,
       },
-      headerLeft: (
-        <DateBackButton onPress={() => navigation.goBack()} dayId={dayId} />
+      headerLeft: null,
+      headerRight: (
+        <TouchableOpacity onPress={() => navigation.goBack()} dayId={dayId}>
+          <Text style={{ fontFamily: "fugaz-one-regular" }}>Done</Text>
+        </TouchableOpacity>
       ),
     };
   };
@@ -76,6 +80,7 @@ class MetricsScreen extends React.Component {
           color: Colors.calBlue,
           startingDay: true,
           endingDay: true,
+          textColor: "white",
         };
         // ensure previous day is endingDay
         if (markedDates[prevDayId]) {
@@ -108,32 +113,75 @@ class MetricsScreen extends React.Component {
     return markedDates;
   }
 
-  // export const selectDay = (dayId = getDateKey()) => {
   _handleDayPress = day => {
     if (!day || !day.timestamp) return;
     const dayId = getDateKey(new Date(day.year, day.month - 1, day.day));
+    if (dayId >= getDateKey()) return;
     this.props.selectDay(dayId);
     this.props.navigation.goBack();
+  };
+
+  _legend = (text, color, idx) => {
+    return (
+      <View
+        key={`lv${idx}`}
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          marginLeft: FormSettings.textMarginLeft,
+          marginTop: 10,
+        }}
+      >
+        <View
+          style={{
+            width: 15,
+            height: 15,
+            borderRadius: 7,
+            backgroundColor: color,
+          }}
+        />
+        <Text style={[SectionStyles.sectionTitle, { marginBottom: 0 }]}>
+          {text}
+        </Text>
+      </View>
+    );
   };
 
   render() {
     const { firstDayId, lastDayId, days, nodes } = this.props;
     const markedDates = this._calculateMarkedDates(days, nodes);
+    const legends = [
+      {
+        text: "PERFECT!",
+        color: Colors.calGreen,
+      },
+      {
+        text: "50%+",
+        color: Colors.calYellow,
+      },
+      {
+        text: "< 50% OR OFF PLAN SNACKS",
+        color: Colors.calRed,
+      },
+    ].map((legendDef, idx) =>
+      this._legend(legendDef.text, legendDef.color, idx),
+    );
     return (
       <View
         style={{
           flex: 1,
           flexDirection: "column",
-          justifyContent: "flex-start",
-          alignItems: "center",
           backgroundColor: "rgb(245, 245, 245)",
+          paddingTop: 20,
         }}
       >
         <Text
           style={{
+            alignSelf: "flex-start",
             fontFamily: "fugaz-one-regular",
-            fontSize: 24,
-            marginTop: 20,
+            fontSize: 36,
+            marginLeft: FormSettings.textMarginLeft,
             marginBottom: 20,
           }}
         >
@@ -159,6 +207,7 @@ class MetricsScreen extends React.Component {
             hideExtraDays={true}
           />
         </View>
+        {legends}
       </View>
     );
   }

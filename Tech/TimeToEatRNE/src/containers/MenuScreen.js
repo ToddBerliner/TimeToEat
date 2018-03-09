@@ -48,8 +48,11 @@ class MenuScreen extends React.Component {
         paddingRight: 12,
         paddingLeft: 12,
       },
-      headerLeft: (
-        <DateBackButton onPress={() => navigation.goBack()} dayId={dayId} />
+      headerLeft: null,
+      headerRight: (
+        <TouchableOpacity onPress={() => navigation.goBack()} dayId={dayId}>
+          <Text style={{ fontFamily: "fugaz-one-regular" }}>Done</Text>
+        </TouchableOpacity>
       ),
     };
   };
