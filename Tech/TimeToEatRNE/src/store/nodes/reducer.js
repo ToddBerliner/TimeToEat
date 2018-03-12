@@ -21,6 +21,7 @@ export const NODE_CHECKED = "node_checked";
 export const NODE_UNCHECKED = "node_unchecked";
 export const NODE_ADDED = "node_added";
 export const NODE_UPDATED = "node_updated";
+export const SNACK_NODE_UNCHECKED = "snack_node_unchecked";
 
 // Actions
 export const tapNode = (nodeId, time) => ({
@@ -38,6 +39,13 @@ export const tapAddSnack = (dateKey, time) => {
   return {
     type: NODE_ADDED,
     node,
+  };
+};
+export const tapAndHoldSnack = (nodeId, time) => {
+  return {
+    type: SNACK_NODE_UNCHECKED,
+    nodeId,
+    time,
   };
 };
 
@@ -87,6 +95,11 @@ export default function reduce(state = initialState, action = {}) {
             action.time,
           ),
         },
+      });
+    case SNACK_NODE_UNCHECKED:
+      return Immutable({
+        ...state,
+        nodesById: Immutable.without(state.nodesById, action.nodeId),
       });
     case NODE_ADDED:
       const newNode = action.node;

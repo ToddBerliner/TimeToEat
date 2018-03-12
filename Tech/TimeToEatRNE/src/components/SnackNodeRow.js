@@ -1,12 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const SnackNodeRow = props => {
   return (
     <View style={styles.snackNodeRow}>
-      <View style={styles.circle}>
-        <View style={styles.circleFill} />
-      </View>
+      <TouchableOpacity
+        onLongPress={props.onTapAndHold}
+        style={{
+          width: 60,
+          height: 60,
+          borderRadius: 30,
+        }}
+      >
+        <View style={styles.circle}>
+          <View style={styles.circleFill} />
+        </View>
+      </TouchableOpacity>
       <View style={styles.nodeNameBlock}>
         <Text style={styles.nodeName}>Off-plan Snack</Text>
         <Text>{props.time}</Text>
@@ -21,7 +30,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     height: 60,
-    paddingLeft: 24
+    paddingLeft: 24,
   },
   circle: {
     width: 40,
@@ -32,20 +41,20 @@ const styles = StyleSheet.create({
     borderColor: "black",
     backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   circleFill: {
     backgroundColor: "black",
     width: 32,
     height: 32,
-    borderRadius: 16
+    borderRadius: 16,
   },
   nodeNameBlock: {
-    marginLeft: 22
+    marginLeft: 22,
   },
   nodeName: {
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
 });
 
 export default SnackNodeRow;

@@ -84,6 +84,7 @@
             ✔ WATER_ADDED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp added]}}
             ✔ WATER_REMOVED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp removed]}}
             ✔ NODE_ADDED => {...daysState, daysById[dayId]: {...day, nodeIds: {...nodeIds, [nodeId]: newNode}}}
+            ✔ NODE_UNCHECKED => {.daysState, daysById[dayId]: {...day, nodeIds: {...nodeIds (minus snack node id)}}}
     nodes
         Actions
             ✔ tapNode(nodeId) => dispatch({type: NODE_CHECKED, nodeId, timestamp})
@@ -98,6 +99,7 @@
             ✔ DAY_AND_NODES_ADDED => {...nodesState, {...nodesById, [[nodeId]: newNode...]}
             ✔ NODE_CHECKED => {...nodesState, {...nodesById, [nodeId]: {...node, compltedTime: timestamp}}}
             ✔ NODE_UNCHECKED => {...nodesState, {...nodesById, [nodeId]: {...node, compltedTime: null}}}
+            ✔ SNACK_NODE_UNCHECKED {...nodesState (without snack node)}
             ✔ NODE_ADDED => {...nodesState, {...nodedById, [nodeId]: snackNode}}}
             ✔ NODE_UPDATED => {...nodesState, {...nodesById, [nodeId]: editedNode}
 */

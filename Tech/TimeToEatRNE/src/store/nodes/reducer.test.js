@@ -12,7 +12,10 @@ import nodes, {
 } from "./reducer";
 import * as nodesFixtures from "./fixtures";
 import * as daysFixtures from "../days/fixtures";
-import { expectedMondayDayAndNodesAddedAction } from "../fixtures";
+import {
+  expectedMondayDayAndNodesAddedAction,
+  expectedSnackNodeUnCheckAction,
+} from "../fixtures";
 import { getDateKey } from "../../utils";
 
 describe("nodes Actions", () => {
@@ -51,6 +54,12 @@ describe("nodes Reducer", () => {
       .withState(nodesFixtures.expectedInitialStateWithMonday)
       .expect(nodesFixtures.expectedSnackTapAction)
       .toReturnState(nodesFixtures.expectedStateWithMondayWithSnack);
+  });
+  it("should remove a snack node from the nodes", () => {
+    Reducer(nodes)
+      .withState(nodesFixtures.expectedStateWithMondayWithSnack)
+      .expect(nodesFixtures.expectedSnackNodeUnCheckAction)
+      .toReturnState(nodesFixtures.expectedInitialStateWithMonday);
   });
   it("should set the completed time of an unchecked node", () => {
     Reducer(nodes)

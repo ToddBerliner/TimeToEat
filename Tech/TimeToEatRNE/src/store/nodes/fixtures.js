@@ -3,6 +3,7 @@ import { dateKeyMonday, snackTimestampMonday } from "../days/fixtures";
 import {
   NODE_CHECKED,
   NODE_UNCHECKED,
+  SNACK_NODE_UNCHECKED,
   NODE_UPDATED,
   PLAN,
   OFFPLAN,
@@ -160,6 +161,11 @@ export const expectedNodeCheckAction = {
 export const expectedNodeUnCheckAction = {
   type: NODE_UNCHECKED,
   nodeId: nodeKeyMonday0,
+  time: 456,
+};
+export const expectedSnackNodeUnCheckAction = {
+  type: SNACK_NODE_UNCHECKED,
+  nodeId: expectedSnackNodeMonday.id,
   time: 456,
 };
 export const expectedSnackTapAction = {

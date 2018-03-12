@@ -64,11 +64,17 @@ describe("days Reducer", () => {
       .expect(expectedMondayDayAndNodesAddedAction)
       .toReturnState(expectedSampleStateWithMonday);
   });
-  it("should splice a new nodeId into the correct index of nodesById", () => {
+  it("should splice a new nodeId into the correct index of day.nodeIds", () => {
     Reducer(days)
       .withState(daysFixtures.expectedInitialStateWithMonday)
       .expect(nodesFixtures.expectedSnackTapAction)
       .toReturnState(daysFixtures.expectedStateWithMondayWithSnack);
+  });
+  it("should remove a snack nodeId from the day.nodeIds", () => {
+    Reducer(days)
+      .withState(daysFixtures.expectedStateWithMondayWithSnack)
+      .expect(nodesFixtures.expectedSnackNodeUnCheckAction)
+      .toReturnState(daysFixtures.expectedInitialStateWithMonday);
   });
   it("should add a timestamp to the completedTimes of the water prop of the day", () => {
     Reducer(days)

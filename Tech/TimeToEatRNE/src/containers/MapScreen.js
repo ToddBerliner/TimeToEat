@@ -20,7 +20,12 @@ import {
 } from "../store/reducer";
 import { selectDay } from "../store/uiState/reducer";
 import { tapWater, tapAndHoldWater } from "../store/days/reducer";
-import { tapNode, tapAndHoldNode, tapAddSnack } from "../store/nodes/reducer";
+import {
+  tapNode,
+  tapAndHoldNode,
+  tapAddSnack,
+  tapAndHoldSnack,
+} from "../store/nodes/reducer";
 import {
   getDateKey,
   getAdjacentDateKey,
@@ -117,6 +122,9 @@ class MapScreen extends Component {
             onTapAndHold={nodeId =>
               this.props.tapAndHoldNode(nodeId, new Date().getTime())
             }
+            onTapAndHoldSnack={nodeId =>
+              this.props.tapAndHoldSnack(nodeId, new Date().getTime())
+            }
           />
         </View>
         <View style={styles.footerRow}>
@@ -177,6 +185,9 @@ const mapDispatchToProps = dispatch => {
     },
     tapAndHoldNode: (nodeId, time) => {
       dispatch(tapAndHoldNode(nodeId, time));
+    },
+    tapAndHoldSnack: (nodeId, time) => {
+      dispatch(tapAndHoldSnack(nodeId, time));
     },
     tapAddSnack: (dayId, time) => {
       dispatch(tapAddSnack(dayId, time));

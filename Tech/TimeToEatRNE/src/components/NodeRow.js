@@ -46,9 +46,7 @@ class NodeRow extends React.Component {
             onLongPress={props.onTapAndHold}
             style={styles.circleTouchable}
           >
-            <View style={styles.circle} onClick={props.onClick}>
-              {circleFillJsx}
-            </View>
+            <View style={styles.circle}>{circleFillJsx}</View>
           </TouchableOpacity>
           <View style={styles.nodeNameBlock}>
             <View style={styles.nodeNameRow}>

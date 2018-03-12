@@ -70,7 +70,13 @@ const NodeRows = props => {
         break;
       case OFFPLAN:
         rows.push(
-          <SnackNodeRow key={node.id} time={getFriendlyTime(node.time)} />,
+          <SnackNodeRow
+            key={node.id}
+            time={getFriendlyTime(node.time)}
+            onTapAndHold={() => {
+              props.onTapAndHoldSnack(node.id);
+            }}
+          />,
         );
       default:
         break;
