@@ -59,14 +59,15 @@ class MenuScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { notificationsDisabled: false };
+    this.state = { notificationsDisabled: false, openPicker: null };
   }
 
-  async componentWillMount() {
-    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-    if (status !== "granted") {
-      this.setState({ notificationsDisabled: true });
-    }
+  handleShowPicker(mealIdx) {
+    this.setState(prevState => {
+      return {
+        openPicker: prevState.openPicker === mealIdx ? null : mealIdx,
+      };
+    });
   }
 
   handleToggleWater(waterToggleState) {
@@ -93,6 +94,13 @@ class MenuScreen extends React.Component {
     }
   }
 
+  async componentWillMount() {
+    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    if (status !== "granted") {
+      this.setState({ notificationsDisabled: true });
+    }
+  }
+
   render() {
     const { waterTracking, plan, notifications, mealsOnly } = this.props;
     const { nodes } = plan.days.Monday;
@@ -114,6 +122,8 @@ class MenuScreen extends React.Component {
           onChange={this.handleChange.bind(this, idx, NAME)}
           onDateChange={this.handleChange.bind(this, idx, TIME)}
           onTrackingchange={this.handleChange.bind(this, idx, TRACKING)}
+          onShowPicker={this.handleShowPicker.bind(this, idx)}
+          isPickerShowing={this.state.openPicker === idx}
         />
       );
       if (idx < nodesArr.length - 1) {

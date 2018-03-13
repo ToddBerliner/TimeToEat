@@ -19,14 +19,8 @@ import {
 import Line from "./Line";
 
 class TextAndTimeRow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isPickerShowing: false,
-    };
-  }
   getPicker(date, onDateChange) {
-    if (this.state.isPickerShowing) {
+    if (this.props.isPickerShowing) {
       return (
         <View>
           <Line marginLeft={FormSettings.textMarginLeft} />
@@ -42,9 +36,6 @@ class TextAndTimeRow extends React.Component {
       return null;
     }
   }
-  handlePress(event) {
-    this.setState({ isPickerShowing: !this.state.isPickerShowing });
-  }
   render() {
     const {
       idx,
@@ -54,9 +45,10 @@ class TextAndTimeRow extends React.Component {
       date,
       onDateChange,
       onTrackingchange,
+      onShowPicker,
       tracking,
     } = this.props;
-    const wrapStyle = !this.state.isPickerShowing
+    const wrapStyle = !this.props.isPickerShowing
       ? { height: FormSettings.defaultCellHeight }
       : null;
     return (
@@ -74,11 +66,15 @@ class TextAndTimeRow extends React.Component {
             style={TIStyles.defaultInputStyle}
             onChange={onChange}
           />
-          <TouchableOpacity
-            onPress={this.handlePress.bind(this)}
-            style={TATStyles.container}
-          >
-            <Text key={`timevalue${idx}`} style={TATStyles.defaultValueStyle}>
+          <TouchableOpacity onPress={onShowPicker} style={TATStyles.container}>
+            <Text
+              key={`timevalue${idx}`}
+              style={
+                this.props.isPickerShowing
+                  ? TATStyles.defaultValueStyleActive
+                  : TATStyles.defaultValueStyle
+              }
+            >
               {cuteDate}
             </Text>
           </TouchableOpacity>

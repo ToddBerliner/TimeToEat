@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import Colors from "./colors";
 
 export const FormSettings = {
   textMarginLeft: 15,
@@ -59,6 +60,12 @@ export const TATStyles = StyleSheet.create({
   defaultValueStyle: {
     marginRight: FormSettings.textMarginLeft,
     color: "#696969",
+    fontSize: 16,
+    alignSelf: "flex-end",
+  },
+  defaultValueStyleActive: {
+    marginRight: FormSettings.textMarginLeft,
+    color: Colors.textRed,
     fontSize: 16,
     alignSelf: "flex-end",
   },

@@ -9,11 +9,12 @@ import {
 import { getFriendlyTime } from "../utils";
 import { CHECKED, MISSED } from "../store/nodes/reducer";
 import Icon from "react-native-vector-icons/Ionicons";
+import Colors from "../styles/colors";
 
 class NodeRow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isPickerShowing: false };
+    this.state = { isPickerShowing: props.isPickerShowing };
   }
 
   render() {
@@ -51,14 +52,14 @@ class NodeRow extends React.Component {
           <View style={styles.nodeNameBlock}>
             <View style={styles.nodeNameRow}>
               <Text style={styles.nodeName}>{props.name}</Text>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({
-                    isPickerShowing: !this.state.isPickerShowing,
-                  });
-                }}
-              >
-                <Text style={styles.nodeEatenTime}>
+              <TouchableOpacity onPress={props.onShowPicker}>
+                <Text
+                  style={
+                    props.isPickerShowing
+                      ? styles.nodeEatenTimeActive
+                      : styles.nodeEatenTime
+                  }
+                >
                   {getFriendlyTime(props.completedTime)}
                 </Text>
               </TouchableOpacity>
@@ -66,7 +67,7 @@ class NodeRow extends React.Component {
             <Text>{getFriendlyTime(props.time)}</Text>
           </View>
         </View>
-        {this.state.isPickerShowing ? (
+        {props.isPickerShowing ? (
           <DatePickerIOS
             mode="time"
             onDateChange={event => {
@@ -150,6 +151,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginRight: 14,
     color: "#969696",
+  },
+  nodeEatenTimeActive: {
+    fontSize: 20,
+    marginRight: 14,
+    color: Colors.textRed,
   },
 });
 

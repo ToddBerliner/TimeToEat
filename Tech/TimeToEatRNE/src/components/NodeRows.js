@@ -64,6 +64,8 @@ const NodeRows = props => {
                   props.onTapAndHold(node.id);
                 }
               }}
+              isPickerShowing={props.openPicker === node.id}
+              onShowPicker={() => props.onShowPicker(node.id)}
             />,
           );
         }
@@ -82,7 +84,6 @@ const NodeRows = props => {
         break;
     }
   });
-
   return <View style={styles.content}>{rows}</View>;
 };
 

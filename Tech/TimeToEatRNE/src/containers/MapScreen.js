@@ -80,23 +80,21 @@ class MapScreen extends Component {
     super(props);
     this.state = {
       tomorrow: parseInt(getAdjacentDateKey(getDateKey(), NEXT), 10),
+      openPicker: null,
     };
   }
 
-  checkTime() {
+  _checkTime() {
     // Load new day when it comes around
     if (
       new Date().getTime() === this.state.tomorrow ||
       new Date().getTime() > this.state.tomorrow
     ) {
+      this.setState({
+        tomorrow: parseInt(getAdjacentDateKey(getDateKey(), NEXT), 10),
+      });
       this.props.selectDay(this.props.dayId, NEXT);
     }
-  }
-
-  async componentDidMount() {
-    // start timer to check for new day
-    this.timer = setInterval(() => this.checkTime(), 1000);
-    Notifications.addListener(this._handleNotification);
   }
 
   _handleNotification = ({ origin, data }) => {
@@ -104,6 +102,20 @@ class MapScreen extends Component {
       this.notification.show({ ...data });
     }
   };
+
+  _handleShowPicker(nodeId) {
+    this.setState(prevState => {
+      return {
+        openPicker: prevState.openPicker === nodeId ? null : nodeId,
+      };
+    });
+  }
+
+  async componentDidMount() {
+    // start timer to check for new day
+    this.timer = setInterval(() => this._checkTime(), 1000);
+    Notifications.addListener(this._handleNotification);
+  }
 
   componentWillUnmount() {
     clearInterval(this.timer);
@@ -116,6 +128,8 @@ class MapScreen extends Component {
           <NodeRows
             dayId={this.props.dayId}
             nodes={this.props.nodes}
+            openPicker={this.state.openPicker}
+            onShowPicker={nodeId => this._handleShowPicker(nodeId)}
             onTap={(nodeId, timestamp = new Date().getTime()) => {
               this.props.tapNode(nodeId, timestamp);
             }}
