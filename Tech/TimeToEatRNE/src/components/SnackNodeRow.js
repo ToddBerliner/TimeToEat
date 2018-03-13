@@ -1,25 +1,54 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  DatePickerIOS,
+} from "react-native";
+import { getFriendlyTime } from "../utils";
+import Colors from "../styles/colors";
 
 const SnackNodeRow = props => {
   return (
-    <View style={styles.snackNodeRow}>
-      <TouchableOpacity
-        onLongPress={props.onTapAndHold}
-        style={{
-          width: 60,
-          height: 60,
-          borderRadius: 30,
-        }}
-      >
-        <View style={styles.circle}>
-          <View style={styles.circleFill} />
+    <View style={{ display: "flex" }}>
+      <View style={styles.snackNodeRow}>
+        <TouchableOpacity
+          onLongPress={props.onTapAndHold}
+          style={{
+            width: 60,
+            height: 40,
+            borderRadius: 30,
+          }}
+        >
+          <View style={styles.circle}>
+            <View style={styles.circleFill} />
+          </View>
+        </TouchableOpacity>
+        <View style={styles.nodeNameBlock}>
+          <Text style={styles.nodeName}>Off-plan Snack</Text>
         </View>
-      </TouchableOpacity>
-      <View style={styles.nodeNameBlock}>
-        <Text style={styles.nodeName}>Off-plan Snack</Text>
-        <Text>{props.time}</Text>
+        <TouchableOpacity onPress={props.onShowPicker}>
+          <Text
+            style={
+              props.isPickerShowing
+                ? styles.nodeTimeBlockActive
+                : styles.nodeTimeBlock
+            }
+          >
+            {getFriendlyTime(props.time)}
+          </Text>
+        </TouchableOpacity>
       </View>
+      {props.isPickerShowing ? (
+        <DatePickerIOS
+          mode="time"
+          onDateChange={event => {
+            props.onDateChange(event.getTime());
+          }}
+          date={new Date(props.time)}
+        />
+      ) : null}
     </View>
   );
 };
@@ -50,7 +79,17 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   nodeNameBlock: {
-    marginLeft: 22,
+    flex: 1,
+  },
+  nodeTimeBlock: {
+    fontSize: 20,
+    marginRight: 14,
+    color: "#969696",
+  },
+  nodeTimeBlockActive: {
+    fontSize: 20,
+    marginRight: 14,
+    color: Colors.textRed,
   },
   nodeName: {
     fontSize: 20,

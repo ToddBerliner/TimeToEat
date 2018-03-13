@@ -1,6 +1,11 @@
 import Immutable from "seamless-immutable";
 import { DAY_AND_NODES_ADDED } from "../reducer";
-import { NODE_ADDED, SNACK_NODE_UNCHECKED } from "../nodes/reducer";
+import {
+  NODE_ADDED,
+  SNACK_NODE_UNCHECKED,
+  NODE_CHECKED,
+} from "../nodes/reducer";
+import { getIdsFromKey } from "../../utils";
 
 // Action Types
 export const WATER_ADDED = "water_added";
@@ -57,7 +62,6 @@ const waterAdd = (day, time) => {
     return day;
   }
 };
-
 const waterRemove = day => {
   const newCompletes = day.water.completedTimes.asMutable();
   newCompletes.pop();
@@ -76,25 +80,23 @@ export default function reduce(state = initialState, action = {}) {
       });
     case NODE_ADDED:
       const nodeId = action.node.id;
-      const nodeIdParts = nodeId.split("_");
-      const dayId = nodeIdParts[0];
+      const ids = getIdsFromKey(nodeId);
       return Immutable({
         ...state,
         daysById: {
           ...state.daysById,
-          [dayId]: nodeIdAdd(getDayById(state, dayId), nodeId),
+          [ids.dayId]: nodeIdAdd(getDayById(state, ids.dayId), nodeId),
         },
       });
     case SNACK_NODE_UNCHECKED:
       const snackNodeId = action.nodeId;
-      const snackNodeParts = snackNodeId.split("_");
-      const snackDayId = snackNodeParts[0];
+      const snackNodeIds = getIdsFromKey(snackNodeId);
       return Immutable({
         ...state,
         daysById: {
           ...state.daysById,
-          [snackDayId]: nodeIdRemove(
-            getDayById(state, snackDayId),
+          [snackNodeIds.dayId]: nodeIdRemove(
+            getDayById(state, snackNodeIds.dayId),
             snackNodeId,
           ),
         },
@@ -121,6 +123,8 @@ export default function reduce(state = initialState, action = {}) {
           ),
         },
       });
+    case NODE_CHECKED:
+      return state;
     default:
       return state;
   }

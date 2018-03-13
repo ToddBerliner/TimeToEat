@@ -29,7 +29,6 @@ class WelcomeScreen extends Component {
       const { status } = permission;
       if (status === "granted") {
         this.props.turnOnNotifications();
-        console.log("Turned on notifications");
         this.props.navigation.navigate("Setup");
       } else {
         this._showAlert();

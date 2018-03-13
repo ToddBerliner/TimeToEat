@@ -5,6 +5,7 @@ import {
   createSnackNode,
   getTimestampFromTimeObj,
   getDateKey,
+  getIdsFromKey,
 } from "../../utils";
 
 // Node Statuses
@@ -48,6 +49,16 @@ export const tapAndHoldSnack = (nodeId, time) => {
     time,
   };
 };
+export const editSnackTime = (nodeId, time) => {
+  return function(dispatch, getState) {
+    // remove the existing snack node
+    dispatch({ type: SNACK_NODE_UNCHECKED, nodeId, time });
+    // create and add a new snack node
+    const dateKey = getIdsFromKey(nodeId).dayId;
+    const node = createSnackNode(dateKey, time);
+    dispatch({ type: NODE_ADDED, node });
+  };
+};
 
 // Reducer
 const initialState = Immutable({
@@ -62,7 +73,9 @@ const nodesAdd = (nodesById, action) => {
   return newNodesById;
 };
 const nodeCheck = (node, timestamp) => {
-  return { ...node, completedTime: timestamp };
+  return node.type === PLAN
+    ? { ...node, completedTime: timestamp }
+    : { ...node, time: timestamp, completedTime: timestamp };
 };
 const nodeUnCheck = node => {
   return { ...node, completedTime: null };

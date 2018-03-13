@@ -1,5 +1,10 @@
 import Immutable from "seamless-immutable";
-import { dateKeyMonday, snackTimestampMonday } from "../days/fixtures";
+import {
+  dateKeyMonday,
+  snackTimestampMonday,
+  snackTimestampMondayEdited,
+  snackKeyMondayEdited,
+} from "../days/fixtures";
 import {
   NODE_CHECKED,
   NODE_UNCHECKED,
@@ -82,6 +87,12 @@ export const expectedSnackNodeMonday = {
   time: snackTimestampMonday,
   completedTime: snackTimestampMonday,
 };
+export const expectedSnackNodeMondayEdited = {
+  type: OFFPLAN,
+  id: `${dateKeyMonday}_${snackTimestampMondayEdited}`,
+  time: snackTimestampMondayEdited,
+  completedTime: snackTimestampMondayEdited,
+};
 export const checkedTrackedNode = {
   type: PLAN,
   completedTime: "123",
@@ -153,9 +164,18 @@ export const expectedStateWithMondayWithSnack = expectedInitialStateWithMonday.s
   ["nodesById", expectedSnackNodeMonday.id],
   expectedSnackNodeMonday,
 );
+export const expectedStateWithMondayWithSnackEdited = expectedInitialStateWithMonday.setIn(
+  ["nodesById", expectedSnackNodeMondayEdited.id],
+  expectedSnackNodeMondayEdited,
+);
 export const expectedNodeCheckAction = {
   type: NODE_CHECKED,
   nodeId: nodeKeyMonday0,
+  time: 456,
+};
+export const expectedSnackNodeChangeAction = {
+  type: NODE_CHECKED,
+  nodeId: expectedSnackNodeMonday.id,
   time: 456,
 };
 export const expectedNodeUnCheckAction = {
@@ -166,11 +186,20 @@ export const expectedNodeUnCheckAction = {
 export const expectedSnackNodeUnCheckAction = {
   type: SNACK_NODE_UNCHECKED,
   nodeId: expectedSnackNodeMonday.id,
-  time: 456,
+  time: snackTimestampMonday,
 };
 export const expectedSnackTapAction = {
   type: NODE_ADDED,
   node: expectedSnackNodeMonday,
+};
+export const expectedSnackNodeEditActionUncheck = {
+  type: SNACK_NODE_UNCHECKED,
+  nodeId: expectedSnackNodeMonday.id,
+  time: snackTimestampMondayEdited,
+};
+export const expectedSnackEditActionNodeAdded = {
+  type: NODE_ADDED,
+  node: expectedSnackNodeMondayEdited,
 };
 export const expectedNodeUpdatedAction = {
   type: NODE_UPDATED,

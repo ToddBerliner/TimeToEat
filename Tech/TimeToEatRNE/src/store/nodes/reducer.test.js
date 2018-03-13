@@ -1,5 +1,5 @@
 import Immutable from "seamless-immutable";
-import { Selector, Reducer } from "redux-testkit";
+import { Selector, Reducer, Thunk } from "redux-testkit";
 import nodes, {
   getNodeById,
   getNodesByIds,
@@ -9,6 +9,7 @@ import nodes, {
   tapNode,
   tapAndHoldNode,
   tapAddSnack,
+  editSnackTime,
 } from "./reducer";
 import * as nodesFixtures from "./fixtures";
 import * as daysFixtures from "../days/fixtures";
@@ -36,6 +37,22 @@ describe("nodes Actions", () => {
         daysFixtures.snackTimestampMonday,
       ),
     ).toEqual(nodesFixtures.expectedSnackTapAction);
+  });
+  it("should return a Thunk with the correct actions for editing a snack", () => {
+    const dispatches = Thunk(editSnackTime)
+      .withState(nodesFixtures.expectedInitialStateWithMonday)
+      .execute(
+        daysFixtures.snackKeyMonday, // orig node edited
+        daysFixtures.snackTimestampMondayEdited, // updated timestamp
+      );
+    // expect 2 dispatches - SNACK_NODE_UNCHECKED & NODE_ADDED
+    expect(dispatches.length).toBe(2);
+    expect(dispatches[0].getAction()).toEqual(
+      nodesFixtures.expectedSnackNodeEditActionUncheck,
+    );
+    expect(dispatches[1].getAction()).toEqual(
+      nodesFixtures.expectedSnackEditActionNodeAdded,
+    );
   });
 });
 

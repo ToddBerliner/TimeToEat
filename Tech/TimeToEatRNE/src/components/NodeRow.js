@@ -12,11 +12,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Colors from "../styles/colors";
 
 class NodeRow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isPickerShowing: props.isPickerShowing };
-  }
-
   render() {
     let circleFillJsx;
     const { props } = this;

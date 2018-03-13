@@ -74,10 +74,13 @@ const NodeRows = props => {
         rows.push(
           <SnackNodeRow
             key={node.id}
-            time={getFriendlyTime(node.time)}
+            time={node.time}
             onTapAndHold={() => {
               props.onTapAndHoldSnack(node.id);
             }}
+            onDateChange={time => props.onEditSnackTime(node.id, time)}
+            isPickerShowing={props.openPicker === node.id}
+            onShowPicker={() => props.onShowPicker(node.id)}
           />,
         );
       default:

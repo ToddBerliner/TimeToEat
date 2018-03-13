@@ -25,6 +25,7 @@ import {
   tapAndHoldNode,
   tapAddSnack,
   tapAndHoldSnack,
+  editSnackTime,
 } from "../store/nodes/reducer";
 import {
   getDateKey,
@@ -139,6 +140,9 @@ class MapScreen extends Component {
             onTapAndHoldSnack={nodeId =>
               this.props.tapAndHoldSnack(nodeId, new Date().getTime())
             }
+            onEditSnackTime={(nodeId, timestamp) =>
+              this.props.editSnackTime(nodeId, timestamp)
+            }
           />
         </View>
         <View style={styles.footerRow}>
@@ -202,6 +206,9 @@ const mapDispatchToProps = dispatch => {
     },
     tapAndHoldSnack: (nodeId, time) => {
       dispatch(tapAndHoldSnack(nodeId, time));
+    },
+    editSnackTime: (nodeId, time) => {
+      dispatch(editSnackTime(nodeId, time));
     },
     tapAddSnack: (dayId, time) => {
       dispatch(tapAddSnack(dayId, time));

@@ -55,7 +55,10 @@ export function getDateFromKey(date) {
     return undefined;
   }
 }
-
+export function getIdsFromKey(key) {
+  const keyParts = key.split("_");
+  return { dayId: keyParts[0], timestamp: keyParts[1] };
+}
 export function getAdjacentDateKey(dateKey, dir) {
   let adjacentDate;
   if (dir === PREV) {

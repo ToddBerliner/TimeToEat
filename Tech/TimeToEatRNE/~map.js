@@ -88,9 +88,13 @@
     nodes
         Actions
             ✔ tapNode(nodeId) => dispatch({type: NODE_CHECKED, nodeId, timestamp})
-            ✔ tapAndHoldNode(nodeId) => dispatch({type: NODE_UNCHECKED, nodeId, timestamp})
+            ✔ tapAndHoldNode(nodeId) => dispatch({type: SNACK_NODE_UNCHECKED, nodeId, timestamp})
             ✔ tapAddSnack(dayId, timestamp) =>
                 // create new snack node createSnackNode(dayId, timestamp)
+                => dispatch({type: NODE_ADDED, snackNode})
+            ✔ editSnackTime(snackId, timestamp) =>
+                // update snack node with new time
+                => dispatch({type: SNACK_NODE_UNCHECKED, nodeId, timestamp})
                 => dispatch({type: NODE_ADDED, snackNode})
         Selectors
             ✔ getNodeById(nodeId) => returns the requested node or undefined if it doesn't exist
