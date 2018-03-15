@@ -9,6 +9,12 @@ export const expectedInitialState = Immutable({
   onboardingComplete: false,
 });
 
+export const expectedInitialStateNotificationsOn = Immutable.set(
+  expectedInitialState,
+  "notifications",
+  true,
+);
+
 export const expectedSampleDaySelected = {
   type: DAY_SELECTED,
   dayId: "123",

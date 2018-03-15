@@ -22,3 +22,13 @@ export const obTitle = {
   letterSpacing: -1,
   marginBottom: 20,
 };
+export const whiteBlock = {
+  width: "100%",
+  borderTopWidth: 1,
+  borderBottomWidth: 1,
+  marginBottom: 10,
+  backgroundColor: "white",
+  borderColor: "#D3D3D3",
+  paddingTop: 8,
+  paddingBottom: 8,
+};

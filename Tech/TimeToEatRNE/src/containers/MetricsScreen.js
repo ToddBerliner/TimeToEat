@@ -13,6 +13,7 @@ import {
 import { getNodesByIds, OFFPLAN } from "../store/nodes/reducer";
 import { selectDay } from "../store/uiState/reducer";
 import { FormSettings, SectionStyles } from "../styles/formStyles";
+import { whiteBlock } from "../styles/styles";
 
 class MetricsScreen extends React.Component {
   /*
@@ -187,17 +188,8 @@ class MetricsScreen extends React.Component {
         >
           How You're Eating
         </Text>
-        <View
-          style={{
-            width: "100%",
-            borderTopWidth: 1,
-            borderBottomWidth: 1,
-            backgroundColor: "white",
-            borderColor: "#D3D3D3",
-            paddingTop: 8,
-            paddingBottom: 8,
-          }}
-        >
+        <Text style={SectionStyles.sectionTitle}>MEAL TRACKING</Text>
+        <View style={whiteBlock}>
           <Calendar
             style={{ width: "90%", alignSelf: "center" }}
             markedDates={markedDates}
@@ -207,7 +199,9 @@ class MetricsScreen extends React.Component {
             hideExtraDays={true}
           />
         </View>
-        {legends}
+        {/*legends*/}
+        <Text style={SectionStyles.sectionTitle}>WEIGHT TRACKING</Text>
+        <View style={whiteBlock} />
       </View>
     );
   }

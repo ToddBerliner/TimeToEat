@@ -60,6 +60,7 @@ const todayState = {
   plan: defaultPlan,
   days: { daysById: {} },
   nodes: { nodesById: {} },
+  uiState: uiStateFixtures.expectedInitialStateNotificationsOn,
 };
 todayState.days.daysById[today] = {
   id: today,
