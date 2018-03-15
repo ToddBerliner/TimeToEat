@@ -10,6 +10,7 @@ import { getIdsFromKey } from "../../utils";
 // Action Types
 export const WATER_ADDED = "water_added";
 export const WATER_REMOVED = "water_removed";
+export const WEIGHT_EDITED = "weight_edited";
 
 // Actions
 export const tapWater = (dayId, time) => {
@@ -23,6 +24,13 @@ export const tapAndHoldWater = dayId => {
   return {
     type: WATER_REMOVED,
     dayId,
+  };
+};
+export const editWeight = (dayId, weight) => {
+  return {
+    type: WEIGHT_EDITED,
+    dayId,
+    weight,
   };
 };
 
@@ -123,8 +131,12 @@ export default function reduce(state = initialState, action = {}) {
           ),
         },
       });
-    case NODE_CHECKED:
-      return state;
+    case WEIGHT_EDITED:
+      const newState = state.setIn(
+        ["daysById", action.dayId, "weight"],
+        action.weight,
+      );
+      return newState;
     default:
       return state;
   }

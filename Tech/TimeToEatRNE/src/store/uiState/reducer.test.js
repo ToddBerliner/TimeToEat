@@ -38,6 +38,18 @@ describe("uiState Actions", () => {
       uiStateFixtures.expectedMondaySelectedAction,
     );
   });
+  it("should return a Thunk with ADDED actions with correct weight", () => {
+    // initial state with a single day with a weight for the day
+    // doing selectDay should create the new day with the previous day's weight
+    // dispatches[0] should be expectedDayAndNodesAddedWithWeight
+    const dispatches = Thunk(selectDay)
+      .withState(rootFixtures.stateWithWeight)
+      .execute(daysFixtures.dateKeyTuesday);
+    expect(dispatches.length).toBe(2);
+    expect(dispatches[0].getAction()).toEqual(
+      rootFixtures.expectedTuesdayDayAndNodesAddedAction,
+    );
+  });
   // test action if day exists
   it("should dispatch the day selected action with the dayId", () => {
     const dispatches = Thunk(selectDay)

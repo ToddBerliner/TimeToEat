@@ -1,5 +1,5 @@
 import Immutable from "seamless-immutable";
-import { WATER_ADDED, WATER_REMOVED } from "./reducer";
+import { WATER_ADDED, WATER_REMOVED, WEIGHT_EDITED } from "./reducer";
 import defaultPlan from "../plan/defaultPlan";
 import { getDateKey } from "../../utils";
 
@@ -24,6 +24,7 @@ export const stateWithDateKeys = Immutable({
 export const planDayMonday = Immutable(defaultPlan.days.Monday);
 export const dateKeySunday = getDateKey(new Date(2017, 1, 5));
 export const dateKeyMonday = getDateKey(new Date(2017, 1, 6));
+export const dateKeyTuesday = getDateKey(new Date(2017, 1, 7));
 export const snackTimestampMonday = new Date(2017, 1, 6, 15, 15).getTime(); // 3:15pm
 export const snackKeyMonday = `${dateKeyMonday}_${snackTimestampMonday}`;
 export const snackTimestampMondayEdited = new Date(2017, 1, 23, 15).getTime(); // 11:15pm
@@ -34,6 +35,11 @@ export const expectedWaterAddAction = {
   type: WATER_ADDED,
   dayId: dateKeyMonday,
   time: "456",
+};
+export const expectedWeightEditedAction = {
+  type: WEIGHT_EDITED,
+  dayId: dateKeyMonday,
+  weight: 123,
 };
 export const expectedWaterRemoveAction = {
   type: WATER_REMOVED,
@@ -53,6 +59,39 @@ export const expectedDayMonday = Immutable({
     "1486368000000_1486432800000",
   ],
   offPlanNodeIds: [],
+  weight: 0,
+});
+export const expectedDayMondayWithWeight = Immutable({
+  id: dateKeyMonday,
+  water: {
+    completedTimes: [],
+    target: 8,
+  },
+  nodeIds: [
+    mealKeyMonday,
+    "1486368000000_1486402200000",
+    "1486368000000_1486413000000",
+    "1486368000000_1486422000000",
+    "1486368000000_1486432800000",
+  ],
+  offPlanNodeIds: [],
+  weight: 123,
+});
+export const expectedDayTuesdayWithWeight = Immutable({
+  id: dateKeyTuesday,
+  water: {
+    completedTimes: [],
+    target: 8,
+  },
+  nodeIds: [
+    "1486454400000_1486479600000",
+    "1486454400000_1486488600000",
+    "1486454400000_1486499400000",
+    "1486454400000_1486508400000",
+    "1486454400000_1486519200000",
+  ],
+  offPlanNodeIds: [],
+  weight: 123,
 });
 export const expectedDayMondayWithWater = Immutable({
   id: dateKeyMonday,
@@ -68,12 +107,17 @@ export const expectedDayMondayWithWater = Immutable({
     "1486368000000_1486432800000",
   ],
   offPlanNodeIds: [],
+  weight: 0,
 });
 export const expectedInitialStateWithMonday = Immutable({
   daysById: {
-    "1486368000000": expectedDayMonday,
+    [dateKeyMonday]: expectedDayMonday,
   },
 });
+export const stateWithMondayWithWeight = expectedInitialStateWithMonday.setIn(
+  ["daysById", [dateKeyMonday]],
+  expectedDayMondayWithWeight,
+);
 export const expectedStateWithMondayWithSnack = Immutable({
   daysById: {
     "1486368000000": {
@@ -91,6 +135,7 @@ export const expectedStateWithMondayWithSnack = Immutable({
         "1486368000000_1486432800000",
       ],
       offPlanNodeIds: [],
+      weight: 0,
     },
   },
 });

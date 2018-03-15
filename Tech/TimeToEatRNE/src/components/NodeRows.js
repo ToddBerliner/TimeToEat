@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
     backgroundColor: "whitesmoke",
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
+    marginBottom: 50,
   },
 });
 

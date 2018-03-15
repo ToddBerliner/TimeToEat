@@ -10,6 +10,7 @@ import days, {
   WATER_REMOVED,
   tapWater,
   tapAndHoldWater,
+  editWeight,
 } from "./reducer";
 import * as daysFixtures from "./fixtures";
 import * as nodesFixtures from "../nodes/fixtures";
@@ -25,6 +26,11 @@ describe("days Actions", () => {
   it("should dispatch the water removed action", () => {
     expect(tapAndHoldWater(daysFixtures.dateKeyMonday, "456")).toEqual(
       daysFixtures.expectedWaterRemoveAction,
+    );
+  });
+  it("should dispatch the weight edited action", () => {
+    expect(editWeight(daysFixtures.dateKeyMonday, 123)).toEqual(
+      daysFixtures.expectedWeightEditedAction,
     );
   });
 });
@@ -87,6 +93,12 @@ describe("days Reducer", () => {
       .withState(expectedStateWaterAdded)
       .expect(daysFixtures.expectedWaterRemoveAction)
       .toReturnState(daysFixtures.expectedInitialStateWithMonday);
+  });
+  it("should edit the weight for a day", () => {
+    Reducer(days)
+      .withState(daysFixtures.expectedInitialStateWithMonday)
+      .expect(daysFixtures.expectedWeightEditedAction)
+      .toReturnState(daysFixtures.stateWithMondayWithWeight);
   });
 });
 

@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
   Alert,
   Button,
+  PickerIOS,
 } from "react-native";
 import AddSnack from "../components/AddSnack";
 import WaterPie from "../components/WaterPie";
 import NodeRows from "../components/NodeRows";
 import TitleDateNav from "../containers/TitleDateNav";
+import NumberSpinner from "../components/NumberSpinner";
 import {
   _getSelectedDayId,
   _getWaterTrackingState,
@@ -19,7 +21,7 @@ import {
   _getNodesByIds,
 } from "../store/reducer";
 import { selectDay } from "../store/uiState/reducer";
-import { tapWater, tapAndHoldWater } from "../store/days/reducer";
+import { tapWater, tapAndHoldWater, editWeight } from "../store/days/reducer";
 import {
   tapNode,
   tapAndHoldNode,
@@ -36,8 +38,10 @@ import {
   NEXT,
 } from "../utils";
 import Icon from "react-native-vector-icons/Ionicons";
+import McIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { StackNavigator } from "react-navigation";
 import { Notifications, Permissions } from "expo";
+import Colors from "../styles/colors";
 
 import Notification from "react-native-in-app-notification";
 const notificationIcon = require("../../assets/images/notification_icon.png");
@@ -82,6 +86,7 @@ class MapScreen extends Component {
     this.state = {
       tomorrow: parseInt(getAdjacentDateKey(getDateKey(), NEXT), 10),
       openPicker: null,
+      weightPickerOpen: false,
     };
   }
 
@@ -104,10 +109,20 @@ class MapScreen extends Component {
     }
   };
 
+  _toggleWeightPicker() {
+    this.setState(prevState => {
+      return {
+        weightPickerOpen: !prevState.weightPickerOpen,
+        openPicker: null,
+      };
+    });
+  }
+
   _handleShowPicker(nodeId) {
     this.setState(prevState => {
       return {
         openPicker: prevState.openPicker === nodeId ? null : nodeId,
+        weightPickerOpen: false,
       };
     });
   }
@@ -125,6 +140,45 @@ class MapScreen extends Component {
   render() {
     return (
       <View style={styles.appWrap}>
+        <View style={styles.weightRow}>
+          <View style={styles.weightTextRow}>
+            <TouchableOpacity
+              onPress={this._toggleWeightPicker.bind(this)}
+              style={styles.weightTextButton}
+            >
+              <McIcon name="scale-bathroom" size={34} />
+              <Text
+                style={
+                  this.state.weightPickerOpen
+                    ? styles.weightTextActive
+                    : styles.weightText
+                }
+              >
+                {this.props.weight}
+              </Text>
+              <Text
+                style={
+                  this.state.weightPickerOpen
+                    ? styles.weightTextLabelActive
+                    : styles.weightTextLabel
+                }
+              >
+                lbs.
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {this.state.weightPickerOpen ? (
+            <View style={styles.topBottomBorder}>
+              <NumberSpinner
+                value={this.props.weight}
+                label="LBS."
+                onValueChange={val =>
+                  this.props.editWeight(this.props.dayId, val)
+                }
+              />
+            </View>
+          ) : null}
+        </View>
         <View style={styles.bodyRow}>
           <NodeRows
             dayId={this.props.dayId}
@@ -187,6 +241,7 @@ const mapStateToProps = state => {
     nodes,
     isToday,
     waterTracking,
+    weight: dayObj.weight,
   };
 };
 
@@ -213,6 +268,9 @@ const mapDispatchToProps = dispatch => {
     tapAddSnack: (dayId, time) => {
       dispatch(tapAddSnack(dayId, time));
     },
+    editWeight: (dayId, weight) => {
+      dispatch(editWeight(dayId, weight));
+    },
     selectDay: (dayId, dir) => {
       const newDayId = getAdjacentDateKey(dayId, dir);
       dispatch(selectDay(newDayId));
@@ -229,9 +287,50 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(102, 102, 102)",
     height: 50,
   },
+  topBottomBorder: {
+    borderColor: "#acacac",
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  weightRow: {
+    flexDirection: "column",
+    marginTop: 12,
+    marginBottom: 12,
+  },
+  weightTextRow: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginBottom: 10,
+  },
+  weightTextButton: {
+    marginRight: 14,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  weightText: {
+    fontSize: 20,
+    letterSpacing: -1,
+    marginLeft: 6,
+  },
+  weightTextActive: {
+    fontSize: 20,
+    letterSpacing: -1,
+    marginLeft: 6,
+    color: Colors.textRed,
+  },
+  weightTextLabel: {
+    fontSize: 20,
+    letterSpacing: -1,
+    marginLeft: 2,
+  },
+  weightTextLabelActive: {
+    fontSize: 20,
+    letterSpacing: -1,
+    marginLeft: 2,
+    color: Colors.textRed,
+  },
   bodyRow: {
     flex: 1,
-    backgroundColor: "rgb(220,220,220)",
   },
   titleRow: {
     height: 36,

@@ -1,5 +1,11 @@
 import Immutable from "seamless-immutable";
-import { getDateKey, getDateFromKey, createDayAndNodes } from "../../utils";
+import {
+  getDateKey,
+  getDateFromKey,
+  getAdjacentDateKey,
+  createDayAndNodes,
+  PREV,
+} from "../../utils";
 import { _getDayById, DAY_AND_NODES_ADDED } from "../reducer";
 import {
   getPlanDayByDayId,
@@ -20,7 +26,10 @@ export const selectDay = (dayId = getDateKey()) => {
     if (_getDayById(getState(), dayId) === undefined) {
       // create the day and dispatch the DAY_AND_NODES_ADDED action
       const planDay = getPlanDayByDayId(getState().plan, dayId);
-      const dayAndNodes = createDayAndNodes(dayId, planDay);
+      // check for previous day
+      const prevDay = _getDayById(getState(), getAdjacentDateKey(dayId, PREV));
+      const prevWeight = prevDay ? prevDay.weight : undefined;
+      const dayAndNodes = createDayAndNodes(dayId, planDay, prevWeight);
       dispatch({ type: DAY_AND_NODES_ADDED, dayAndNodes });
     }
     // once day is created, dispatch the DAY_SELECTED

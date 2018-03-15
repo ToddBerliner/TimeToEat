@@ -74,6 +74,7 @@
         Actions
             ✔ tapWater => dispatch({type: WATER_ADDED, {dayId: timestamp}})
             ✔ tapAndHoldWater => dispatch({type: WATER_REMOVED, {dayId: timestamp}})
+            ✔ editWeight => dispatch({type: WEIGHT_EDITED, dayId, weight})
         Selectors
             ✔ getDayById(dayId) => returns a day or undefined
             ✔ getDayIds() => returns all the day ids
@@ -84,7 +85,8 @@
             ✔ WATER_ADDED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp added]}}
             ✔ WATER_REMOVED => returns {...daysState, daysById[dayId]: {...day, water_completes: [timestamp removed]}}
             ✔ NODE_ADDED => {...daysState, daysById[dayId]: {...day, nodeIds: {...nodeIds, [nodeId]: newNode}}}
-            ✔ NODE_UNCHECKED => {.daysState, daysById[dayId]: {...day, nodeIds: {...nodeIds (minus snack node id)}}}
+            ✔ NODE_UNCHECKED => {...daysState, daysById[dayId]: {...day, nodeIds: {...nodeIds (minus snack node id)}}}
+            ✔ WEIGHT_EDITED => {...daysState, daysById[dayId]: {...day, weight}}
     nodes
         Actions
             ✔ tapNode(nodeId) => dispatch({type: NODE_CHECKED, nodeId, timestamp})
@@ -158,7 +160,8 @@
             tracking: true || false
           }
         ],
-        water_target: 8
+        water_target: 8,
+        weight: 123.4
       }
     ],
   }

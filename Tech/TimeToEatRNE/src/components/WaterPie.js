@@ -36,7 +36,6 @@ const WaterPie = props => {
 
 const styles = StyleSheet.create({
   waterPieWrap: {
-    marginRight: 10,
     flexDirection: "row",
     alignItems: "center",
   },

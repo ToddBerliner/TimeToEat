@@ -192,16 +192,21 @@ export function getFriendlyTime(timestamp) {
   return `${hours}${minutes}${ampm}`;
 }
 
-export function createDayAndNodes(dateKey, planDay) {
+export function createDayAndNodes(dateKey, planDay, prevWeight) {
   // create the nodes
   const nodes = createNodesFromPlanDay(dateKey, planDay);
   const nodeIdsArr = nodes.map(node => node.id);
   // create the day
-  const day = createDayFromPlanDay(dateKey, planDay, nodeIdsArr);
+  const day = createDayFromPlanDay(dateKey, planDay, nodeIdsArr, prevWeight);
   return { day, nodes };
 }
 
-export function createDayFromPlanDay(dateKey, planDay, nodeIdsArr) {
+export function createDayFromPlanDay(
+  dateKey,
+  planDay,
+  nodeIdsArr,
+  prevWeight = 0,
+) {
   const day = {
     id: dateKey,
     water: {
@@ -210,6 +215,7 @@ export function createDayFromPlanDay(dateKey, planDay, nodeIdsArr) {
     },
     nodeIds: nodeIdsArr,
     offPlanNodeIds: [],
+    weight: prevWeight,
   };
   return day;
 }

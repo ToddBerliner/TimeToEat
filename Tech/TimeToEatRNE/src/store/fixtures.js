@@ -29,9 +29,24 @@ export const expectedMondayDayAndNodesAddedAction = {
   },
 };
 
+export const expectedTuesdayDayAndNodesAddedAction = {
+  type: DAY_AND_NODES_ADDED,
+  dayAndNodes: {
+    day: daysFixtures.expectedDayTuesdayWithWeight,
+    nodes: nodesFixtures.expectedNodesTuesday,
+  },
+};
+
 export const stateWithMonday = {
   days: daysFixtures.expectedInitialStateWithMonday,
   nodes: nodesFixtures.expectedInitialStateWithMonday,
+};
+
+export const stateWithWeight = {
+  uiState: uiStateFixtures.expectedInitialState,
+  days: daysFixtures.stateWithMondayWithWeight,
+  nodes: nodesFixtures.expectedInitialStateWithMonday,
+  plan: defaultPlan,
 };
 
 export const stateWithNotifications = {
