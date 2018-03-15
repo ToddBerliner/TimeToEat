@@ -29,7 +29,7 @@ const getCurrentNodeId = nodes => {
 // NodeRows handles layout of node rows
 const NodeRows = props => {
   const rows = [];
-  const { nodes } = props;
+  const { nodes, height } = props;
   const selectedNodeId = getCurrentNodeId(nodes);
   nodes.forEach(node => {
     switch (node.type) {
@@ -87,18 +87,14 @@ const NodeRows = props => {
         break;
     }
   });
-  return <View style={styles.content}>{rows}</View>;
+  return <View style={[styles.content, { height }]}>{rows}</View>;
 };
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: "whitesmoke",
-    flex: 1,
-    alignSelf: "stretch",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     marginBottom: 50,
-    borderWidth: 1,
   },
 });
 

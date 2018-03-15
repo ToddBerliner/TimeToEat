@@ -90,6 +90,7 @@ class MapScreen extends Component {
       tomorrow: parseInt(getAdjacentDateKey(getDateKey(), NEXT), 10),
       openPicker: null,
       weightPickerOpen: false,
+      bodyRowHeight: false,
     };
   }
 
@@ -127,6 +128,15 @@ class MapScreen extends Component {
         openPicker: prevState.openPicker === nodeId ? null : nodeId,
         weightPickerOpen: false,
       };
+    });
+  }
+
+  _handleBodyRowLayout(evt) {
+    const { height } = evt.nativeEvent.layout;
+    this.setState(prevState => {
+      if (!prevState.bodyRowHeight) {
+        return { bodyRowHeight: height };
+      }
     });
   }
 
@@ -195,26 +205,32 @@ class MapScreen extends Component {
             </View>
           ) : null}
         </View>
-        <View style={styles.bodyRow}>
-          <NodeRows
-            dayId={this.props.dayId}
-            nodes={this.props.nodes}
-            openPicker={this.state.openPicker}
-            onShowPicker={nodeId => this._handleShowPicker(nodeId)}
-            onTap={(nodeId, timestamp = new Date().getTime()) => {
-              this.props.tapNode(nodeId, timestamp);
-            }}
-            onTapAndHold={nodeId =>
-              this.props.tapAndHoldNode(nodeId, new Date().getTime())
-            }
-            onTapAndHoldSnack={nodeId =>
-              this.props.tapAndHoldSnack(nodeId, new Date().getTime())
-            }
-            onEditSnackTime={(nodeId, timestamp) =>
-              this.props.editSnackTime(nodeId, timestamp)
-            }
-          />
-        </View>
+        <ScrollView
+          style={styles.bodyRow}
+          onLayout={this._handleBodyRowLayout.bind(this)}
+        >
+          {this.state.bodyRowHeight ? (
+            <NodeRows
+              dayId={this.props.dayId}
+              nodes={this.props.nodes}
+              openPicker={this.state.openPicker}
+              onShowPicker={nodeId => this._handleShowPicker(nodeId)}
+              onTap={(nodeId, timestamp = new Date().getTime()) => {
+                this.props.tapNode(nodeId, timestamp);
+              }}
+              onTapAndHold={nodeId =>
+                this.props.tapAndHoldNode(nodeId, new Date().getTime())
+              }
+              onTapAndHoldSnack={nodeId =>
+                this.props.tapAndHoldSnack(nodeId, new Date().getTime())
+              }
+              onEditSnackTime={(nodeId, timestamp) =>
+                this.props.editSnackTime(nodeId, timestamp)
+              }
+              height={this.state.bodyRowHeight}
+            />
+          ) : null}
+        </ScrollView>
         <View style={styles.footerRow}>
           <AddSnack
             onTap={() => {
@@ -314,7 +330,6 @@ const styles = StyleSheet.create({
   weightRow: {
     flexDirection: "column",
     marginTop: 12,
-    marginBottom: 12,
   },
   weightTextRow: {
     flexDirection: "row",
@@ -350,7 +365,6 @@ const styles = StyleSheet.create({
   },
   bodyRow: {
     flex: 1,
-    borderWidth: 1,
   },
   titleRow: {
     height: 36,
