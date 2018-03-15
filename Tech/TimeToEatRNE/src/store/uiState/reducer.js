@@ -47,6 +47,7 @@ export const toggleNotifications = notificationState => {
       // schedule all notifications
       scheduleAllMealNotifications(dispatch, getState);
     } else {
+      console.log("Cancelling all notifications");
       Notifications.cancelAllScheduledNotificationsAsync();
     }
     dispatch({ type: NOTIFICATIONS_TOGGLED, notificationState });

@@ -1,5 +1,5 @@
 import Immutable from "seamless-immutable";
-import { DAY_SELECTED } from "./reducer";
+import { DAY_SELECTED, NOTIFICATIONS_TOGGLED } from "./reducer";
 import { dateKeyMonday } from "../days/fixtures";
 
 export const expectedInitialState = Immutable({
@@ -17,4 +17,14 @@ export const expectedSampleDaySelected = {
 export const expectedMondaySelectedAction = {
   type: DAY_SELECTED,
   dayId: dateKeyMonday,
+};
+
+export const expectedToggleNotificationOffAction = {
+  type: NOTIFICATIONS_TOGGLED,
+  notificationState: false,
+};
+
+export const expectedToggleNotificationOnAction = {
+  type: NOTIFICATIONS_TOGGLED,
+  notificationState: true,
 };

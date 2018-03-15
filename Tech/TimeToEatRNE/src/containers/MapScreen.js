@@ -8,6 +8,7 @@ import {
   Alert,
   Button,
   PickerIOS,
+  ScrollView,
 } from "react-native";
 import AddSnack from "../components/AddSnack";
 import WaterPie from "../components/WaterPie";
@@ -31,12 +32,14 @@ import {
 } from "../store/nodes/reducer";
 import {
   getDateKey,
+  getDateFromKey,
   getAdjacentDateKey,
   getFriendlyDate,
   sendImmediateNotification,
   PREV,
   NEXT,
 } from "../utils";
+import { _logState } from "../store/reducer";
 import Icon from "react-native-vector-icons/Ionicons";
 import McIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { StackNavigator } from "react-navigation";
@@ -142,6 +145,19 @@ class MapScreen extends Component {
       <View style={styles.appWrap}>
         <View style={styles.weightRow}>
           <View style={styles.weightTextRow}>
+            <View style={{ flexDirection: "row" }}>
+              <Button
+                style={{ marginRight: 10 }}
+                title="Log State"
+                onPress={this.props._logState}
+              />
+              <Button
+                title="Next Date"
+                onPress={() => {
+                  this.props.selectDay(this.props.dayId, NEXT);
+                }}
+              />
+            </View>
             <TouchableOpacity
               onPress={this._toggleWeightPicker.bind(this)}
               style={styles.weightTextButton}
@@ -275,6 +291,9 @@ const mapDispatchToProps = dispatch => {
       const newDayId = getAdjacentDateKey(dayId, dir);
       dispatch(selectDay(newDayId));
     },
+    _logState: () => {
+      dispatch(_logState());
+    },
   };
 };
 
@@ -299,7 +318,7 @@ const styles = StyleSheet.create({
   },
   weightTextRow: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     marginBottom: 10,
   },
   weightTextButton: {
@@ -331,6 +350,7 @@ const styles = StyleSheet.create({
   },
   bodyRow: {
     flex: 1,
+    borderWidth: 1,
   },
   titleRow: {
     height: 36,

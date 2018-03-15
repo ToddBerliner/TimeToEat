@@ -55,7 +55,9 @@ class WelcomeScreen extends Component {
     let text =
       "Time to Eat works best with notifications enabled so we can help you stick to your plan. You can turn notifications on and off anytime in the settings menu.";
     if (includeCancel) {
-      text = text + "\n\nTap Cancel to go back and Allow Notifications.";
+      text =
+        text +
+        "\n\nTap Cancel to go back and Allow Notifications or OK to continue without them.";
     }
     Alert.alert(title, text, buttons);
   }

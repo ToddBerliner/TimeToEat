@@ -19,6 +19,7 @@ import {
   mealEditedNotificationAction,
   mealEditedNotificationOffAction,
   expectedStateWithNotificationIds,
+  expectedStateWithoutNotificationIds,
 } from "./fixtures";
 import {
   expectedNodeUpdatedAction,
@@ -26,6 +27,7 @@ import {
   expectedNodeTrackingUpdatedAction,
   expectedNodeTrackingOffUpdatedAction,
 } from "../nodes/fixtures";
+import * as uiStateFixtures from "../uiState/fixtures";
 import { stateWithMonday, stateWithToday } from "../fixtures";
 
 describe("plan Actions", () => {
@@ -123,6 +125,12 @@ describe("plan Reducer", () => {
       .withState(expectedStateWithNotificationIds)
       .expect(mealEditedNotificationOffAction)
       .toReturnState(expectedInitialState);
+  });
+  it("should remove all notification ids when notifications off", () => {
+    Reducer(plan)
+      .withState(expectedStateWithNotificationIds)
+      .expect(uiStateFixtures.expectedToggleNotificationOffAction)
+      .toReturnState(expectedStateWithoutNotificationIds);
   });
 });
 

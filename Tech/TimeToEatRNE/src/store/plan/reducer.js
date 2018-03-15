@@ -13,6 +13,7 @@ import {
   _getNotificationIdByMealIdx,
 } from "../reducer";
 import { NODE_UPDATED } from "../nodes/reducer";
+import { NOTIFICATIONS_TOGGLED } from "../uiState/reducer";
 import { Notifications } from "expo";
 const notificationIcon = require("../../../assets/images/notification_icon.png");
 
@@ -126,6 +127,15 @@ export default function reduce(state = initialState, action = {}) {
       const newNotificationsState = [...state.notifications];
       newNotificationsState[mealIdx] = notificationId;
       return Immutable.set(state, "notifications", newNotificationsState);
+    case NOTIFICATIONS_TOGGLED:
+      if (action.notificationState) return state;
+      return Immutable.set(state, "notifications", [
+        null,
+        null,
+        null,
+        null,
+        null,
+      ]);
     default:
       return state;
   }

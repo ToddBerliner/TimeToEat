@@ -94,9 +94,11 @@ const styles = StyleSheet.create({
   content: {
     backgroundColor: "whitesmoke",
     flex: 1,
+    alignSelf: "stretch",
     flexDirection: "column",
     justifyContent: "space-between",
     marginBottom: 50,
+    borderWidth: 1,
   },
 });
 

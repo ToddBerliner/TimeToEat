@@ -13,31 +13,30 @@ class TitleDateNav extends Component {
   }
 
   _selectDate(dir) {
+    console.log(dir);
     this.props.selectDate(this.props.dayId, dir);
   }
 
   render() {
     return (
       <View style={styles.titleRowCenter}>
-        <View style={styles.titleLeftArrow}>
+        <View>
           <TouchableOpacity
             onPress={this._selectDate.bind(this, PREV)}
-            style={{ width: 30 }}
+            style={styles.titleLeftArrow}
             hitSlop={{ left: 10, right: 10 }}
           >
-            <Icon
-              name="ios-arrow-back"
-              size={24}
-              style={{ alignSelf: "flex-end" }}
-            />
+            <Icon name="ios-arrow-back" size={24} />
           </TouchableOpacity>
         </View>
         <TitleDate dayId={this.props.dayId} />
-        <View style={styles.titleRightArrow}>
-          {!this.props.isToday && (
+        <View>
+          {this.props.isToday ? (
+            <View style={styles.titleRightArrow} />
+          ) : (
             <TouchableOpacity
               onPress={this._selectDate.bind(this, NEXT)}
-              style={{ width: 30 }}
+              style={styles.titleRightArrow}
               hitSlop={{ left: 10, right: 10 }}
             >
               <Icon name="ios-arrow-forward" size={24} />
@@ -58,11 +57,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   titleLeftArrow: {
-    width: 15,
-    alignItems: "flex-end",
+    width: 30,
+    alignItems: "center",
   },
   titleRightArrow: {
-    width: 15,
+    width: 30,
+    alignItems: "center",
   },
 });
 

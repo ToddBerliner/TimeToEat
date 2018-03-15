@@ -55,6 +55,12 @@ export const _ensureDaysAndNodes = (
   }
 };
 
+export const _logState = () => {
+  return function(dispatch, getState) {
+    console.log(getState());
+  };
+};
+
 const store = combineReducers({
   uiState, // call uiState(state.plan, action);
   plan, // call plan(state.plan, action);

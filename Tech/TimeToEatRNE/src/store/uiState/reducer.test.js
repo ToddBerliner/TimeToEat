@@ -76,15 +76,13 @@ describe("uiState Actions", () => {
   );
   it("should return thunk with the notification toggled action", () => {
     const notificationState = false;
-    const expectedToggleNotificationAction = {
-      type: NOTIFICATIONS_TOGGLED,
-      notificationState: notificationState,
-    };
     const dispatches = Thunk(toggleNotifications)
       .withState(rootFixtures.expectedInitialState)
       .execute(notificationState);
     expect(dispatches.length).toBe(1);
-    expect(dispatches[0].getAction()).toEqual(expectedToggleNotificationAction);
+    expect(dispatches[0].getAction()).toEqual(
+      uiStateFixtures.expectedToggleNotificationOffAction,
+    );
   });
   it("should dispatch the onboardingComplete action", () => {
     expect(completeOnboarding()).toEqual({ type: ONBOARDING_COMPLETED });

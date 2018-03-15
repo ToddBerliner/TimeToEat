@@ -9,6 +9,11 @@ export const expectedStateWithNotificationIds = Immutable.set(
   "notifications",
   [null, "123", null, null, null],
 );
+export const expectedStateWithoutNotificationIds = Immutable.set(
+  expectedInitialState,
+  "notifications",
+  [null, null, null, null, null],
+);
 
 export const expectedMeal0 = {
   name: "Breakfast",
