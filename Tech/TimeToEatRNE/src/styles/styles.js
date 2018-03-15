@@ -8,6 +8,13 @@ export const obText = {
   fontSize: 16,
   marginBottom: 16,
 };
+export const obSmallTitle = {
+  textAlign: "center",
+  fontFamily: "fugaz-one-regular",
+  fontSize: 24,
+  letterSpacing: -1,
+  marginBottom: 20,
+};
 export const obTitle = {
   textAlign: "center",
   fontFamily: "fugaz-one-regular",

@@ -34,9 +34,6 @@ class SetupScreen extends Component {
   }
 
   render() {
-    const setNotifications = this.props.notifications.filter(
-      notification => notification !== null,
-    );
     return (
       <View
         style={{
@@ -60,17 +57,11 @@ class SetupScreen extends Component {
           style={{ width: "80%", marginTop: 12 }}
           onPress={this._handleDone}
           title="Done"
-          disabled={setNotifications.length === 0}
         />
       </View>
     );
   }
 }
-
-mapStateToProps = state => {
-  const notifications = state.plan.notifications;
-  return { notifications };
-};
 
 mapDispatchToProps = dispatch => {
   return {
@@ -80,4 +71,4 @@ mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SetupScreen);
+export default connect(null, mapDispatchToProps)(SetupScreen);

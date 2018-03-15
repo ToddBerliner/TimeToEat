@@ -11,6 +11,7 @@ import {
   _getNodeIdByDayIdAndMealIdx,
   _getMealByMealIdx,
   _getNotificationIdByMealIdx,
+  _getNotificationsState,
 } from "../reducer";
 import { NODE_UPDATED } from "../nodes/reducer";
 import { NOTIFICATIONS_TOGGLED } from "../uiState/reducer";
@@ -65,8 +66,10 @@ export function scheduleMealNotification(mealIdx, meal, dispatch) {
 export const editMeal = (mealIdx, field, value) => {
   return function(dispatch, getState) {
     // check for need to update/cancel a notification
-    // if (field === time || field === tracking)
-    if (field === TIME || field === TRACKING) {
+    if (
+      (field === TIME || field === TRACKING) &&
+      _getNotificationsState(getState())
+    ) {
       // get the meal in the plan
       let meal = _getMealByMealIdx(getState(), mealIdx);
       meal = Immutable.asMutable(meal, { deep: true });

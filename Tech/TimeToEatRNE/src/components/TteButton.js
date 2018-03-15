@@ -7,6 +7,7 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 class TteButton extends Component {
   render() {
@@ -20,6 +21,7 @@ class TteButton extends Component {
       testID,
       style,
       secondaryStyle,
+      iconName,
     } = this.props;
     const buttonStyles = secondaryStyle
       ? [styles.secondaryButton]
@@ -49,6 +51,7 @@ class TteButton extends Component {
         style={style}
       >
         <View style={buttonStyles}>
+          {iconName ? <Icon name={iconName} size={24} /> : null}
           <Text style={textStyles} disabled={disabled}>
             {formattedTitle}
           </Text>
@@ -63,6 +66,9 @@ const styles = StyleSheet.create({
     ios: {
       borderWidth: 2,
       borderRadius: 30,
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
     },
     android: {
       elevation: 4,

@@ -101,3 +101,6 @@ export const _getMealByMealIdx = (state, mealIdx) => {
 export const _getNotificationIdByMealIdx = (state, mealIdx) => {
   return getNotificationIdByMealIdx(state.plan, mealIdx);
 };
+export const _getNotificationStatus = state => {
+  return state.uiState.notifications;
+};

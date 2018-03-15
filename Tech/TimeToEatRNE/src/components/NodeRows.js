@@ -28,7 +28,7 @@ const getCurrentNodeId = nodes => {
 
 // NodeRows handles layout of node rows
 const NodeRows = props => {
-  const rows = [];
+  let rows = [];
   const { nodes, height } = props;
   const selectedNodeId = getCurrentNodeId(nodes);
   nodes.forEach(node => {

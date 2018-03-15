@@ -10,6 +10,7 @@ import {
   PickerIOS,
   ScrollView,
 } from "react-native";
+import EmptyPlan from "../components/EmptyPlan";
 import AddSnack from "../components/AddSnack";
 import WaterPie from "../components/WaterPie";
 import NodeRows from "../components/NodeRows";
@@ -151,6 +152,7 @@ class MapScreen extends Component {
   }
 
   render() {
+    const trackedMeals = this.props.nodes.filter(node => node.tracking);
     return (
       <View style={styles.appWrap}>
         <View style={styles.weightRow}>
@@ -210,25 +212,32 @@ class MapScreen extends Component {
           onLayout={this._handleBodyRowLayout.bind(this)}
         >
           {this.state.bodyRowHeight ? (
-            <NodeRows
-              dayId={this.props.dayId}
-              nodes={this.props.nodes}
-              openPicker={this.state.openPicker}
-              onShowPicker={nodeId => this._handleShowPicker(nodeId)}
-              onTap={(nodeId, timestamp = new Date().getTime()) => {
-                this.props.tapNode(nodeId, timestamp);
-              }}
-              onTapAndHold={nodeId =>
-                this.props.tapAndHoldNode(nodeId, new Date().getTime())
-              }
-              onTapAndHoldSnack={nodeId =>
-                this.props.tapAndHoldSnack(nodeId, new Date().getTime())
-              }
-              onEditSnackTime={(nodeId, timestamp) =>
-                this.props.editSnackTime(nodeId, timestamp)
-              }
-              height={this.state.bodyRowHeight}
-            />
+            trackedMeals.length > 0 ? (
+              <NodeRows
+                dayId={this.props.dayId}
+                nodes={this.props.nodes}
+                openPicker={this.state.openPicker}
+                onShowPicker={nodeId => this._handleShowPicker(nodeId)}
+                onTap={(nodeId, timestamp = new Date().getTime()) => {
+                  this.props.tapNode(nodeId, timestamp);
+                }}
+                onTapAndHold={nodeId =>
+                  this.props.tapAndHoldNode(nodeId, new Date().getTime())
+                }
+                onTapAndHoldSnack={nodeId =>
+                  this.props.tapAndHoldSnack(nodeId, new Date().getTime())
+                }
+                onEditSnackTime={(nodeId, timestamp) =>
+                  this.props.editSnackTime(nodeId, timestamp)
+                }
+                height={this.state.bodyRowHeight}
+              />
+            ) : (
+              <EmptyPlan
+                navigate={this.props.navigation.navigate}
+                height={this.state.bodyRowHeight}
+              />
+            )
           ) : null}
         </ScrollView>
         <View style={styles.footerRow}>
