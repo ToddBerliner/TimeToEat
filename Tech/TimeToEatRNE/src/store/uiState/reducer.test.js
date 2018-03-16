@@ -132,34 +132,28 @@ describe("uiState Reducer", () => {
   });
   it("should return new state with selectedDay set", () => {
     const dayId = "123";
-    const expectedState = {
-      selectedDayId: "123",
-      waterTracking: true,
-      notifications: false,
-      onboardingComplete: false,
-    };
+    const expectedState = uiStateFixtures.expectedInitialState.set(
+      "selectedDayId",
+      "123",
+    );
     Reducer(uiState)
       .expect({ type: DAY_SELECTED, dayId })
       .toReturnState(expectedState);
   });
   it("should return new state with water tracking off", () => {
-    const expectedState = {
-      selectedDayId: null,
-      waterTracking: false,
-      notifications: false,
-      onboardingComplete: false,
-    };
+    const expectedState = uiStateFixtures.expectedInitialState.set(
+      "waterTracking",
+      false,
+    );
     Reducer(uiState)
       .expect({ type: WATER_TRACKING_TOGGLED, trackingState: false })
       .toReturnState(expectedState);
   });
   it("should return new state with onboardingComplete true", () => {
-    const expectedState = {
-      selectedDayId: null,
-      waterTracking: true,
-      notifications: false,
-      onboardingComplete: true,
-    };
+    const expectedState = uiStateFixtures.expectedInitialState.set(
+      "onboardingComplete",
+      true,
+    );
     Reducer(uiState)
       .expect({ type: ONBOARDING_COMPLETED })
       .toReturnState(expectedState);

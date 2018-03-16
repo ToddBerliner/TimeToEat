@@ -14,10 +14,12 @@ import { clearSavedState } from "../store/configureStore";
 import DateBackButton from "../components/DateBackButton";
 import {
   _getWaterTrackingState,
+  _getWeightTrackingState,
   _getNotificationsState,
 } from "../store/reducer";
 import {
   toggleWaterTracking,
+  toggleWeightTracking,
   toggleNotifications,
 } from "../store/uiState/reducer";
 import { editMeal, NAME, TIME, TRACKING } from "../store/plan/reducer";
@@ -74,6 +76,10 @@ class MenuScreen extends React.Component {
     this.props.toggleWater(waterToggleState);
   }
 
+  handleToggleWeight(weightToggleState) {
+    this.props.toggleWeight(weightToggleState);
+  }
+
   handleToggleNotifications(notificationsState) {
     this.props.toggleNotifications(notificationsState);
   }
@@ -102,7 +108,13 @@ class MenuScreen extends React.Component {
   }
 
   render() {
-    const { waterTracking, plan, notifications, mealsOnly } = this.props;
+    const {
+      waterTracking,
+      weightTracking,
+      plan,
+      notifications,
+      mealsOnly,
+    } = this.props;
     const { nodes } = plan.days.Monday;
 
     const meals = [];
@@ -185,6 +197,12 @@ class MenuScreen extends React.Component {
               </Text>
               <View style={SectionStyles.sectionWrapper}>
                 <SwitchRow
+                  switchTitle="Track Weight"
+                  onValueChange={this.handleToggleWeight.bind(this)}
+                  value={weightTracking}
+                />
+                <Line marginLeft={FormSettings.textMarginLeft} />
+                <SwitchRow
                   switchTitle="Track Water"
                   onValueChange={this.handleToggleWater.bind(this)}
                   value={waterTracking}
@@ -225,15 +243,19 @@ class MenuScreen extends React.Component {
 
 const mapStateToProps = state => {
   const waterTracking = _getWaterTrackingState(state);
+  const weightTracking = _getWeightTrackingState(state);
   const notifications = _getNotificationsState(state);
   const { plan } = state;
-  return { waterTracking, notifications, plan };
+  return { waterTracking, weightTracking, notifications, plan };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     toggleWater: waterToggleState => {
       dispatch(toggleWaterTracking(waterToggleState));
+    },
+    toggleWeight: weightToggleState => {
+      dispatch(toggleWeightTracking(weightToggleState));
     },
     toggleNotifications: notificationsState => {
       dispatch(toggleNotifications(notificationsState));

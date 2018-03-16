@@ -7,6 +7,7 @@ import {
 import uiState, {
   getSelectedDayId,
   getWaterTrackingState,
+  getWeightTrackingState,
   getNotificationsState,
 } from "./uiState/reducer";
 import plan, {
@@ -81,6 +82,9 @@ export const _getSelectedDayId = state => {
 };
 export const _getWaterTrackingState = state => {
   return getWaterTrackingState(state.uiState);
+};
+export const _getWeightTrackingState = state => {
+  return getWeightTrackingState(state.uiState);
 };
 export const _getNotificationsState = state => {
   return getNotificationsState(state.uiState);

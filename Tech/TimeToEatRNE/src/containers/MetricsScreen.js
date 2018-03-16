@@ -1,21 +1,39 @@
 import React from "react";
 import { connect } from "react-redux";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  MaskedViewIOS,
+  Dimensions,
+} from "react-native";
 import DateBackButton from "../components/DateBackButton";
 import { Calendar } from "react-native-calendars";
 import Colors from "../styles/colors";
+import WeightChart from "../components/WeightChart";
+import DayChart from "../components/DayChart";
 import { getDateKey, getColorFromNodes, getDateKeyForCal } from "../utils";
 import {
   getFirstDayId,
   getLastDayId,
   getAllDayIdsInOrder,
+  getDayById,
 } from "../store/days/reducer";
+import { _getWeightTrackingState } from "../store/reducer";
 import { getNodesByIds, OFFPLAN } from "../store/nodes/reducer";
 import { selectDay } from "../store/uiState/reducer";
 import { FormSettings, SectionStyles } from "../styles/formStyles";
 import { whiteBlock } from "../styles/styles";
 
 class MetricsScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      calMonth: new Date().getMonth() + 1,
+      calYear: new Date().getFullYear(),
+    };
+  }
   /*
     Calendar TODO:
       ✔ minDate = first date in state.days
@@ -73,6 +91,7 @@ class MetricsScreen extends React.Component {
 
     for (const dayId of orderedDayIds) {
       const calDateKey = getDateKeyForCal(dayId);
+      const dayObj = getDayById(daysState, dayId);
 
       // failsafe to not mark days in future
       if (dayId === todayKey) {
@@ -82,6 +101,7 @@ class MetricsScreen extends React.Component {
           startingDay: true,
           endingDay: true,
           textColor: "white",
+          weight: dayObj.weight,
         };
         // ensure previous day is endingDay
         if (markedDates[prevDayId]) {
@@ -95,8 +115,7 @@ class MetricsScreen extends React.Component {
       // calc color
       const color = getColorFromNodes(nodes);
       // create and update dayConfig
-      const day = { color, endingDay: true };
-      const dayConfig = { color };
+      const dayConfig = { color, weight: dayObj.weight };
       // calculate starting and ending day values
       if (prevColor !== color) {
         dayConfig.startingDay = true;
@@ -114,13 +133,20 @@ class MetricsScreen extends React.Component {
     return markedDates;
   }
 
-  _handleDayPress = day => {
+  _handleDayPress(day) {
     if (!day || !day.timestamp) return;
     const dayId = getDateKey(new Date(day.year, day.month - 1, day.day));
     if (dayId >= getDateKey()) return;
     this.props.selectDay(dayId);
     this.props.navigation.goBack();
-  };
+  }
+
+  _handleMonthChange(month) {
+    this.setState({
+      calMonth: month.month,
+      calYear: month.year,
+    });
+  }
 
   _legend = (text, color, idx) => {
     return (
@@ -150,8 +176,9 @@ class MetricsScreen extends React.Component {
   };
 
   render() {
-    const { firstDayId, lastDayId, days, nodes } = this.props;
+    const { firstDayId, lastDayId, days, nodes, weightTracking } = this.props;
     const markedDates = this._calculateMarkedDates(days, nodes);
+    const { width } = Dimensions.get("window");
     const legends = [
       {
         text: "PERFECT!",
@@ -191,17 +218,44 @@ class MetricsScreen extends React.Component {
         <Text style={SectionStyles.sectionTitle}>MEAL TRACKING</Text>
         <View style={whiteBlock}>
           <Calendar
-            style={{ width: "90%", alignSelf: "center" }}
+            style={{ width: "95%", alignSelf: "center" }}
             markedDates={markedDates}
             minDate={new Date(parseInt(firstDayId, 10))}
             markingType={"period"}
             onDayPress={this._handleDayPress.bind(this)}
             hideExtraDays={true}
+            onMonthChange={this._handleMonthChange.bind(this)}
           />
         </View>
-        {/*legends*/}
-        <Text style={SectionStyles.sectionTitle}>WEIGHT TRACKING</Text>
-        <View style={whiteBlock} />
+        {weightTracking ? (
+          <View>
+            <Text style={SectionStyles.sectionTitle}>WEIGHT TRACKING</Text>
+            <View style={[whiteBlock, { paddingTop: 14, paddingBottom: 14 }]}>
+              <View
+                style={{
+                  width: "95%",
+                  alignSelf: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <DayChart
+                  width={0.95 * width}
+                  markedDates={markedDates}
+                  calMonth={this.state.calMonth}
+                  calYear={this.state.calYear}
+                />
+                <WeightChart
+                  width={0.95 * width}
+                  markedDates={markedDates}
+                  calMonth={this.state.calMonth}
+                  calYear={this.state.calYear}
+                />
+              </View>
+            </View>
+          </View>
+        ) : (
+          legends
+        )}
       </View>
     );
   }
@@ -210,12 +264,14 @@ class MetricsScreen extends React.Component {
 mapStateToProps = state => {
   const firstDayId = getFirstDayId(state.days);
   const lastDayId = getLastDayId(state.days);
+  const weightTracking = _getWeightTrackingState(state);
   const { days, nodes } = state;
   return {
     firstDayId,
     lastDayId,
     days,
     nodes,
+    weightTracking,
   };
 };
 mapDispatchToProps = dispatch => {

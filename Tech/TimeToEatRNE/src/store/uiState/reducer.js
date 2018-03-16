@@ -16,6 +16,7 @@ import { Notifications } from "expo";
 // Action Types
 export const DAY_SELECTED = "day_selected";
 export const WATER_TRACKING_TOGGLED = "water_tracking_toggled";
+export const WEIGHT_TRACKING_TOGGLED = "weight_tracking_toggled";
 export const NOTIFICATIONS_TOGGLED = "notifications_toggled";
 export const ONBOARDING_COMPLETED = "onboarding_completed";
 
@@ -41,6 +42,10 @@ export const toggleWaterTracking = trackingState => {
   return { type: WATER_TRACKING_TOGGLED, trackingState };
 };
 
+export const toggleWeightTracking = trackingState => {
+  return { type: WEIGHT_TRACKING_TOGGLED, trackingState };
+};
+
 export const toggleNotifications = notificationState => {
   return function(dispatch, getState) {
     if (notificationState) {
@@ -62,6 +67,7 @@ export const completeOnboarding = () => {
 const initialState = Immutable({
   selectedDayId: null,
   waterTracking: true,
+  weightTracking: true,
   notifications: false,
   onboardingComplete: false,
 });
@@ -72,6 +78,8 @@ export default function reduce(state = initialState, action = {}) {
       return Immutable({ ...state, selectedDayId: action.dayId });
     case WATER_TRACKING_TOGGLED:
       return Immutable({ ...state, waterTracking: action.trackingState });
+    case WEIGHT_TRACKING_TOGGLED:
+      return Immutable({ ...state, weightTracking: action.trackingState });
     case NOTIFICATIONS_TOGGLED:
       return Immutable({ ...state, notifications: action.notificationState });
     case ONBOARDING_COMPLETED:
@@ -87,5 +95,6 @@ export default function reduce(state = initialState, action = {}) {
 // Selectors
 export const getSelectedDayId = state => state.selectedDayId || getDateKey();
 export const getWaterTrackingState = state => state.waterTracking;
+export const getWeightTrackingState = state => state.weightTracking;
 export const getNotificationsState = state => state.notifications;
 export const getOnboardingState = state => state.onboardingComplete;

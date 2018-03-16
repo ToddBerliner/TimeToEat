@@ -141,6 +141,7 @@
     selectedDay: dayId,
     notifications: true || false,
     waterTracking: true || false,
+    weightTracking: true || false,
     onboardingComplete: true || false,
   }
   plan: {

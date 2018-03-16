@@ -19,6 +19,7 @@ import NumberSpinner from "../components/NumberSpinner";
 import {
   _getSelectedDayId,
   _getWaterTrackingState,
+  _getWeightTrackingState,
   _getDayById,
   _getNodesByIds,
 } from "../store/reducer";
@@ -170,30 +171,32 @@ class MapScreen extends Component {
                 }}
               />
             </View>
-            <TouchableOpacity
-              onPress={this._toggleWeightPicker.bind(this)}
-              style={styles.weightTextButton}
-            >
-              <McIcon name="scale-bathroom" size={34} />
-              <Text
-                style={
-                  this.state.weightPickerOpen
-                    ? styles.weightTextActive
-                    : styles.weightText
-                }
+            {this.props.weightTracking && (
+              <TouchableOpacity
+                onPress={this._toggleWeightPicker.bind(this)}
+                style={styles.weightTextButton}
               >
-                {this.props.weight}
-              </Text>
-              <Text
-                style={
-                  this.state.weightPickerOpen
-                    ? styles.weightTextLabelActive
-                    : styles.weightTextLabel
-                }
-              >
-                lbs.
-              </Text>
-            </TouchableOpacity>
+                <McIcon name="scale-bathroom" size={34} />
+                <Text
+                  style={
+                    this.state.weightPickerOpen
+                      ? styles.weightTextActive
+                      : styles.weightText
+                  }
+                >
+                  {this.props.weight}
+                </Text>
+                <Text
+                  style={
+                    this.state.weightPickerOpen
+                      ? styles.weightTextLabelActive
+                      : styles.weightTextLabel
+                  }
+                >
+                  lbs.
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
           {this.state.weightPickerOpen ? (
             <View style={styles.topBottomBorder}>
@@ -276,12 +279,14 @@ const mapStateToProps = state => {
   const nodes = _getNodesByIds(state, dayObj.nodeIds);
   const isToday = dayId === getDateKey();
   const waterTracking = _getWaterTrackingState(state);
+  const weightTracking = _getWeightTrackingState(state);
   return {
     dayId,
     waterCount: dayObj.water.completedTimes.length,
     nodes,
     isToday,
     waterTracking,
+    weightTracking,
     weight: dayObj.weight,
   };
 };
