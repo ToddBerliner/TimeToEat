@@ -66,6 +66,7 @@ const NodeRows = props => {
               }}
               isPickerShowing={props.openPicker === node.id}
               onShowPicker={() => props.onShowPicker(node.id)}
+              pickerHeight={props.nodeHeights[node.id]}
             />,
           );
         }

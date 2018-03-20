@@ -1,6 +1,7 @@
 import React from "react";
 import {
   View,
+  Animated,
   Text,
   StyleSheet,
   TouchableOpacity,
@@ -62,15 +63,25 @@ class NodeRow extends React.Component {
             <Text>{getFriendlyTime(props.time)}</Text>
           </View>
         </View>
-        {props.isPickerShowing ? (
-          <DatePickerIOS
-            mode="time"
-            onDateChange={event => {
-              props.onDateChange(event.getTime());
+        <Animated.View
+          style={{ overflow: "hidden", height: props.pickerHeight }}
+        >
+          <View
+            style={{
+              borderColor: "#acacac",
+              borderTopWidth: StyleSheet.hairlineWidth,
+              borderBottomWidth: StyleSheet.hairlineWidth,
             }}
-            date={new Date(props.completedTime)}
-          />
-        ) : null}
+          >
+            <DatePickerIOS
+              mode="time"
+              onDateChange={event => {
+                props.onDateChange(event.getTime());
+              }}
+              date={new Date(props.completedTime)}
+            />
+          </View>
+        </Animated.View>
       </View>
     );
     // Add DatePicker with onDateChange which must be passed down

@@ -22,7 +22,7 @@ export const AppNavigator = StackNavigator(
     },
   },
   {
-    initialRouteName: "Map",
+    initialRouteName: "Menu",
     mode: "modal",
   },
 );

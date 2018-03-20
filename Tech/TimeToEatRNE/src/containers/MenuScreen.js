@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   StyleSheet,
   View,
+  Animated,
   Text,
   Switch,
   TextInput,
@@ -61,15 +62,37 @@ class MenuScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { notificationsDisabled: false, openPicker: null };
+    this.state = {
+      notificationsDisabled: false,
+      openPicker: null,
+      nodeIds: [],
+    };
+    props.plan.days["Monday"].nodes.forEach((node, idx) => {
+      const nodeId = idx.toString();
+      this.state.nodeIds.push(nodeId);
+      this.state[nodeId] = new Animated.Value(0);
+    });
   }
 
   handleShowPicker(mealIdx) {
-    this.setState(prevState => {
-      return {
-        openPicker: prevState.openPicker === mealIdx ? null : mealIdx,
-      };
-    });
+    this.setState(
+      prevState => {
+        return {
+          openPicker: prevState.openPicker === mealIdx ? null : mealIdx,
+        };
+      },
+      () => {
+        this.state.nodeIds.forEach(nodeId => {
+          Animated.timing(this.state[nodeId.toString()], {
+            toValue:
+              nodeId === mealIdx.toString() && this.state.openPicker === mealIdx
+                ? 1
+                : 0,
+            duration: 150,
+          }).start();
+        });
+      },
+    );
   }
 
   handleToggleWater(waterToggleState) {
@@ -116,13 +139,28 @@ class MenuScreen extends React.Component {
       mealsOnly,
     } = this.props;
     const { nodes } = plan.days.Monday;
-
+    const pickerHeights = {};
+    nodes.forEach((node, idx) => {
+      const nodeId = idx.toString();
+      pickerHeights[nodeId] = this.state[nodeId].interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 217],
+      });
+      pickerHeights[`${nodeId}wrap`] = this.state[nodeId].interpolate({
+        inputRange: [0, 1],
+        outputRange: [
+          FormSettings.defaultCellHeight,
+          217 + FormSettings.defaultCellHeight,
+        ],
+      });
+    });
     const meals = [];
     nodes.forEach((node, idx, nodesArr) => {
       const { name, time, tracking } = node;
       const ts = getTimestampFromTimeObj(getDateKey(), time);
       const cuteDate = getFriendlyTime(ts);
       const date = new Date(ts);
+      const nodeId = idx.toString();
       const mealRow = (
         <TextAndTimeRow
           key={`timeAndTextRow${idx}`}
@@ -136,6 +174,8 @@ class MenuScreen extends React.Component {
           onTrackingchange={this.handleChange.bind(this, idx, TRACKING)}
           onShowPicker={this.handleShowPicker.bind(this, idx)}
           isPickerShowing={this.state.openPicker === idx}
+          pickerHeight={pickerHeights[nodeId]}
+          pickerWrapHeight={pickerHeights[`${nodeId}wrap`]}
         />
       );
       if (idx < nodesArr.length - 1) {

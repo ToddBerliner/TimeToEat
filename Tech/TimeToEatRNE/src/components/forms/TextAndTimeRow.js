@@ -2,6 +2,7 @@ import React from "react";
 import {
   StyleSheet,
   View,
+  Animated,
   TextInput,
   Text,
   DatePickerIOS,
@@ -19,23 +20,6 @@ import {
 import Line from "./Line";
 
 class TextAndTimeRow extends React.Component {
-  getPicker(date, onDateChange) {
-    if (this.props.isPickerShowing) {
-      return (
-        <View>
-          <Line marginLeft={FormSettings.textMarginLeft} />
-          <DatePickerIOS
-            mode="time"
-            date={date}
-            onDateChange={onDateChange}
-            minuteInterval={15}
-          />
-        </View>
-      );
-    } else {
-      return null;
-    }
-  }
   render() {
     const {
       idx,
@@ -46,13 +30,15 @@ class TextAndTimeRow extends React.Component {
       onDateChange,
       onTrackingchange,
       onShowPicker,
+      pickerHeight,
+      pickerWrapHeight,
       tracking,
     } = this.props;
     const wrapStyle = !this.props.isPickerShowing
       ? { height: FormSettings.defaultCellHeight }
       : null;
     return (
-      <View key={`ttrwrap${idx}`} style={wrapStyle}>
+      <Animated.View key={`ttrwrap${idx}`} style={{ height: pickerWrapHeight }}>
         <View
           key={`mealrow${idx}`}
           style={[
@@ -84,8 +70,21 @@ class TextAndTimeRow extends React.Component {
             onValueChange={onTrackingchange}
           />
         </View>
-        {this.getPicker(date, onDateChange)}
-      </View>
+        <Animated.View
+          style={{
+            overflow: "hidden",
+            height: pickerHeight,
+          }}
+        >
+          <Line marginLeft={FormSettings.textMarginLeft} />
+          <DatePickerIOS
+            mode="time"
+            date={date}
+            onDateChange={onDateChange}
+            minuteInterval={15}
+          />
+        </Animated.View>
+      </Animated.View>
     );
   }
 }

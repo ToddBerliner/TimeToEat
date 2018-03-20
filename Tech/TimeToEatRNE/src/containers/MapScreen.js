@@ -95,7 +95,12 @@ class MapScreen extends Component {
       weightPickerOpen: false,
       weightPickerAnimated: new Animated.Value(0),
       bodyRowHeight: false,
+      nodeIds: [],
     };
+    props.nodes.forEach(node => {
+      this.state.nodeIds.push(node.id);
+      this.state[node.id] = new Animated.Value(0);
+    });
   }
 
   _checkTime() {
@@ -131,6 +136,12 @@ class MapScreen extends Component {
           toValue,
           duration: 150,
         }).start();
+        this.state.nodeIds.forEach(nodeId => {
+          Animated.timing(this.state[nodeId], {
+            toValue: 0,
+            duration: 150,
+          }).start();
+        });
       },
     );
   }
@@ -149,6 +160,12 @@ class MapScreen extends Component {
           toValue,
           duration: 150,
         }).start();
+        this.state.nodeIds.forEach(nodeId => {
+          Animated.timing(this.state[nodeId], {
+            toValue: this.state.openPicker === nodeId ? 1 : 0,
+            duration: 150,
+          }).start();
+        });
       },
     );
   }
@@ -181,6 +198,13 @@ class MapScreen extends Component {
     const heightInterpolate = this.state.weightPickerAnimated.interpolate({
       inputRange: [0, 1],
       outputRange: [0, 217],
+    });
+    const nodeHeights = {};
+    this.props.nodes.forEach(node => {
+      nodeHeights[node.id] = this.state[node.id].interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 217],
+      });
     });
     return (
       <View style={styles.appWrap}>
@@ -266,6 +290,7 @@ class MapScreen extends Component {
                 onEditSnackTime={(nodeId, timestamp) =>
                   this.props.editSnackTime(nodeId, timestamp)
                 }
+                nodeHeights={nodeHeights}
                 height={this.state.bodyRowHeight}
               />
             ) : (
