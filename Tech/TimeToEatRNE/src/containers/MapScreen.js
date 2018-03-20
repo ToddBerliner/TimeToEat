@@ -9,6 +9,7 @@ import {
   Button,
   PickerIOS,
   ScrollView,
+  Animated,
 } from "react-native";
 import EmptyPlan from "../components/EmptyPlan";
 import AddSnack from "../components/AddSnack";
@@ -92,6 +93,7 @@ class MapScreen extends Component {
       tomorrow: parseInt(getAdjacentDateKey(getDateKey(), NEXT), 10),
       openPicker: null,
       weightPickerOpen: false,
+      weightPickerAnimated: new Animated.Value(0),
       bodyRowHeight: false,
     };
   }
@@ -116,21 +118,39 @@ class MapScreen extends Component {
   };
 
   _toggleWeightPicker() {
-    this.setState(prevState => {
-      return {
-        weightPickerOpen: !prevState.weightPickerOpen,
-        openPicker: null,
-      };
-    });
+    this.setState(
+      prevState => {
+        return {
+          openPicker: null,
+          weightPickerOpen: !prevState.weightPickerOpen,
+        };
+      },
+      () => {
+        const toValue = this.state.weightPickerOpen ? 1 : 0;
+        Animated.timing(this.state.weightPickerAnimated, {
+          toValue,
+          duration: 150,
+        }).start();
+      },
+    );
   }
 
   _handleShowPicker(nodeId) {
-    this.setState(prevState => {
-      return {
-        openPicker: prevState.openPicker === nodeId ? null : nodeId,
-        weightPickerOpen: false,
-      };
-    });
+    this.setState(
+      prevState => {
+        return {
+          openPicker: prevState.openPicker === nodeId ? null : nodeId,
+          weightPickerOpen: false,
+        };
+      },
+      () => {
+        const toValue = this.state.weightPickerOpen ? 1 : 0;
+        Animated.timing(this.state.weightPickerAnimated, {
+          toValue,
+          duration: 150,
+        }).start();
+      },
+    );
   }
 
   _handleBodyRowLayout(evt) {
@@ -140,6 +160,10 @@ class MapScreen extends Component {
         return { bodyRowHeight: height };
       }
     });
+  }
+
+  _onViewLayout(evt) {
+    // console.log(evt.nativeEvent);
   }
 
   async componentDidMount() {
@@ -154,6 +178,10 @@ class MapScreen extends Component {
 
   render() {
     const trackedMeals = this.props.nodes.filter(node => node.tracking);
+    const heightInterpolate = this.state.weightPickerAnimated.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 217],
+    });
     return (
       <View style={styles.appWrap}>
         <View style={styles.weightRow}>
@@ -198,8 +226,13 @@ class MapScreen extends Component {
               </TouchableOpacity>
             )}
           </View>
-          {this.state.weightPickerOpen ? (
-            <View style={styles.topBottomBorder}>
+          <Animated.View
+            style={{ overflow: "hidden", height: heightInterpolate }}
+          >
+            <View
+              style={[styles.topBottomBorder]}
+              onLayout={this._onViewLayout.bind(this)}
+            >
               <NumberSpinner
                 value={this.props.weight}
                 label="LBS."
@@ -208,7 +241,7 @@ class MapScreen extends Component {
                 }
               />
             </View>
-          ) : null}
+          </Animated.View>
         </View>
         <ScrollView
           style={styles.bodyRow}
@@ -406,6 +439,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginLeft: 14,
     marginRight: 14,
+  },
+  collapsed: {
+    height: 0,
+    overflow: "hidden",
   },
 });
 
