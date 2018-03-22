@@ -4,7 +4,6 @@ import Colors from "../styles/colors";
 import PropTypes from "prop-types";
 
 // TODO: add configurability for number of places, separators, etc.
-
 /*
   props: {
     selectedValue: number value with decimal point
@@ -69,7 +68,9 @@ export default class NumberSpinner extends Component {
         key={`spinner${numType}${idx}`}
         style={styles.numberSpinner}
         selectedValue={value}
-        onValueChange={val => this._handleValueChange(numType, idx, val)}
+        onValueChange={val => {
+          this._handleValueChange(numType, idx, val);
+        }}
       >
         {digits.map(digit => (
           <PickerIOS.Item
@@ -82,8 +83,10 @@ export default class NumberSpinner extends Component {
     );
   }
 
-  componentDidUpdate() {
-    this.props.onValueChange(this._getValueFromState());
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state !== prevState) {
+      this.props.onValueChange(this._getValueFromState());
+    }
   }
 
   render() {
