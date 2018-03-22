@@ -28,7 +28,6 @@ export default class DayChart extends React.PureComponent {
     // build days
     const days = [];
     for (const day = 1; day <= numDays; day++) {
-      const isFuture = day > new Date().getDate();
       const dayKeyDay = day.toString().length === 1 ? `0${day}` : day;
       const dayKey = `${dayKeyBase}${dayKeyDay}`;
       days.push(
@@ -39,7 +38,7 @@ export default class DayChart extends React.PureComponent {
             height: "100%",
             backgroundColor: this.props.markedDates[dayKey]
               ? this.props.markedDates[dayKey].color
-              : isFuture ? "whitesmoke" : "white",
+              : "white",
           }}
         />,
       );

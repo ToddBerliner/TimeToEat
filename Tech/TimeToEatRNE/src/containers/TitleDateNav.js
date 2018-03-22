@@ -13,7 +13,6 @@ class TitleDateNav extends Component {
   }
 
   _selectDate(dir) {
-    console.log(dir);
     this.props.selectDate(this.props.dayId, dir);
   }
 

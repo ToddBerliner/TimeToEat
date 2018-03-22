@@ -218,19 +218,6 @@ class MapScreen extends Component {
       <View style={styles.appWrap}>
         <View style={styles.weightRow}>
           <View style={styles.weightTextRow}>
-            <View style={{ flexDirection: "row" }}>
-              <Button
-                style={{ marginRight: 10 }}
-                title="Log State"
-                onPress={this.props._logState}
-              />
-              <Button
-                title="Next Date"
-                onPress={() => {
-                  this.props.selectDay(this.props.dayId, NEXT);
-                }}
-              />
-            </View>
             {this.props.weightTracking && (
               <TouchableOpacity
                 onPress={this._toggleWeightPicker.bind(this)}
@@ -410,7 +397,7 @@ const styles = StyleSheet.create({
   },
   weightTextRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     marginBottom: 10,
   },
   weightTextButton: {

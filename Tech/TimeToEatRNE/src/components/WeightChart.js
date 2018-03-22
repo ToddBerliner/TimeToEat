@@ -32,6 +32,7 @@ export default class WeightChart extends React.PureComponent {
     let firstPointIdx = null;
     let lastPointIdx = null;
     let circles = [];
+    let datumCount = 0;
     for (const day = 1; day <= numDays; day++) {
       const dayKeyDay = day.toString().length === 1 ? `0${day}` : day;
       const dayKey = `${dayKeyBase}${dayKeyDay}`;
@@ -39,6 +40,9 @@ export default class WeightChart extends React.PureComponent {
         this.props.markedDates[dayKey] && this.props.markedDates[dayKey].weight
           ? this.props.markedDates[dayKey].weight
           : undefined;
+      if (typeof weight !== "undefined") {
+        datumCount++;
+      }
       if (firstPointIdx === null && typeof weight !== "undefined") {
         firstPointIdx = day - 1;
       }
@@ -49,6 +53,37 @@ export default class WeightChart extends React.PureComponent {
         circles.push(day - 1);
       }
       data.push(weight);
+    }
+
+    if (datumCount === 0) {
+      return (
+        <View
+          style={{
+            width: this.props.width,
+            height: this.props.height,
+            borderLeftWidth: 1,
+            borderBottomWidth: 1,
+            borderRightWidth: 1,
+            borderColor: Colors.borderGrey,
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
+            paddingLeft: 5,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: Colors.grey,
+              fontSize: 14,
+              fontFamily: "System",
+            }}
+          >
+            NO WEIGHTS RECORDED YET THIS MONTH
+          </Text>
+        </View>
+      );
     }
 
     const StartEndDots = ({ x, y }) => {
