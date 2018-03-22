@@ -95,13 +95,21 @@ class MapScreen extends Component {
       weightPickerOpen: false,
       weightPickerAnimated: new Animated.Value(0),
       bodyRowHeight: false,
-      nodeIds: [],
+      pickerAnims: {},
     };
     props.nodes.forEach(node => {
-      this.state.nodeIds.push(node.id);
-      this.state[node.id] = new Animated.Value(0);
+      this.state.pickerAnims[node.id] = new Animated.Value(0);
     });
   }
+
+  // NOTE: moving to scoped arrow functions - TODO: update remainder throughout
+  _resetPickerAnims = nodes => {
+    const pickerAnims = {};
+    nodes.forEach(node => {
+      pickerAnims[node.id] = new Animated.Value(0);
+    });
+    this.setState({ pickerAnims });
+  };
 
   _checkTime() {
     // Load new day when it comes around
@@ -136,12 +144,12 @@ class MapScreen extends Component {
           toValue,
           duration: 150,
         }).start();
-        this.state.nodeIds.forEach(nodeId => {
-          Animated.timing(this.state[nodeId], {
+        for (let nodeId in this.state.pickerAnims) {
+          Animated.timing(this.state.pickerAnims[nodeId], {
             toValue: 0,
             duration: 150,
           }).start();
-        });
+        }
       },
     );
   }
@@ -160,12 +168,12 @@ class MapScreen extends Component {
           toValue,
           duration: 150,
         }).start();
-        this.state.nodeIds.forEach(nodeId => {
-          Animated.timing(this.state[nodeId], {
+        for (let nodeId in this.state.pickerAnims) {
+          Animated.timing(this.state.pickerAnims[nodeId], {
             toValue: this.state.openPicker === nodeId ? 1 : 0,
             duration: 150,
           }).start();
-        });
+        }
       },
     );
   }
@@ -179,14 +187,14 @@ class MapScreen extends Component {
     });
   }
 
-  _onViewLayout(evt) {
-    // console.log(evt.nativeEvent);
-  }
-
   async componentDidMount() {
     // start timer to check for new day
     this.timer = setInterval(() => this._checkTime(), 1000);
     Notifications.addListener(this._handleNotification);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this._resetPickerAnims(nextProps.nodes);
   }
 
   componentWillUnmount() {
@@ -200,12 +208,12 @@ class MapScreen extends Component {
       outputRange: [0, 217],
     });
     const nodeHeights = {};
-    this.props.nodes.forEach(node => {
-      nodeHeights[node.id] = this.state[node.id].interpolate({
+    for (let nodeId in this.state.pickerAnims) {
+      nodeHeights[nodeId] = this.state.pickerAnims[nodeId].interpolate({
         inputRange: [0, 1],
         outputRange: [0, 217],
       });
-    });
+    }
     return (
       <View style={styles.appWrap}>
         <View style={styles.weightRow}>
@@ -253,16 +261,13 @@ class MapScreen extends Component {
           <Animated.View
             style={{ overflow: "hidden", height: heightInterpolate }}
           >
-            <View
-              style={[styles.topBottomBorder]}
-              onLayout={this._onViewLayout.bind(this)}
-            >
+            <View style={[styles.topBottomBorder]}>
               <NumberSpinner
                 value={this.props.weight}
                 label="LBS."
-                onValueChange={val =>
-                  this.props.editWeight(this.props.dayId, val)
-                }
+                onValueChange={val => {
+                  this.props.editWeight(this.props.dayId, val);
+                }}
               />
             </View>
           </Animated.View>
@@ -290,7 +295,7 @@ class MapScreen extends Component {
                 onEditSnackTime={(nodeId, timestamp) =>
                   this.props.editSnackTime(nodeId, timestamp)
                 }
-                nodeHeights={nodeHeights}
+                pickerHeights={nodeHeights}
                 height={this.state.bodyRowHeight}
               />
             ) : (

@@ -45,8 +45,6 @@ export default class DayChart extends React.PureComponent {
       );
     }
 
-    console.log(days.length);
-
     // get date lables
     const monthText = getMonth(this.props.calMonth - 1);
     return (
