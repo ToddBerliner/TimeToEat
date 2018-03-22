@@ -12,7 +12,7 @@
     "prop-types": "^15.6.0",
     "react": "16.2.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
-    "react-native-calendars": "^1.17.3",
+    "react-native-calendars": "^1.17.4",
     "react-native-in-app-notification": "^2.2.0",
     "react-native-svg": "^6.2.2",
     "react-native-svg-charts": "^4.1.0",
