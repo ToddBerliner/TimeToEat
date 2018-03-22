@@ -97,10 +97,9 @@ class MetricsScreen extends React.Component {
       if (dayId === todayKey) {
         // mark today
         markedDates[calDateKey] = {
-          color: Colors.calBlue,
+          color: Colors.ltGrey,
           startingDay: true,
           endingDay: true,
-          textColor: "white",
           weight: dayObj.weight,
         };
         // ensure previous day is endingDay
@@ -225,6 +224,9 @@ class MetricsScreen extends React.Component {
             onDayPress={this._handleDayPress.bind(this)}
             hideExtraDays={true}
             onMonthChange={this._handleMonthChange.bind(this)}
+            hideArrowsPastMinMaxMonths={true}
+            minMonthDate={new Date(parseInt(firstDayId, 10))}
+            maxMonthDate={new Date()}
           />
         </View>
         {weightTracking ? (
