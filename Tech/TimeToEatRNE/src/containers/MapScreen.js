@@ -105,10 +105,16 @@ class MapScreen extends Component {
   // NOTE: moving to scoped arrow functions - TODO: update remainder throughout
   _resetPickerAnims = nodes => {
     const pickerAnims = {};
+    const openPicker = null;
+    const weightPickerOpen = false;
+    const weightPickerAnimated = new Animated.Value(0);
     nodes.forEach(node => {
       pickerAnims[node.id] = new Animated.Value(0);
     });
-    this.setState({ pickerAnims });
+    this.setState({
+      pickerAnims,
+      openPicker,
+    });
   };
 
   _checkTime() {
@@ -194,6 +200,14 @@ class MapScreen extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.state.weightPickerOpen && this.props.dayId !== nextProps.dayId) {
+      this.setState({ weightPickerOpen: false }, () => {
+        Animated.timing(this.state.weightPickerAnimated, {
+          toValue: 0,
+          duration: 0,
+        }).start();
+      });
+    }
     this._resetPickerAnims(nextProps.nodes);
   }
 
@@ -398,7 +412,6 @@ const styles = StyleSheet.create({
   weightTextRow: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    marginBottom: 10,
   },
   weightTextButton: {
     marginRight: 14,

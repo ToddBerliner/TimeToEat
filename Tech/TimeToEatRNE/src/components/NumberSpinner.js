@@ -83,6 +83,10 @@ export default class NumberSpinner extends Component {
     );
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState(this._getStateFromValue(nextProps.value));
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (this.state !== prevState) {
       this.props.onValueChange(this._getValueFromState());
