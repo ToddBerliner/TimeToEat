@@ -86,12 +86,19 @@ class MetricsScreen extends React.Component {
     const orderedDayIds = getAllDayIdsInOrder(daysState);
 
     let prevDayId = null;
+    let prevDayIsContiguous = false;
     let prevColor = null;
     const todayKey = getDateKey();
 
     for (const dayId of orderedDayIds) {
       const calDateKey = getDateKeyForCal(dayId);
       const dayObj = getDayById(daysState, dayId);
+
+      if (prevDayId !== null) {
+        let thisDay = new Date(parseInt(dayId, 10));
+        thisDay.setDate(thisDay.getDate() - 1);
+        prevDayIsContiguous = prevDayId === getDateKeyForCal(thisDay);
+      }
 
       // failsafe to not mark days in future
       if (dayId === todayKey) {
@@ -116,12 +123,15 @@ class MetricsScreen extends React.Component {
       // create and update dayConfig
       const dayConfig = { color, weight: dayObj.weight };
       // calculate starting and ending day values
-      if (prevColor !== color) {
+      if (prevColor !== color || !prevDayIsContiguous) {
         dayConfig.startingDay = true;
       } else {
         dayConfig.startingDay = false;
       }
-      if (prevColor !== color && markedDates[prevDayId]) {
+      if (
+        (prevColor !== color || !prevDayIsContiguous) &&
+        markedDates[prevDayId]
+      ) {
         markedDates[prevDayId].endingDay = true;
       }
       // set dayConfig into markedDates & set prev values for next iteration
@@ -135,6 +145,7 @@ class MetricsScreen extends React.Component {
   _handleDayPress(day) {
     if (!day || !day.timestamp) return;
     const dayId = getDateKey(new Date(day.year, day.month - 1, day.day));
+    // ignore taps on future days
     if (dayId >= getDateKey()) return;
     this.props.selectDay(dayId);
     this.props.navigation.goBack();
@@ -219,7 +230,6 @@ class MetricsScreen extends React.Component {
           <Calendar
             style={{ width: "95%", alignSelf: "center" }}
             markedDates={markedDates}
-            minDate={new Date(parseInt(firstDayId, 10))}
             markingType={"period"}
             onDayPress={this._handleDayPress.bind(this)}
             hideExtraDays={true}
