@@ -27,6 +27,16 @@ describe("root Actions", () => {
       rootFixtures.expectedMondayDayAndNodesAddedAction,
     );
   });
+  it("should dispatch the DAY_AND_NODES_ADDED action with weight", () => {
+    const dispatches = Thunk(_ensureDaysAndNodes)
+      .withState(rootFixtures.stateWithWeight)
+      .execute(daysFixtures.dateKeyMonday, daysFixtures.dateKeyTuesday);
+    expect(dispatches.length).toBe(1);
+    expect(dispatches[0].isPlainObject()).toBe(true);
+    expect(dispatches[0].getAction()).toEqual(
+      rootFixtures.expectedTuesdayDayAndNodesAddedAction,
+    );
+  });
 });
 
 describe("root Selectors", () => {

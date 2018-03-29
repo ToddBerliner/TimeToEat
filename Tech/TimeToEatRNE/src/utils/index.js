@@ -169,6 +169,25 @@ export function getFriendlyDate(timestamp) {
   return `${dow}, ${month} ${date}`;
 }
 
+export function getDayWithSup(date) {
+  // date = 1-31, not a date object
+  let dateStr = date.toString();
+  const supMap = {
+    "1": "st",
+    "2": "nd",
+    "3": "rd",
+    "4": "th",
+    "5": "th",
+    "6": "th",
+    "7": "th",
+    "8": "th",
+    "9": "th",
+    "0": "th",
+  };
+  const sub = supMap[dateStr.substring(dateStr.length - 1)];
+  return `${dateStr}${sub}`;
+}
+
 export function getFriendlyTime(timestamp) {
   if (!timestamp) return null;
   const date = new Date(timestamp);
@@ -192,7 +211,7 @@ export function getFriendlyTime(timestamp) {
   return `${hours}${minutes}${ampm}`;
 }
 
-export function createDayAndNodes(dateKey, planDay, prevWeight) {
+export function createDayAndNodes(dateKey, planDay, prevWeight = 0) {
   // create the nodes
   const nodes = createNodesFromPlanDay(dateKey, planDay);
   const nodeIdsArr = nodes.map(node => node.id);

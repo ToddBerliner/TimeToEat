@@ -42,11 +42,14 @@ export const _ensureDaysAndNodes = (
   }
   if (dayIdsToCreate.length > 0) {
     return function(dispatch, getState) {
+      // get sinceDay weight
+      const sinceDay = _getDayById(getState(), sinceDayId);
+      const prevWeight = typeof sinceDay === "undefined" ? 0 : sinceDay.weight;
       // iterate over dayIdsToCreate, create the payload and dispatch the action
       for (var dayId of dayIdsToCreate) {
         if (typeof _getDayById(getState(), dayId) === "undefined") {
           const planDay = getPlanDayByDayId(getState().plan, dayId);
-          const dayAndNodes = createDayAndNodes(dayId, planDay);
+          const dayAndNodes = createDayAndNodes(dayId, planDay, prevWeight);
           dispatch({ type: DAY_AND_NODES_ADDED, dayAndNodes });
         }
       }
