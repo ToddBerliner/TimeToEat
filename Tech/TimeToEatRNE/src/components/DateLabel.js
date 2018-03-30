@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import Colors from "../styles/colors";
+import PropTypes from "prop-types";
 
 export default class DateLabel extends React.PureComponent {
   render() {
@@ -25,7 +26,7 @@ export default class DateLabel extends React.PureComponent {
           <Text
             style={{
               fontFamily: "System",
-              fontSize: 14,
+              fontSize: this.props.monthFontSize,
               color: Colors.grey,
             }}
           >
@@ -36,7 +37,7 @@ export default class DateLabel extends React.PureComponent {
           <Text
             style={{
               fontFamily: "System",
-              fontSize: 10,
+              fontSize: this.props.subFontSize,
               color: Colors.grey,
             }}
           >
@@ -47,3 +48,13 @@ export default class DateLabel extends React.PureComponent {
     );
   }
 }
+DateLabel.propTypes = {
+  month: PropTypes.string.isRequired,
+  day: PropTypes.number.isRequired,
+  monthFontSize: PropTypes.number,
+  subFontSize: PropTypes.number,
+};
+DateLabel.defaultProps = {
+  monthFontSize: 14,
+  subFontSize: 10,
+};

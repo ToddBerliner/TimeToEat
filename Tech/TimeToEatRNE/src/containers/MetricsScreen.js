@@ -13,7 +13,13 @@ import { Calendar } from "react-native-calendars";
 import Colors from "../styles/colors";
 import WeightChart from "../components/WeightChart";
 import DayChart from "../components/DayChart";
-import { getDateKey, getColorFromNodes, getDateKeyForCal } from "../utils";
+import DateLabel from "../components/DateLabel";
+import {
+  getMonth,
+  getDateKey,
+  getColorFromNodes,
+  getDateKeyForCal,
+} from "../utils";
 import {
   getFirstDayId,
   getLastDayId,
@@ -29,26 +35,26 @@ import { whiteBlock } from "../styles/styles";
 class MetricsScreen extends React.Component {
   constructor(props) {
     super(props);
+    const curDate = new Date();
     this.state = {
-      calMonth: new Date().getMonth() + 1,
-      calYear: new Date().getFullYear(),
+      calMonth: curDate.getMonth() + 1,
+      calYear: curDate.getFullYear(),
+      daysInMonth: new Date(
+        curDate.getFullYear(),
+        curDate.getMonth() + 1, // already 1 month "ahead" due to calMonth being 1 index
+        0,
+      ).getDate(),
     };
   }
   /*
     Calendar TODO:
       ✔ minDate = first date in state.days
-      ❍ month nav buttons - only allow scroll to months in state
+      ✔ month nav buttons - only allow scroll to months in state
       ✔ day tap = selectDay (if not disabled)
       ✔ markedDates for state
       ❍ make dot and period marking PR?
       ❍ at least color text of days w/ off plan snacks
       ❍ suggestions! (eg, you have a lot of off-plan snacks - update your plan)
-      ❍ on time stats - separate chart below calendar
-
-      Add prop to control month nav arrows based on minMax dates
-      - hide next/back arrows if the current month is the min or max date month
-      https://github.com/wix/react-native-calendars/blob/master/src/calendar/header/index.js
-
   */
   static navigationOptions = ({ navigation, screenProps }) => {
     const { dayId } = screenProps;
@@ -69,19 +75,6 @@ class MetricsScreen extends React.Component {
 
   // calculate day markings
   _calculateMarkedDates(daysState, nodesState) {
-    /*
-      Calculating day colors
-      - green 100%
-      - yellow 51-99%
-      - red 0-50%
-
-      For each day, in order, get nodes
-      - count tracked nodes
-      - count completed nodes
-      - calc completed/tracked
-      - update days.daysById[dayId].color
-      - update previous days endingDay value
-    */
     const markedDates = {};
     const orderedDayIds = getAllDayIdsInOrder(daysState);
 
@@ -155,6 +148,7 @@ class MetricsScreen extends React.Component {
     this.setState({
       calMonth: month.month,
       calYear: month.year,
+      daysInMonth: new Date(month.year, month.month, 0).getDate(),
     });
   }
 
@@ -167,7 +161,6 @@ class MetricsScreen extends React.Component {
           alignItems: "center",
           justifyContent: "flex-start",
           marginLeft: FormSettings.textMarginLeft,
-          marginTop: 10,
         }}
       >
         <View
@@ -178,7 +171,7 @@ class MetricsScreen extends React.Component {
             backgroundColor: color,
           }}
         />
-        <Text style={[SectionStyles.sectionTitle, { marginBottom: 0 }]}>
+        <Text style={{ fontSize: 12, color: "#808080", marginLeft: 4 }}>
           {text}
         </Text>
       </View>
@@ -191,15 +184,15 @@ class MetricsScreen extends React.Component {
     const { width } = Dimensions.get("window");
     const legends = [
       {
-        text: "PERFECT!",
+        text: "Perfect!",
         color: Colors.calGreen,
       },
       {
-        text: "50%+",
+        text: "Missed Meals",
         color: Colors.calYellow,
       },
       {
-        text: "< 50% OR OFF PLAN SNACKS",
+        text: "Off Plan Snacks",
         color: Colors.calRed,
       },
     ].map((legendDef, idx) =>
@@ -210,7 +203,7 @@ class MetricsScreen extends React.Component {
         style={{
           flex: 1,
           flexDirection: "column",
-          backgroundColor: "rgb(245, 245, 245)",
+          backgroundColor: "whitesmoke",
           paddingTop: 20,
         }}
       >
@@ -226,7 +219,7 @@ class MetricsScreen extends React.Component {
           How You're Eating
         </Text>
         <Text style={SectionStyles.sectionTitle}>MEAL TRACKING</Text>
-        <View style={whiteBlock}>
+        <View style={[whiteBlock, { marginBottom: 10 }]}>
           <Calendar
             style={{ width: "95%", alignSelf: "center" }}
             markedDates={markedDates}
@@ -234,40 +227,50 @@ class MetricsScreen extends React.Component {
             onDayPress={this._handleDayPress.bind(this)}
             hideExtraDays={true}
             onMonthChange={this._handleMonthChange.bind(this)}
-            hideArrowsPastMinMaxMonths={true}
+            hideArrowsPastMinMaxMonths={false}
             minMonthDate={new Date(parseInt(firstDayId, 10))}
             maxMonthDate={new Date()}
           />
         </View>
+        <View style={{ flexDirection: "row", marginBottom: 10 }}>
+          {legends}
+        </View>
         {weightTracking ? (
-          <View>
+          <View style={{ flex: 1, marginTop: 8 }}>
             <Text style={SectionStyles.sectionTitle}>WEIGHT TRACKING</Text>
-            <View style={[whiteBlock, { paddingTop: 14, paddingBottom: 14 }]}>
+            <View style={[whiteBlock, { alignItems: "center" }]}>
               <View
                 style={{
-                  width: "95%",
-                  alignSelf: "center",
-                  flexDirection: "column",
+                  width: width - FormSettings.textMarginLeft * 2,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  borderBottomWidth: StyleSheet.hairlineWidth,
+                  borderColor: Colors.borderGrey,
                 }}
               >
-                <DayChart
-                  width={0.95 * width}
-                  markedDates={markedDates}
-                  calMonth={this.state.calMonth}
-                  calYear={this.state.calYear}
+                <DateLabel
+                  month={getMonth(this.state.calMonth - 1)}
+                  day={1}
+                  monthFontSize={12}
+                  subFontSize={9}
                 />
-                <WeightChart
-                  width={0.95 * width}
-                  markedDates={markedDates}
-                  calMonth={this.state.calMonth}
-                  calYear={this.state.calYear}
+                <DateLabel
+                  month={getMonth(this.state.calMonth - 1)}
+                  day={this.state.daysInMonth}
+                  monthFontSize={12}
+                  subFontSize={9}
                 />
               </View>
+              <WeightChart
+                width={width - FormSettings.textMarginLeft * 2}
+                markedDates={markedDates}
+                calMonth={this.state.calMonth}
+                calYear={this.state.calYear}
+                style={{ marginTop: 10 }}
+              />
             </View>
           </View>
-        ) : (
-          legends
-        )}
+        ) : null}
       </View>
     );
   }
