@@ -62,7 +62,7 @@ export default class NumberSpinner extends Component {
   }
 
   _getSpinner(numType, value, idx) {
-    const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     return (
       <PickerIOS
         key={`spinner${numType}${idx}`}
