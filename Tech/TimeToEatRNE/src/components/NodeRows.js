@@ -94,8 +94,7 @@ const NodeRows = props => {
 const styles = StyleSheet.create({
   content: {
     flexDirection: "column",
-    justifyContent: "space-around",
-    marginBottom: 50,
+    justifyContent: "space-between",
   },
 });
 

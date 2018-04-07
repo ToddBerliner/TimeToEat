@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    height: 80,
+    height: 69,
     paddingLeft: 14,
   },
   nodeRowSelected: {
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    height: 80,
+    height: 69,
     paddingLeft: 14,
   },
   circleTouchable: {

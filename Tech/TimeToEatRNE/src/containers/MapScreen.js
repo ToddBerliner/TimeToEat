@@ -186,9 +186,10 @@ class MapScreen extends Component {
 
   _handleBodyRowLayout(evt) {
     const { height } = evt.nativeEvent.layout;
+    console.log(`mapScreen ${height}`);
     this.setState(prevState => {
       if (!prevState.bodyRowHeight) {
-        return { bodyRowHeight: height };
+        return { bodyRowHeight: height - 30 };
       }
     });
   }
