@@ -28,17 +28,6 @@ const SnackNodeRow = props => {
         <View style={styles.nodeNameBlock}>
           <Text style={styles.nodeName}>Off-plan Snack</Text>
         </View>
-        <TouchableOpacity onPress={props.onShowPicker}>
-          <Text
-            style={
-              props.isPickerShowing
-                ? styles.nodeTimeBlockActive
-                : styles.nodeTimeBlock
-            }
-          >
-            {getFriendlyTime(props.time)}
-          </Text>
-        </TouchableOpacity>
       </View>
       {props.isPickerShowing ? (
         <DatePickerIOS

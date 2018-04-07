@@ -32,3 +32,8 @@ export const whiteBlock = {
   paddingTop: 8,
   paddingBottom: 8,
 };
+export const topBottomBorder = {
+  borderColor: "#acacac",
+  borderTopWidth: StyleSheet.hairlineWidth,
+  borderBottomWidth: StyleSheet.hairlineWidth,
+};

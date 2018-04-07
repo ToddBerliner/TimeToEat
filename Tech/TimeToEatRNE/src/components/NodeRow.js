@@ -48,17 +48,6 @@ class NodeRow extends React.Component {
           <View style={styles.nodeNameBlock}>
             <View style={styles.nodeNameRow}>
               <Text style={styles.nodeName}>{props.name}</Text>
-              <TouchableOpacity onPress={props.onShowPicker}>
-                <Text
-                  style={
-                    props.isPickerShowing
-                      ? styles.nodeEatenTimeActive
-                      : styles.nodeEatenTime
-                  }
-                >
-                  {getFriendlyTime(props.completedTime)}
-                </Text>
-              </TouchableOpacity>
             </View>
             <Text>{getFriendlyTime(props.time)}</Text>
           </View>
