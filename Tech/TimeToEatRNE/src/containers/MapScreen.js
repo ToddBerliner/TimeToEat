@@ -10,6 +10,8 @@ import {
   PickerIOS,
   ScrollView,
   Animated,
+  SafeAreaView,
+  Dimensions,
 } from "react-native";
 import EmptyPlan from "../components/EmptyPlan";
 import AddSnack from "../components/AddSnack";
@@ -185,11 +187,15 @@ class MapScreen extends Component {
   }
 
   _handleBodyRowLayout(evt) {
-    const { height } = evt.nativeEvent.layout;
-    console.log(`mapScreen ${height}`);
+    const d = Dimensions.get("window");
+    const { width, height } = d;
+    const isX = width === 812 || height === 812;
+    const minus = isX ? 70 : 30;
+
+    const scrollHeight = evt.nativeEvent.layout.height;
     this.setState(prevState => {
       if (!prevState.bodyRowHeight) {
-        return { bodyRowHeight: height - 30 };
+        return { bodyRowHeight: scrollHeight - minus };
       }
     });
   }
@@ -230,7 +236,7 @@ class MapScreen extends Component {
       });
     }
     return (
-      <View style={styles.appWrap}>
+      <SafeAreaView style={styles.appWrap}>
         <View style={styles.weightRow}>
           <View style={styles.weightTextRow}>
             {this.props.weightTracking && (
@@ -333,7 +339,7 @@ class MapScreen extends Component {
             this.notification = ref;
           }}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }
