@@ -11,3 +11,12 @@ const Colors = {
   textRed: "rgb(208,2,27)",
 };
 export default Colors;
+
+/*
+TODO:
+- move all styles to stylesheets
+- except a truely re-usable component - pickers?
+- all colors in color def - move to StyleSheet
+- all font scaling in StyleSheet
+-- set const in stylesheet and use that
+*/

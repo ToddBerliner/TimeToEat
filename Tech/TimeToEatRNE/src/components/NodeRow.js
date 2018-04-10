@@ -12,6 +12,8 @@ import { CHECKED, MISSED } from "../store/nodes/reducer";
 import Icon from "react-native-vector-icons/Ionicons";
 import Colors from "../styles/colors";
 
+export const nodeRowHeight = 69;
+
 class NodeRow extends React.Component {
   render() {
     let circleFillJsx;
@@ -73,10 +75,6 @@ class NodeRow extends React.Component {
         </Animated.View>
       </View>
     );
-    // Add DatePicker with onDateChange which must be passed down
-    // from MapScreen through NodeRows to here
-    // MapScreen.onDateChange must translate the date into timestamp and call
-    // tapNode(nodeId, timestamp)
   }
 }
 
@@ -88,7 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    height: 69,
+    height: nodeRowHeight,
     paddingLeft: 14,
   },
   nodeRowSelected: {
@@ -96,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    height: 69,
+    height: nodeRowHeight,
     paddingLeft: 14,
   },
   circleTouchable: {

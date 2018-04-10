@@ -9,17 +9,15 @@ import {
 import { getFriendlyTime } from "../utils";
 import Colors from "../styles/colors";
 
+export const snackRowHeight = 60;
+
 const SnackNodeRow = props => {
   return (
     <View style={{ display: "flex" }}>
       <View style={styles.snackNodeRow}>
         <TouchableOpacity
           onLongPress={props.onTapAndHold}
-          style={{
-            width: 60,
-            height: 40,
-            borderRadius: 30,
-          }}
+          style={styles.circleTouchable}
         >
           <View style={styles.circle}>
             <View style={styles.circleFill} />
@@ -47,8 +45,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    height: 60,
+    height: snackRowHeight,
     paddingLeft: 24,
+  },
+  circleTouchable: {
+    width: 60,
+    height: 40,
+    borderRadius: 30,
   },
   circle: {
     width: 40,

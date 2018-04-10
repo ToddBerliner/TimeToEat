@@ -26,8 +26,11 @@ import {
   _getDayById,
   _getNodesByIds,
 } from "../store/reducer";
+import { PLAN, OFFPLAN } from "../store/nodes/reducer";
 import { selectDay } from "../store/uiState/reducer";
 import { tapWater, tapAndHoldWater, editWeight } from "../store/days/reducer";
+import { nodeRowHeight } from "../components/NodeRow";
+import { snackRowHeight } from "../components/SnackNodeRow";
 import {
   tapNode,
   tapAndHoldNode,
@@ -191,14 +194,33 @@ class MapScreen extends Component {
     const { width, height } = d;
     const isX = width === 812 || height === 812;
     const minus = isX ? 70 : 30;
-
     const scrollHeight = evt.nativeEvent.layout.height;
     this.setState(prevState => {
       if (!prevState.bodyRowHeight) {
-        return { bodyRowHeight: scrollHeight - minus };
+        return {
+          bodyRowHeight: scrollHeight - minus,
+          scrollContentHeight: this._calcScrollContentHeight(this.props.nodes),
+        };
       }
     });
   }
+
+  _setScrollContentHeight = nodes => {
+    const scrollContentHeight = this._calcScrollContentHeight(nodes);
+    this.setState({
+      scrollContentHeight,
+    });
+  };
+
+  _calcScrollContentHeight = nodes => {
+    let height = 0;
+    nodes.forEach(node => {
+      height += node.type === PLAN ? nodeRowHeight : snackRowHeight;
+    });
+    return this.state.bodyRowHeight > height
+      ? this.state.bodyRowHeight
+      : height;
+  };
 
   async componentDidMount() {
     // start timer to check for new day
@@ -216,6 +238,7 @@ class MapScreen extends Component {
       });
     }
     this._resetPickerAnims(nextProps.nodes);
+    this._setScrollContentHeight(nextProps.nodes);
   }
 
   componentWillUnmount() {
@@ -304,12 +327,15 @@ class MapScreen extends Component {
                   this.props.editSnackTime(nodeId, timestamp)
                 }
                 pickerHeights={nodeHeights}
-                height={this.state.bodyRowHeight}
+                height={this.state.scrollContentHeight}
+                scrollingRequired={
+                  this.state.bodyRowHeight < this.state.scrollContentHeight
+                }
               />
             ) : (
               <EmptyPlan
                 navigate={this.props.navigation.navigate}
-                height={this.state.bodyRowHeight}
+                height={this.state.scrollContentHeight}
               />
             )
           ) : null}

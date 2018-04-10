@@ -29,8 +29,9 @@ const getCurrentNodeId = nodes => {
 // NodeRows handles layout of node rows
 const NodeRows = props => {
   let rows = [];
-  const { nodes, height } = props;
+  const { nodes, height, scrollingRequired } = props;
   const selectedNodeId = getCurrentNodeId(nodes);
+  const justifyContent = scrollingRequired ? "space-between" : "space-around";
   nodes.forEach(node => {
     switch (node.type) {
       case PLAN:
@@ -88,7 +89,9 @@ const NodeRows = props => {
         break;
     }
   });
-  return <View style={[styles.content, { height }]}>{rows}</View>;
+  return (
+    <View style={[styles.content, { height }, { justifyContent }]}>{rows}</View>
+  );
 };
 
 const styles = StyleSheet.create({
