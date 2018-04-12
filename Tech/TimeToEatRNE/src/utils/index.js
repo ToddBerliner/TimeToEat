@@ -50,7 +50,7 @@ export const shortMonths = [
 
 export function isSeSize() {
   const { width, height } = Dimensions.get("window");
-  return width < 414 || height < 414;
+  return width < 375 || height < 375;
 }
 
 export function getDow(dayIndex) {

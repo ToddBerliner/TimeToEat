@@ -65,6 +65,7 @@ export default class WeightChart extends React.PureComponent {
     // build circles and weight labels
     const circles = [];
     const weightLabels = [];
+    const textLabels = [];
 
     points.forEach((point, idx, points) => {
       if (typeof point !== "undefined") {
@@ -89,6 +90,14 @@ export default class WeightChart extends React.PureComponent {
       }
     });
 
+    let prevIdx = null;
+    weightLabels.forEach(point => {
+      if (prevIdx === null || point.idx - prevIdx > 2) {
+        textLabels.push(point);
+        prevIdx = point.idx;
+      }
+    });
+
     const StartEndDots = ({ x, y }) => {
       return (
         <G key="startEndDots">
@@ -110,49 +119,49 @@ export default class WeightChart extends React.PureComponent {
     const WeightLabels = ({ x, y }) => {
       return (
         <G key="weightLabels">
+          {weightLabels.map(point => (
+            <G key={`gl${point.idx}`} x={x(point.idx)}>
+              <Line
+                key={`line${point.idx}`}
+                y1={y(data[point.idx])}
+                y2={this.props.height + this.props.bottomInset}
+                d={(0, 0, 50, 50)}
+                stroke={Colors.grey}
+                strokeWidth={1}
+              />
+            </G>
+          ))}
           <Rect
             key="weightmask"
             x="0"
             y={this.props.height + 12}
             width={this.props.width}
-            height="60"
+            height={this.props.bottomInset - 12}
             fill={"white"}
           />
-          {weightLabels.map(point => (
-            <G key={`g${point.idx}`} x={x(point.idx)}>
-              <Line
-                key={`line${point.idx}`}
-                y1={y(data[point.idx])}
-                y2={this.props.height + 12}
-                d={(0, 0, 50, 50)}
-                stroke={Colors.grey}
-                strokeWidth={1}
-              />
-              {(point.idx % 7 === 0 ||
-                point.idx % 7 === 3 ||
-                point.idx % 7 === 4) && (
-                <G key={`lab${point.idx}`}>
-                  <SvgText
-                    key={`wl${point.idx}`}
-                    y={this.props.height + 12}
-                    textAnchor={"middle"}
-                    fontSize={16}
-                    fontWeight={-0.4}
-                  >
-                    {data[point.idx]}
-                  </SvgText>
-                  <SvgText
-                    key={`wlt${point.idx}`}
-                    y={this.props.height + 12 + 18}
-                    textAnchor={"middle"}
-                    fontSize={10}
-                    fontWeight={-0.4}
-                    fill={Colors.grey}
-                  >
-                    LBS
-                  </SvgText>
-                </G>
-              )}
+          {textLabels.map(point => (
+            <G key={`gt${point.idx}`} x={x(point.idx)}>
+              <G key={`lab${point.idx}`}>
+                <SvgText
+                  key={`wl${point.idx}`}
+                  y={this.props.height + 12}
+                  textAnchor={"middle"}
+                  fontSize={16}
+                  fontWeight={-0.4}
+                >
+                  {data[point.idx]}
+                </SvgText>
+                <SvgText
+                  key={`wlt${point.idx}`}
+                  y={this.props.height + 12 + 18}
+                  textAnchor={"middle"}
+                  fontSize={10}
+                  fontWeight={-0.4}
+                  fill={Colors.grey}
+                >
+                  LBS
+                </SvgText>
+              </G>
             </G>
           ))}
         </G>

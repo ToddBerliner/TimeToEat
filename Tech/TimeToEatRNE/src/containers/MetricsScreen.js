@@ -164,7 +164,7 @@ class MetricsScreen extends React.Component {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "flex-start",
-          marginLeft: isSe ? 8 : FormSettings.textMarginLeft,
+          marginLeft: 8,
         }}
       >
         <View
@@ -218,9 +218,21 @@ class MetricsScreen extends React.Component {
             minMonthDate={new Date(parseInt(firstDayId, 10))}
             maxMonthDate={new Date()}
           />
-        </View>
-        <View style={{ flexDirection: "row", marginBottom: 10 }}>
-          {legends}
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              {legends}
+            </View>
+          </View>
         </View>
         {weightTracking ? (
           <View style={{ flex: 1, marginTop: 8 }}>
@@ -255,7 +267,7 @@ class MetricsScreen extends React.Component {
                 markedDates={markedDates}
                 calMonth={this.state.calMonth}
                 calYear={this.state.calYear}
-                style={{ marginTop: 10 }}
+                style={{ marginTop: 0 }}
               />
             </View>
           </View>
