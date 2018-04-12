@@ -470,6 +470,8 @@ const styles = StyleSheet.create({
   },
   bodyRow: {
     flex: 1,
+    marginRight: 14,
+    marginLeft: 8,
   },
   titleRow: {
     height: 36,
