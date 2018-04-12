@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   StyleSheet,
   View,
+  ScrollView,
   Text,
   TouchableOpacity,
   MaskedViewIOS,
@@ -19,6 +20,7 @@ import {
   getDateKey,
   getColorFromNodes,
   getDateKeyForCal,
+  isSeSize,
 } from "../utils";
 import {
   getFirstDayId,
@@ -30,7 +32,9 @@ import { _getWeightTrackingState } from "../store/reducer";
 import { getNodesByIds, OFFPLAN } from "../store/nodes/reducer";
 import { selectDay } from "../store/uiState/reducer";
 import { FormSettings, SectionStyles } from "../styles/formStyles";
-import { whiteBlock } from "../styles/styles";
+import { whiteBlock, MetricsScreenStyles } from "../styles/styles";
+
+const isSe = isSeSize();
 
 class MetricsScreen extends React.Component {
   constructor(props) {
@@ -160,13 +164,13 @@ class MetricsScreen extends React.Component {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "flex-start",
-          marginLeft: FormSettings.textMarginLeft,
+          marginLeft: isSe ? 8 : FormSettings.textMarginLeft,
         }}
       >
         <View
           style={{
-            width: 15,
-            height: 15,
+            width: isSe ? 12 : 15,
+            height: isSe ? 12 : 15,
             borderRadius: 7,
             backgroundColor: color,
           }}
@@ -199,27 +203,10 @@ class MetricsScreen extends React.Component {
       this._legend(legendDef.text, legendDef.color, idx),
     );
     return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "column",
-          backgroundColor: "whitesmoke",
-          paddingTop: 20,
-        }}
-      >
-        <Text
-          style={{
-            alignSelf: "flex-start",
-            fontFamily: "fugaz-one-regular",
-            fontSize: 36,
-            marginLeft: FormSettings.textMarginLeft,
-            marginBottom: 20,
-          }}
-        >
-          How You're Eating
-        </Text>
+      <ScrollView style={MetricsScreenStyles.metricsWrap}>
+        <Text style={MetricsScreenStyles.title}>How You're Eating</Text>
         <Text style={SectionStyles.sectionTitle}>MEAL TRACKING</Text>
-        <View style={[whiteBlock, { marginBottom: 10 }]}>
+        <View style={whiteBlock}>
           <Calendar
             style={{ width: "95%", alignSelf: "center" }}
             markedDates={markedDates}
@@ -227,7 +214,7 @@ class MetricsScreen extends React.Component {
             onDayPress={this._handleDayPress.bind(this)}
             hideExtraDays={true}
             onMonthChange={this._handleMonthChange.bind(this)}
-            hideArrowsPastMinMaxMonths={false}
+            hideArrowsPastMinMaxMonths={true}
             minMonthDate={new Date(parseInt(firstDayId, 10))}
             maxMonthDate={new Date()}
           />
@@ -238,7 +225,9 @@ class MetricsScreen extends React.Component {
         {weightTracking ? (
           <View style={{ flex: 1, marginTop: 8 }}>
             <Text style={SectionStyles.sectionTitle}>WEIGHT TRACKING</Text>
-            <View style={[whiteBlock, { alignItems: "center" }]}>
+            <View
+              style={[whiteBlock, { alignItems: "center", marginBottom: 22 }]}
+            >
               <View
                 style={{
                   width: width - FormSettings.textMarginLeft * 2,
@@ -262,7 +251,7 @@ class MetricsScreen extends React.Component {
                 />
               </View>
               <WeightChart
-                width={width - FormSettings.textMarginLeft * 2}
+                width={width}
                 markedDates={markedDates}
                 calMonth={this.state.calMonth}
                 calYear={this.state.calYear}
@@ -271,7 +260,7 @@ class MetricsScreen extends React.Component {
             </View>
           </View>
         ) : null}
-      </View>
+      </ScrollView>
     );
   }
 }

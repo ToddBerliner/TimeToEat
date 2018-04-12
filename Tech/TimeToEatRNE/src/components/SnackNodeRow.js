@@ -6,10 +6,11 @@ import {
   TouchableOpacity,
   DatePickerIOS,
 } from "react-native";
-import { getFriendlyTime } from "../utils";
+import { getFriendlyTime, isSeSize } from "../utils";
 import Colors from "../styles/colors";
 
 export const snackRowHeight = 60;
+const isSe = isSeSize();
 
 const SnackNodeRow = props => {
   return (
@@ -54,9 +55,9 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   circle: {
-    width: 40,
-    height: 40,
-    borderRadius: 25,
+    width: isSe ? 35 : 40,
+    height: isSe ? 35 : 40,
+    borderRadius: isSe ? 18 : 25,
     borderStyle: "solid",
     borderWidth: 2,
     borderColor: "black",
@@ -66,9 +67,9 @@ const styles = StyleSheet.create({
   },
   circleFill: {
     backgroundColor: "black",
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: isSe ? 27 : 32,
+    height: isSe ? 27 : 32,
+    borderRadius: isSe ? 14 : 16,
   },
   nodeNameBlock: {
     flex: 1,
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     color: Colors.textRed,
   },
   nodeName: {
-    fontSize: 20,
+    fontSize: isSe ? 18 : 20,
   },
 });
 

@@ -44,6 +44,7 @@ import {
   getAdjacentDateKey,
   getFriendlyDate,
   sendImmediateNotification,
+  isSeSize,
   PREV,
   NEXT,
 } from "../utils";
@@ -53,6 +54,7 @@ import McIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { StackNavigator } from "react-navigation";
 import { Notifications, Permissions } from "expo";
 import Colors from "../styles/colors";
+import { MapScreenStyles } from "../styles/styles";
 
 import Notification from "react-native-in-app-notification";
 const notificationIcon = require("../../assets/images/notification_icon.png");
@@ -262,32 +264,33 @@ class MapScreen extends Component {
         outputRange: [0, 217],
       });
     }
+    const isSe = isSeSize();
     return (
-      <SafeAreaView style={styles.appWrap}>
-        <View style={styles.weightRow}>
-          <View style={styles.weightTextRow}>
+      <SafeAreaView style={MapScreenStyles.appWrap}>
+        <View style={MapScreenStyles.weightRow}>
+          <View style={MapScreenStyles.weightTextRow}>
             {this.props.weightTracking && (
               <TouchableOpacity
                 onPress={this._toggleWeightPicker.bind(this)}
-                style={styles.weightTextButton}
+                style={MapScreenStyles.weightTextButton}
               >
                 <Text
                   style={
                     this.state.weightPickerOpen
-                      ? styles.weightTextActive
-                      : styles.weightText
+                      ? MapScreenStyles.weightTextActive
+                      : MapScreenStyles.weightText
                   }
                 >
                   {this.props.weight} lbs.
                 </Text>
-                <McIcon name="scale-bathroom" size={34} />
+                <McIcon name="scale-bathroom" size={isSe ? 24 : 34} />
               </TouchableOpacity>
             )}
           </View>
           <Animated.View
             style={{ overflow: "hidden", height: heightInterpolate }}
           >
-            <View style={[styles.topBottomBorder]}>
+            <View style={[MapScreenStyles.topBottomBorder]}>
               <NumberSpinner
                 value={this.props.weight}
                 label="LBS."
@@ -299,7 +302,7 @@ class MapScreen extends Component {
           </Animated.View>
         </View>
         <ScrollView
-          style={styles.bodyRow}
+          style={MapScreenStyles.bodyRow}
           onLayout={this._handleBodyRowLayout.bind(this)}
         >
           {this.state.bodyRowHeight ? (
@@ -335,7 +338,7 @@ class MapScreen extends Component {
             )
           ) : null}
         </ScrollView>
-        <View style={styles.footerRow}>
+        <View style={MapScreenStyles.footerRow}>
           <AddSnack
             onTap={() => {
               this.props.tapAddSnack(this.props.dayId, new Date().getTime());
@@ -418,92 +421,5 @@ const mapDispatchToProps = dispatch => {
     },
   };
 };
-
-const styles = StyleSheet.create({
-  appWrap: {
-    backgroundColor: "rgb(245, 245, 245)",
-    flex: 1,
-  },
-  box: {
-    backgroundColor: "rgb(102, 102, 102)",
-    height: 50,
-  },
-  topBottomBorder: {
-    borderColor: "#acacac",
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  weightRow: {
-    flexDirection: "column",
-    marginTop: 12,
-  },
-  weightTextRow: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  weightTextButton: {
-    marginRight: 14,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  weightText: {
-    fontSize: 20,
-    letterSpacing: -1,
-    marginRight: 6,
-  },
-  weightTextActive: {
-    fontSize: 20,
-    letterSpacing: -1,
-    marginRight: 6,
-    color: Colors.textRed,
-  },
-  weightTextLabel: {
-    fontSize: 20,
-    letterSpacing: -1,
-    marginLeft: 2,
-  },
-  weightTextLabelActive: {
-    fontSize: 20,
-    letterSpacing: -1,
-    marginLeft: 2,
-    color: Colors.textRed,
-  },
-  bodyRow: {
-    flex: 1,
-    marginRight: 14,
-    marginLeft: 8,
-  },
-  titleRow: {
-    height: 36,
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: 14,
-    marginRight: 14,
-  },
-  titleRowLeft: {
-    width: 38,
-    height: 36,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  titleRowRight: {
-    width: 38,
-    height: 36,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  footerRow: {
-    height: 70,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginLeft: 14,
-    marginRight: 14,
-  },
-  collapsed: {
-    height: 0,
-    overflow: "hidden",
-  },
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);

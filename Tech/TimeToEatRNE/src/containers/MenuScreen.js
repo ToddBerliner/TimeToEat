@@ -40,6 +40,7 @@ import {
   DPStyles,
   TIStyles,
 } from "../styles/formStyles";
+import { MenuScreenStyles } from "../styles/styles";
 import { Notifications, Permissions } from "expo";
 
 class MenuScreen extends React.Component {
@@ -200,23 +201,9 @@ class MenuScreen extends React.Component {
       );
     } else {
       return (
-        <ScrollView
-          style={{
-            flex: 1,
-            backgroundColor: "rgb(245,245,245)",
-            paddingTop: 20,
-          }}
-        >
+        <ScrollView style={MenuScreenStyles.settingsWrap}>
           <TouchableOpacity onPress={clearSavedState}>
-            <Text
-              style={{
-                fontFamily: "fugaz-one-regular",
-                fontSize: 36,
-                marginLeft: FormSettings.textMarginLeft,
-              }}
-            >
-              Make a Plan
-            </Text>
+            <Text style={MenuScreenStyles.title}>Make a Plan</Text>
           </TouchableOpacity>
           <View style={{ flex: 1 }}>
             <View style={SectionStyles.container}>

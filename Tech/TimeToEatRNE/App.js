@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AsyncStorage, StyleSheet } from "react-native";
+import { AsyncStorage, StyleSheet, Dimensions } from "react-native";
 import { Provider } from "react-redux";
 import configureStore, {
   getSavedState,

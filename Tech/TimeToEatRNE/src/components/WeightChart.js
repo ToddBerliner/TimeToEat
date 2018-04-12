@@ -75,6 +75,7 @@ export default class WeightChart extends React.PureComponent {
           circles.push(point);
           weightLabels.push(point);
         } else if (
+          // first or last points of a segment
           idx === lastPointIdx ||
           idx === firstPointIdx ||
           (idx > 1 && points[idx - 1] === undefined) ||
@@ -211,8 +212,8 @@ export default class WeightChart extends React.PureComponent {
           contentInset={{
             top: 10,
             bottom: this.props.bottomInset,
-            left: 30,
-            right: 30,
+            left: 22,
+            right: 22,
           }}
           extras={[WeightLabels, Fline, StartEndDots]}
         />

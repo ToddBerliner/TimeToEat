@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   DatePickerIOS,
 } from "react-native";
-import { getFriendlyTime } from "../utils";
+import { getFriendlyTime, isSeSize } from "../utils";
 import { CHECKED, MISSED } from "../store/nodes/reducer";
 import Icon from "react-native-vector-icons/Ionicons";
 import Colors from "../styles/colors";
 import { topBottomBorder } from "../styles/styles";
 
 export const nodeRowHeight = 69;
+const isSe = isSeSize();
 
 class NodeRow extends React.Component {
   render() {
@@ -23,14 +24,22 @@ class NodeRow extends React.Component {
       case CHECKED:
         circleFillJsx = (
           <View style={styles.circleFill}>
-            <Icon name="ios-checkmark" style={styles.nodeIcon} size={56} />
+            <Icon
+              name="ios-checkmark"
+              style={styles.nodeIcon}
+              size={isSe ? 50 : 56}
+            />
           </View>
         );
         break;
       case MISSED:
         circleFillJsx = (
           <View style={styles.circleFill}>
-            <Icon name="ios-close" style={styles.nodeIcon} size={56} />
+            <Icon
+              name="ios-close"
+              style={styles.nodeIcon}
+              size={isSe ? 50 : 56}
+            />
           </View>
         );
         break;
@@ -40,7 +49,7 @@ class NodeRow extends React.Component {
 
     return (
       <View style={styles.nodeRowWrap}>
-        <View style={props.selected ? styles.nodeRowSelected : styles.nodeRow}>
+        <View style={styles.nodeRow}>
           <TouchableOpacity
             onPress={props.onTap}
             onLongPress={props.onTapAndHold}
@@ -95,14 +104,14 @@ const styles = StyleSheet.create({
     paddingLeft: 14,
   },
   circleTouchable: {
-    width: 60,
-    height: 60,
+    width: isSe ? 50 : 60,
+    height: isSe ? 50 : 60,
     borderRadius: 30,
   },
   circle: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: isSe ? 50 : 60,
+    height: isSe ? 50 : 60,
+    borderRadius: isSe ? 25 : 30,
     borderStyle: "solid",
     borderWidth: 2,
     borderColor: "black",
@@ -111,12 +120,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   circleFill: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+    width: isSe ? 42 : 52,
+    height: isSe ? 42 : 52,
+    borderRadius: isSe ? 21 : 26,
     backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
+    paddingTop: 2,
   },
   nodeIcon: {
     color: "white",
@@ -130,7 +140,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   nodeName: {
-    fontSize: 24,
+    fontSize: isSe ? 22 : 24,
   },
   nodeNameRow: {
     flexDirection: "row",

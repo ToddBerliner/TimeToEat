@@ -1,4 +1,5 @@
 import { Notifications } from "expo";
+import { Dimensions } from "react-native";
 import Colors from "../styles/colors";
 
 export const PREV = "prev";
@@ -46,6 +47,11 @@ export const shortMonths = [
   "Nov.",
   "Dec.",
 ];
+
+export function isSeSize() {
+  const { width, height } = Dimensions.get("window");
+  return width < 414 || height < 414;
+}
 
 export function getDow(dayIndex) {
   return DOW[dayIndex] || null;
