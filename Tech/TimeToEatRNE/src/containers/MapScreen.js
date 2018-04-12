@@ -193,13 +193,16 @@ class MapScreen extends Component {
     const d = Dimensions.get("window");
     const { width, height } = d;
     const isX = width === 812 || height === 812;
-    const minus = isX ? 70 : 30;
-    const scrollHeight = evt.nativeEvent.layout.height;
+    const minus = isX ? 40 : 10;
+    const bodyRowHeight = evt.nativeEvent.layout.height - minus;
     this.setState(prevState => {
       if (!prevState.bodyRowHeight) {
         return {
-          bodyRowHeight: scrollHeight - minus,
-          scrollContentHeight: this._calcScrollContentHeight(this.props.nodes),
+          bodyRowHeight: bodyRowHeight,
+          scrollContentHeight: this._calcScrollContentHeight(
+            this.props.nodes,
+            bodyRowHeight,
+          ),
         };
       }
     });
@@ -212,14 +215,15 @@ class MapScreen extends Component {
     });
   };
 
-  _calcScrollContentHeight = nodes => {
+  _calcScrollContentHeight = (
+    nodes,
+    bodyRowHeight = this.state.bodyRowHeight,
+  ) => {
     let height = 0;
     nodes.forEach(node => {
       height += node.type === PLAN ? nodeRowHeight : snackRowHeight;
     });
-    return this.state.bodyRowHeight > height
-      ? this.state.bodyRowHeight
-      : height;
+    return bodyRowHeight > height ? bodyRowHeight : height;
   };
 
   async componentDidMount() {
@@ -267,7 +271,6 @@ class MapScreen extends Component {
                 onPress={this._toggleWeightPicker.bind(this)}
                 style={styles.weightTextButton}
               >
-                <McIcon name="scale-bathroom" size={34} />
                 <Text
                   style={
                     this.state.weightPickerOpen
@@ -275,17 +278,9 @@ class MapScreen extends Component {
                       : styles.weightText
                   }
                 >
-                  {this.props.weight}
+                  {this.props.weight} lbs.
                 </Text>
-                <Text
-                  style={
-                    this.state.weightPickerOpen
-                      ? styles.weightTextLabelActive
-                      : styles.weightTextLabel
-                  }
-                >
-                  lbs.
-                </Text>
+                <McIcon name="scale-bathroom" size={34} />
               </TouchableOpacity>
             )}
           </View>
@@ -454,12 +449,12 @@ const styles = StyleSheet.create({
   weightText: {
     fontSize: 20,
     letterSpacing: -1,
-    marginLeft: 6,
+    marginRight: 6,
   },
   weightTextActive: {
     fontSize: 20,
     letterSpacing: -1,
-    marginLeft: 6,
+    marginRight: 6,
     color: Colors.textRed,
   },
   weightTextLabel: {

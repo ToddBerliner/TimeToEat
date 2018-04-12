@@ -11,6 +11,7 @@ import { getFriendlyTime } from "../utils";
 import { CHECKED, MISSED } from "../store/nodes/reducer";
 import Icon from "react-native-vector-icons/Ionicons";
 import Colors from "../styles/colors";
+import { topBottomBorder } from "../styles/styles";
 
 export const nodeRowHeight = 69;
 
@@ -49,7 +50,9 @@ class NodeRow extends React.Component {
           </TouchableOpacity>
           <View style={styles.nodeNameBlock}>
             <View style={styles.nodeNameRow}>
-              <Text style={styles.nodeName}>{props.name}</Text>
+              <Text style={styles.nodeName} numberOfLines={1}>
+                {props.name}
+              </Text>
             </View>
             <Text>{getFriendlyTime(props.time)}</Text>
           </View>
@@ -57,13 +60,7 @@ class NodeRow extends React.Component {
         <Animated.View
           style={{ overflow: "hidden", height: props.pickerHeight }}
         >
-          <View
-            style={{
-              borderColor: "#acacac",
-              borderTopWidth: StyleSheet.hairlineWidth,
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          >
+          <View style={topBottomBorder}>
             <DatePickerIOS
               mode="time"
               onDateChange={event => {

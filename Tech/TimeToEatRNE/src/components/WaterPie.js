@@ -14,6 +14,7 @@ const slices = [wp0, wp1, wp2, wp3, wp4, wp5, wp6, wp7, wp8];
 const WaterPie = props => {
   return (
     <View style={styles.waterPieWrap}>
+      <Text style={styles.waterPieText}>Water</Text>
       <TouchableOpacity
         onPress={() => {
           if (props.waterCount < 8) {
@@ -29,7 +30,6 @@ const WaterPie = props => {
       >
         <Image source={slices[props.waterCount]} style={styles.waterPieImage} />
       </TouchableOpacity>
-      <Text style={styles.waterPieText}>Water</Text>
     </View>
   );
 };
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   waterPieText: {
     fontSize: 20,
     letterSpacing: -1,
-    marginLeft: 8,
+    marginRight: 8,
   },
 });
 

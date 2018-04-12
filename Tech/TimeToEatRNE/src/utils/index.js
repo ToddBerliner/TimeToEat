@@ -32,6 +32,21 @@ export const months = [
   "December",
 ];
 
+export const shortMonths = [
+  "Jan.",
+  "Feb.",
+  "Mar.",
+  "Apr.",
+  "May",
+  "June",
+  "July",
+  "Aug.",
+  "Sept.",
+  "Oct.",
+  "Nov.",
+  "Dec.",
+];
+
 export function getDow(dayIndex) {
   return DOW[dayIndex] || null;
 }
@@ -158,13 +173,15 @@ export function getNotificationTimeFromTimeObj(timeObj) {
   }
 }
 
-export function getFriendlyDate(timestamp) {
+export function getFriendlyDate(timestamp, useShortMonths = false) {
   if (typeof timestamp === "string") {
     timestamp = parseInt(timestamp, 10);
   }
   const today = new Date(timestamp);
   const dow = getDow(today.getDay());
-  const month = months[today.getMonth()];
+  const month = useShortMonths
+    ? shortMonths[today.getMonth()]
+    : months[today.getMonth()];
   const date = today.getDate();
   return `${dow}, ${month} ${date}`;
 }

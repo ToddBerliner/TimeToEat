@@ -57,11 +57,11 @@ const styles = StyleSheet.create({
   },
   titleLeftArrow: {
     width: 30,
-    alignItems: "center",
+    alignItems: "flex-end",
   },
   titleRightArrow: {
     width: 30,
-    alignItems: "center",
+    alignItems: "flex-start",
   },
 });
 
