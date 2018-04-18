@@ -67,6 +67,7 @@ class MetricsScreen extends React.Component {
       headerStyle: {
         paddingRight: 12,
         paddingLeft: 12,
+        backgroundColor: "white",
       },
       headerLeft: null,
       headerRight: (

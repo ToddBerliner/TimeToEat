@@ -7,6 +7,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MapScreen from "../containers/MapScreen";
 import MenuScreen from "../containers/MenuScreen";
 import MetricsScreen from "../containers/MetricsScreen";
+import HelpScreen from "../components/HelpScreen";
 import { _getSelectedDayId } from "../store/reducer";
 
 export const AppNavigator = StackNavigator(
@@ -19,6 +20,9 @@ export const AppNavigator = StackNavigator(
     },
     Metrics: {
       screen: MetricsScreen,
+    },
+    Help: {
+      screen: HelpScreen,
     },
   },
   {

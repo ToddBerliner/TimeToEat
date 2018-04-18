@@ -4,17 +4,33 @@ import Colors from "./colors";
 import { FormSettings } from "../styles/formStyles";
 const isSe = isSeSize();
 
+export const TextStyles = StyleSheet.create({
+  contentWrap: {
+    marginLeft: FormSettings.textMarginLeft,
+    marginRight: FormSettings.textMarginLeft,
+  },
+  content: {
+    fontSize: 16,
+    marginBottom: 16,
+  },
+  subTitle: {
+    fontFamily: "fugaz-one-regular",
+    fontSize: isSe ? 18 : 22,
+    marginBottom: 8,
+  },
+});
+
 export const MapScreenStyles = StyleSheet.create({
   appWrap: {
-    backgroundColor: "rgb(245, 245, 245)",
+    backgroundColor: Colors.superLtGrey,
     flex: 1,
   },
   box: {
-    backgroundColor: "rgb(102, 102, 102)",
+    backgroundColor: Colors.borderGrey,
     height: 50,
   },
   topBottomBorder: {
-    borderColor: "#acacac",
+    borderColor: Colors.borderGrey,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
@@ -91,6 +107,37 @@ export const MapScreenStyles = StyleSheet.create({
   },
 });
 
+export const HelpScreenStyles = StyleSheet.create({
+  helpWrap: {
+    flex: 1,
+    backgroundColor: Colors.superLtGrey,
+    paddingTop: isSe ? 8 : 20,
+  },
+  headerWrap: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: FormSettings.textMarginLeft,
+    marginRight: FormSettings.textMarginLeft,
+    marginBottom: isSe ? 4 : 8,
+  },
+  headerText: {
+    fontFamily: "fugaz-one-regular",
+    fontSize: isSe ? 18 : 22,
+    marginLeft: 10,
+  },
+  helpSection: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: Colors.borderGrey,
+    paddingTop: isSe ? 12 : 24,
+    paddingBottom: isSe ? 8 : 12,
+    marginBottom: isSe ? 8 : 12,
+    paddingLeft: FormSettings.textMarginLeft,
+    paddingRight: FormSettings.textMarginLeft,
+    backgroundColor: "white",
+  },
+});
+
 export const MenuScreenStyles = StyleSheet.create({
   settingsWrap: {
     flex: 1,
@@ -101,6 +148,17 @@ export const MenuScreenStyles = StyleSheet.create({
     fontFamily: "fugaz-one-regular",
     fontSize: isSe ? 24 : 36,
     marginLeft: FormSettings.textMarginLeft,
+  },
+  notificationsMsgWrap: {
+    marginTop: 7,
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 15,
+  },
+  helpButtonRow: {
+    alignItems: "center",
+    marginTop: 18,
+    marginBottom: 15,
   },
 });
 

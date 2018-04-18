@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
   },
   numberSpinner: {
     width: 55,

@@ -68,6 +68,7 @@ class MapScreen extends Component {
       headerStyle: {
         paddingRight: 12,
         paddingLeft: 12,
+        backgroundColor: "white",
       },
       headerLeft: (
         <TouchableOpacity
@@ -88,7 +89,11 @@ class MapScreen extends Component {
           style={{ width: 30 }}
           hitSlop={{ left: 10, right: 10 }}
         >
-          <Icon name="ios-pulse" size={24} style={{ alignSelf: "flex-end" }} />
+          <Icon
+            name="ios-speedometer"
+            size={24}
+            style={{ alignSelf: "flex-end" }}
+          />
         </TouchableOpacity>
       ),
     };

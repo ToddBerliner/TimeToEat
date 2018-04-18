@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { clearSavedState } from "../store/configureStore";
 import DateBackButton from "../components/DateBackButton";
+import TteButton from "../components/TteButton";
 import {
   _getWaterTrackingState,
   _getWeightTrackingState,
@@ -51,6 +52,7 @@ class MenuScreen extends React.Component {
       headerStyle: {
         paddingRight: 12,
         paddingLeft: 12,
+        backgroundColor: "white",
       },
       headerLeft: null,
       headerRight: (
@@ -138,6 +140,7 @@ class MenuScreen extends React.Component {
       plan,
       notifications,
       mealsOnly,
+      navigation,
     } = this.props;
     const { nodes } = plan.days.Monday;
     const pickerHeights = {};
@@ -241,14 +244,7 @@ class MenuScreen extends React.Component {
                   value={notifications}
                 />
                 {this.state.notificationsDisabled && (
-                  <View
-                    style={{
-                      marginTop: 7,
-                      marginLeft: 15,
-                      marginRight: 15,
-                      marginBottom: 15,
-                    }}
-                  >
+                  <View style={MenuScreenStyles.notificationsMsgWrap}>
                     <Text style={{ fontWeight: "700", marginBottom: 4 }}>
                       Notifications Are Currently Off
                     </Text>
@@ -259,7 +255,14 @@ class MenuScreen extends React.Component {
                   </View>
                 )}
               </View>
-              <View style={{ height: 15 }} />
+              <View style={MenuScreenStyles.helpButtonRow}>
+                <TteButton
+                  iconName="ios-help-circle-outline"
+                  style={{ width: "80%" }}
+                  title="Help"
+                  onPress={() => navigation.navigate("Help")}
+                />
+              </View>
             </View>
           </View>
         </ScrollView>
