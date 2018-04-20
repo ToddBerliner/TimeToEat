@@ -12,6 +12,7 @@ import {
   Animated,
   SafeAreaView,
   Dimensions,
+  Modal,
 } from "react-native";
 import EmptyPlan from "../components/EmptyPlan";
 import AddSnack from "../components/AddSnack";
@@ -19,6 +20,7 @@ import WaterPie from "../components/WaterPie";
 import NodeRows from "../components/NodeRows";
 import TitleDateNav from "../containers/TitleDateNav";
 import NumberSpinner from "../components/NumberSpinner";
+import MapIntro from "../components/MapIntro";
 import {
   _getSelectedDayId,
   _getWaterTrackingState,
@@ -27,7 +29,11 @@ import {
   _getNodesByIds,
 } from "../store/reducer";
 import { PLAN, OFFPLAN } from "../store/nodes/reducer";
-import { selectDay } from "../store/uiState/reducer";
+import {
+  selectDay,
+  readIntro,
+  getIntroReadState,
+} from "../store/uiState/reducer";
 import { tapWater, tapAndHoldWater, editWeight } from "../store/days/reducer";
 import { nodeRowHeight } from "../components/NodeRow";
 import { snackRowHeight } from "../components/SnackNodeRow";
@@ -108,6 +114,7 @@ class MapScreen extends Component {
       weightPickerAnimated: new Animated.Value(0),
       bodyRowHeight: false,
       pickerAnims: {},
+      introVisible: false,
     };
     props.nodes.forEach(node => {
       this.state.pickerAnims[node.id] = new Animated.Value(0);
@@ -233,10 +240,22 @@ class MapScreen extends Component {
     return bodyRowHeight > height ? bodyRowHeight : height;
   };
 
+  _openIntro = () => {
+    this.setState({ introVisible: true });
+  };
+
+  _closeIntro = () => {
+    this.props.readIntro();
+    this.setState({ introVisible: false });
+  };
+
   async componentDidMount() {
     // start timer to check for new day
     this.timer = setInterval(() => this._checkTime(), 1000);
     Notifications.addListener(this._handleNotification);
+    if (!this.props.introRead) {
+      setTimeout(this._openIntro, 550);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -368,6 +387,10 @@ class MapScreen extends Component {
             this.notification = ref;
           }}
         />
+        <MapIntro
+          visible={this.state.introVisible}
+          onClose={this._closeIntro}
+        />
       </SafeAreaView>
     );
   }
@@ -380,6 +403,7 @@ const mapStateToProps = state => {
   const isToday = dayId === getDateKey();
   const waterTracking = _getWaterTrackingState(state);
   const weightTracking = _getWeightTrackingState(state);
+  const introRead = getIntroReadState(state.uiState);
   return {
     dayId,
     waterCount: dayObj.water.completedTimes.length,
@@ -388,6 +412,7 @@ const mapStateToProps = state => {
     waterTracking,
     weightTracking,
     weight: dayObj.weight,
+    introRead,
   };
 };
 
@@ -420,6 +445,9 @@ const mapDispatchToProps = dispatch => {
     selectDay: (dayId, dir) => {
       const newDayId = getAdjacentDateKey(dayId, dir);
       dispatch(selectDay(newDayId));
+    },
+    readIntro: (read = true) => {
+      dispatch(readIntro(read));
     },
     _logState: () => {
       dispatch(_logState());

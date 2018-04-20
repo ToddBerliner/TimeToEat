@@ -9,6 +9,7 @@ const Colors = {
   calBlue: "rgb(74,144,226)",
   textGreen: "rgb(65,117,5)",
   textRed: "rgb(208,2,27)",
+  blue: "rgb(0, 122, 255)",
 };
 export default Colors;
 

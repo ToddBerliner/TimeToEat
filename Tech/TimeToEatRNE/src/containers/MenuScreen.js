@@ -10,6 +10,7 @@ import {
   DatePickerIOS,
   TouchableOpacity,
   ScrollView,
+  Linking,
 } from "react-native";
 import { clearSavedState } from "../store/configureStore";
 import DateBackButton from "../components/DateBackButton";
@@ -41,7 +42,7 @@ import {
   DPStyles,
   TIStyles,
 } from "../styles/formStyles";
-import { MenuScreenStyles } from "../styles/styles";
+import { MenuScreenStyles, TextStyles } from "../styles/styles";
 import { Notifications, Permissions } from "expo";
 
 class MenuScreen extends React.Component {
@@ -76,6 +77,14 @@ class MenuScreen extends React.Component {
       this.state[nodeId] = new Animated.Value(0);
     });
   }
+
+  goToPrivacy = () => {
+    Linking.openURL("https://github.com/ToddBerliner/TimeToEat");
+  };
+
+  goToTos = () => {
+    Linking.openURL("https://github.com/ToddBerliner/TimeToEat");
+  };
 
   handleShowPicker(mealIdx) {
     this.setState(
@@ -223,7 +232,7 @@ class MenuScreen extends React.Component {
             </View>
             <View style={SectionStyles.container}>
               <Text style={SectionStyles.sectionTitle}>
-                TIME TO EAT SETTINGS
+                TIME TO EAT OPTIONS
               </Text>
               <View style={SectionStyles.sectionWrapper}>
                 <SwitchRow
@@ -249,8 +258,12 @@ class MenuScreen extends React.Component {
                       Notifications Are Currently Off
                     </Text>
                     <Text>
-                      Notifications are turned off in your Settings. Please go
-                      to Settings > Time to Eat and turn on Notifications.
+                      Time to Eat Notifications are not allowed in your
+                      Settings. Please go to{` `}
+                      <Text style={{ fontWeight: "bold" }}>
+                        Settings > Time to Eat > Notifications
+                      </Text>
+                      {` `}and turn on "Allow Notifications".
                     </Text>
                   </View>
                 )}
@@ -262,6 +275,14 @@ class MenuScreen extends React.Component {
                   title="Help"
                   onPress={() => navigation.navigate("Help")}
                 />
+              </View>
+              <View style={MenuScreenStyles.linkRow}>
+                <TouchableOpacity onPress={this.goToPrivacy}>
+                  <Text style={TextStyles.link}>Privacy Policy</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.goToTos}>
+                  <Text style={TextStyles.link}>Terms of Service</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>

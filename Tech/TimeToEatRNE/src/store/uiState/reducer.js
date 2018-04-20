@@ -19,6 +19,7 @@ export const WATER_TRACKING_TOGGLED = "water_tracking_toggled";
 export const WEIGHT_TRACKING_TOGGLED = "weight_tracking_toggled";
 export const NOTIFICATIONS_TOGGLED = "notifications_toggled";
 export const ONBOARDING_COMPLETED = "onboarding_completed";
+export const INTRO_READ = "intro_read";
 
 // Actions
 export const selectDay = (dayId = getDateKey()) => {
@@ -63,6 +64,10 @@ export const completeOnboarding = () => {
   return { type: ONBOARDING_COMPLETED };
 };
 
+export const readIntro = (read = true) => {
+  return { type: INTRO_READ, read };
+};
+
 // Reducer
 const initialState = Immutable({
   selectedDayId: null,
@@ -70,6 +75,7 @@ const initialState = Immutable({
   weightTracking: true,
   notifications: false,
   onboardingComplete: false,
+  introRead: false,
 });
 
 export default function reduce(state = initialState, action = {}) {
@@ -87,6 +93,8 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         onboardingComplete: !state.onboardingComplete,
       });
+    case INTRO_READ:
+      return Immutable.set(state, ["introRead"], action.read);
     default:
       return state;
   }
@@ -98,3 +106,4 @@ export const getWaterTrackingState = state => state.waterTracking;
 export const getWeightTrackingState = state => state.weightTracking;
 export const getNotificationsState = state => state.notifications;
 export const getOnboardingState = state => state.onboardingComplete;
+export const getIntroReadState = state => state.introRead;

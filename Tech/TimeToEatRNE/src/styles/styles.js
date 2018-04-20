@@ -13,10 +13,74 @@ export const TextStyles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 16,
   },
+  contentCentered: {
+    fontSize: 16,
+    marginBottom: 16,
+    textAlign: "center",
+  },
+  centered: {
+    textAlign: "center",
+  },
+  title: {
+    fontFamily: "fugaz-one-regular",
+    fontSize: isSe ? 24 : 36,
+  },
   subTitle: {
     fontFamily: "fugaz-one-regular",
     fontSize: isSe ? 18 : 22,
     marginBottom: 8,
+  },
+  link: {
+    color: Colors.blue,
+  },
+});
+
+export const IntroStyles = StyleSheet.create({
+  mask: {
+    flex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "black",
+    opacity: 0.45,
+  },
+  wrap: {
+    marginTop: isSe ? 40 : 60,
+    marginRight: isSe ? 10 : 20,
+    marginLeft: isSe ? 10 : 20,
+    marginBottom: isSe ? 10 : 20,
+    backgroundColor: "white",
+    borderRadius: 40,
+    flex: 1,
+    paddingTop: isSe ? 15 : 30,
+    paddingLeft: isSe ? 15 : 30,
+    paddingRight: isSe ? 15 : 30,
+    paddingBottom: 15,
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  contentWrap: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  content: {
+    fontSize: isSe ? 14 : 16,
+    marginBottom: isSe ? 4 : 8,
+    textAlign: "center",
+  },
+  sectionWrap: {
+    flexDirection: "column",
+    alignItems: "center",
+    marginBottom: isSe ? 8 : 16,
+  },
+  divider: {
+    width: 200,
+    borderBottomWidth: 1,
+    borderColor: Colors.borderGrey,
+    marginBottom: isSe ? 8 : 16,
   },
 });
 
@@ -159,6 +223,14 @@ export const MenuScreenStyles = StyleSheet.create({
     alignItems: "center",
     marginTop: 18,
     marginBottom: 15,
+  },
+  linkRow: {
+    alignSelf: "center",
+    width: "80%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginBottom: 10,
   },
 });
 

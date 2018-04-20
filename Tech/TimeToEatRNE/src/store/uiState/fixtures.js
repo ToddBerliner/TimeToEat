@@ -8,6 +8,7 @@ export const expectedInitialState = Immutable({
   weightTracking: true,
   notifications: false,
   onboardingComplete: false,
+  introRead: false,
 });
 
 export const expectedInitialStateNotificationsOn = Immutable.set(

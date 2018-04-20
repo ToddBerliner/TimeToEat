@@ -9,6 +9,7 @@ import uiState, {
   getWaterTrackingState,
   getWeightTrackingState,
   getNotificationsState,
+  getIntroReadState,
 } from "./uiState/reducer";
 import plan, {
   getPlanDayByDayId,
