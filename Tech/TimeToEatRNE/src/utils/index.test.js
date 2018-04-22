@@ -189,13 +189,13 @@ describe("Nodes Utilities", () => {
     const nodeColor = getColorFromNodes(nodes);
     expect(nodeColor).toEqual(Colors.calYellow);
   });
-  it("should return red for a set with 1/3 completes", () => {
+  it("should return yellow for a set with 1/3 completes", () => {
     const nodes = [
       nodesFixtures.checkedTrackedNode,
       nodesFixtures.uncheckedTrackedNode,
       nodesFixtures.uncheckedTrackedNode,
     ];
     const nodeColor = getColorFromNodes(nodes);
-    expect(nodeColor).toEqual(Colors.calRed);
+    expect(nodeColor).toEqual(Colors.calYellow);
   });
 });

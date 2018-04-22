@@ -309,8 +309,5 @@ export function getColorFromNodes(nodes) {
   if (completedPct === 1) {
     return Colors.calGreen;
   }
-  if (completedPct >= 0.5 && completedPct < 1) {
-    return Colors.calYellow;
-  }
-  return Colors.calRed;
+  return Colors.calYellow;
 }
