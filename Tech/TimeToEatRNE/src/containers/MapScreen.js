@@ -156,6 +156,10 @@ class MapScreen extends Component {
     }
   };
 
+  _closeNotification = () => {
+    this.notification.closeNotification();
+  };
+
   _toggleWeightPicker() {
     this.setState(
       prevState => {
@@ -257,13 +261,6 @@ class MapScreen extends Component {
     if (!this.props.introRead) {
       setTimeout(this._openIntro, 550);
     }
-    this._handleNotification({
-      origin: "foo",
-      data: {
-        title: "Breakfast",
-        message: "It's Time to Eat!",
-      },
-    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -345,6 +342,7 @@ class MapScreen extends Component {
                 openPicker={this.state.openPicker}
                 onShowPicker={nodeId => this._handleShowPicker(nodeId)}
                 onTap={(nodeId, timestamp = new Date().getTime()) => {
+                  this._closeNotification();
                   this.props.tapNode(nodeId, timestamp);
                 }}
                 onTapAndHold={nodeId =>
