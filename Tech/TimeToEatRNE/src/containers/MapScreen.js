@@ -21,6 +21,7 @@ import NodeRows from "../components/NodeRows";
 import TitleDateNav from "../containers/TitleDateNav";
 import NumberSpinner from "../components/NumberSpinner";
 import MapIntro from "../components/MapIntro";
+import TteNotificationBody from "../components/TteNotificationBody";
 import {
   _getSelectedDayId,
   _getWaterTrackingState,
@@ -256,6 +257,13 @@ class MapScreen extends Component {
     if (!this.props.introRead) {
       setTimeout(this._openIntro, 550);
     }
+    this._handleNotification({
+      origin: "foo",
+      data: {
+        title: "CLose me easy",
+        message: "cuz it was hard",
+      },
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -386,6 +394,7 @@ class MapScreen extends Component {
           ref={ref => {
             this.notification = ref;
           }}
+          notificationBodyComponent={TteNotificationBody}
         />
         <MapIntro
           visible={this.state.introVisible}
