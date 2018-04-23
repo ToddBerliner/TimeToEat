@@ -260,8 +260,8 @@ class MapScreen extends Component {
     this._handleNotification({
       origin: "foo",
       data: {
-        title: "CLose me easy",
-        message: "cuz it was hard",
+        title: "Breakfast",
+        message: "It's Time to Eat!",
       },
     });
   }
@@ -389,8 +389,7 @@ class MapScreen extends Component {
           ) : null}
         </View>
         <Notification
-          closeInterval={10000}
-          iconApp={notificationIcon}
+          closeInterval={60000}
           ref={ref => {
             this.notification = ref;
           }}

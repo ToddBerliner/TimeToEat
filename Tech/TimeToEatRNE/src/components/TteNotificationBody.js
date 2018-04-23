@@ -11,6 +11,7 @@ import {
 import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const styles = {
   root: {
@@ -27,29 +28,35 @@ const styles = {
   content: {
     flex: 1,
     flexDirection: "row",
+    alignItems: "center",
   },
   iconApp: {
-    marginTop: 12,
-    marginLeft: 12,
     resizeMode: "contain",
     width: 36,
     height: 36,
     borderRadius: 5,
+    marginLeft: 12,
+    marginRight: 18,
   },
   icon: {
-    marginTop: 20,
-    marginLeft: 10,
     resizeMode: "contain",
     width: 48,
     height: 48,
+    marginLeft: 12,
+    marginRight: 18,
+    justifySelf: "center",
   },
   textContainer: {
-    alignSelf: "center",
-    marginLeft: 20,
+    flex: 1,
+  },
+  closeIcon: {
+    marginLeft: 12,
+    marginRight: 12,
   },
   title: {
     color: "#FFF",
     fontWeight: "bold",
+    fontSize: 24,
   },
   message: {
     color: "#FFF",
@@ -107,32 +114,33 @@ class TteNotificationBody extends React.Component {
   }
 
   render() {
-    const { title, message, onPress, onClose } = this.props;
+    const { title, message, onPress, onClose, iconApp, icon } = this.props;
+    const textMargin = !iconApp && !icon ? 18 : 0;
 
     return (
       <View style={styles.root}>
         <GestureRecognizer onSwipe={this.onSwipe} style={styles.container}>
-          <TouchableOpacity
-            style={styles.content}
-            activeOpacity={0.3}
-            underlayColor="transparent"
-            onPress={() => {
-              onClose();
-              onPress();
-              console.log("hi, i got touchabled");
-            }}
-          >
+          <View style={styles.content}>
             {this.renderIcon()}
-            <View style={styles.textContainer}>
-              <Text numberOfLines={1} style={styles.title}>
-                {title}
-              </Text>
+            <View style={[styles.textContainer, { marginLeft: textMargin }]}>
               <Text numberOfLines={1} style={styles.message}>
                 {message}
               </Text>
+              <Text numberOfLines={1} style={styles.title}>
+                {title}
+              </Text>
             </View>
-          </TouchableOpacity>
-
+            <TouchableOpacity
+              style={styles.closeIcon}
+              activeOpacity={0.3}
+              underlayColor="transparent"
+              onPress={() => {
+                onClose();
+              }}
+            >
+              <Icon name="ios-close-circle-outline" color="white" size={30} />
+            </TouchableOpacity>
+          </View>
           <View style={styles.footer} />
         </GestureRecognizer>
       </View>
