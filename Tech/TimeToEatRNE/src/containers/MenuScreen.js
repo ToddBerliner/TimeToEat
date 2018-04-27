@@ -253,12 +253,6 @@ class MenuScreen extends React.Component {
                 />
                 <Line marginLeft={FormSettings.textMarginLeft} />
                 <SwitchRow
-                  switchTitle="Track Water"
-                  onValueChange={this.handleToggleWater.bind(this)}
-                  value={waterTracking}
-                />
-                <Line marginLeft={FormSettings.textMarginLeft} />
-                <SwitchRow
                   switchTitle="Notifications"
                   onValueChange={this.handleToggleNotifications.bind(this)}
                   value={notifications}

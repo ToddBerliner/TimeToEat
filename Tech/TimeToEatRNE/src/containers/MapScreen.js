@@ -436,17 +436,6 @@ class MapScreen extends Component {
             }}
           />
           <Button title="Cycle" onPress={this._cycleScheme} />
-          {this.props.waterTracking ? (
-            <WaterPie
-              waterCount={this.props.waterCount}
-              onTap={() => {
-                this.props.tapWater(this.props.dayId, new Date().getTime());
-              }}
-              onTapAndHold={() => {
-                this.props.tapAndHoldWater(this.props.dayId);
-              }}
-            />
-          ) : null}
         </View>
         <Notification
           closeInterval={60000}
