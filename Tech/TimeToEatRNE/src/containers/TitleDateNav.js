@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { selectDay } from "../store/uiState/reducer";
 import { getDateKey, getAdjacentDateKey, PREV, NEXT } from "../utils";
 import { _getSelectedDayId } from "../store/reducer";
+import Colors, { HeaderColors } from "../styles/colors";
 
 class TitleDateNav extends Component {
   constructor(props) {
@@ -25,10 +26,14 @@ class TitleDateNav extends Component {
             style={styles.titleLeftArrow}
             hitSlop={{ left: 10, right: 10 }}
           >
-            <Icon name="ios-arrow-back" size={24} />
+            <Icon
+              name="ios-arrow-back"
+              size={24}
+              color={HeaderColors[this.props.scheme]}
+            />
           </TouchableOpacity>
         </View>
-        <TitleDate dayId={this.props.dayId} />
+        <TitleDate dayId={this.props.dayId} scheme={this.props.scheme} />
         <View>
           {this.props.isToday ? (
             <View style={styles.titleRightArrow} />
@@ -38,7 +43,11 @@ class TitleDateNav extends Component {
               style={styles.titleRightArrow}
               hitSlop={{ left: 10, right: 10 }}
             >
-              <Icon name="ios-arrow-forward" size={24} />
+              <Icon
+                name="ios-arrow-forward"
+                size={24}
+                color={HeaderColors[this.props.scheme]}
+              />
             </TouchableOpacity>
           )}
         </View>

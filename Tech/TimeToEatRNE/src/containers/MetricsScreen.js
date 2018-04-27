@@ -28,11 +28,12 @@ import {
   getAllDayIdsInOrder,
   getDayById,
 } from "../store/days/reducer";
+import { getScheme } from "../store/uiState/reducer";
 import { _getWeightTrackingState } from "../store/reducer";
 import { getNodesByIds, OFFPLAN } from "../store/nodes/reducer";
 import { selectDay } from "../store/uiState/reducer";
 import { FormSettings, SectionStyles } from "../styles/formStyles";
-import { whiteBlock, MetricsScreenStyles } from "../styles/styles";
+import { whiteBlock, MetricsScreenStyles, Schemes } from "../styles/styles";
 
 const isSe = isSeSize();
 
@@ -61,18 +62,24 @@ class MetricsScreen extends React.Component {
       ❍ suggestions! (eg, you have a lot of off-plan snacks - update your plan)
   */
   static navigationOptions = ({ navigation, screenProps }) => {
-    const { dayId } = screenProps;
+    const { dayId, scheme } = screenProps;
     return {
       headerTitle: null,
-      headerStyle: {
-        paddingRight: 12,
-        paddingLeft: 12,
-        backgroundColor: "white",
-      },
+      headerStyle: [
+        {
+          paddingRight: 12,
+          paddingLeft: 12,
+        },
+        Schemes[scheme].header,
+      ],
       headerLeft: null,
       headerRight: (
         <TouchableOpacity onPress={() => navigation.goBack()} dayId={dayId}>
-          <Text style={{ fontFamily: "fugaz-one-regular" }}>Done</Text>
+          <Text
+            style={{ fontFamily: "fugaz-one-regular", color: Colors[scheme] }}
+          >
+            Done
+          </Text>
         </TouchableOpacity>
       ),
     };
@@ -184,7 +191,14 @@ class MetricsScreen extends React.Component {
   };
 
   render() {
-    const { firstDayId, lastDayId, days, nodes, weightTracking } = this.props;
+    const {
+      firstDayId,
+      lastDayId,
+      days,
+      nodes,
+      weightTracking,
+      scheme,
+    } = this.props;
     const markedDates = this._calculateMarkedDates(days, nodes);
     const { width } = Dimensions.get("window");
     const legends = [
@@ -205,7 +219,9 @@ class MetricsScreen extends React.Component {
     );
     return (
       <ScrollView style={MetricsScreenStyles.metricsWrap}>
-        <Text style={MetricsScreenStyles.title}>How You're Eating</Text>
+        <Text style={[MetricsScreenStyles.title, { color: Colors[scheme] }]}>
+          How You're Eating
+        </Text>
         <Text style={SectionStyles.sectionTitle}>MEAL TRACKING</Text>
         <View style={whiteBlock}>
           <Calendar
@@ -282,6 +298,7 @@ mapStateToProps = state => {
   const firstDayId = getFirstDayId(state.days);
   const lastDayId = getLastDayId(state.days);
   const weightTracking = _getWeightTrackingState(state);
+  const scheme = getScheme(state.uiState);
   const { days, nodes } = state;
   return {
     firstDayId,
@@ -289,6 +306,7 @@ mapStateToProps = state => {
     days,
     nodes,
     weightTracking,
+    scheme,
   };
 };
 mapDispatchToProps = dispatch => {

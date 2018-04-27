@@ -1,10 +1,15 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
 import { months, getDow, getFriendlyDate } from "../utils";
+import { HeaderColors } from "../styles/colors";
 
 const TitleDate = props => {
   const dateStr = getFriendlyDate(props.dayId, true);
-  return <Text style={styles.titleDate}>{dateStr}</Text>;
+  return (
+    <Text style={[styles.titleDate, { color: HeaderColors[props.scheme] }]}>
+      {dateStr}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create({

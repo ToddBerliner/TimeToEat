@@ -24,6 +24,7 @@ import {
   toggleWaterTracking,
   toggleWeightTracking,
   toggleNotifications,
+  getScheme,
 } from "../store/uiState/reducer";
 import { editMeal, NAME, TIME, TRACKING } from "../store/plan/reducer";
 import {
@@ -42,23 +43,30 @@ import {
   DPStyles,
   TIStyles,
 } from "../styles/formStyles";
-import { MenuScreenStyles, TextStyles } from "../styles/styles";
+import { MenuScreenStyles, TextStyles, Schemes } from "../styles/styles";
+import Colors, { HeaderColors } from "../styles/colors";
 import { Notifications, Permissions } from "expo";
 
 class MenuScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => {
-    const { dayId } = screenProps;
+    const { dayId, scheme } = screenProps;
     return {
       headerTitle: null,
-      headerStyle: {
-        paddingRight: 12,
-        paddingLeft: 12,
-        backgroundColor: "white",
-      },
+      headerStyle: [
+        {
+          paddingRight: 12,
+          paddingLeft: 12,
+        },
+        Schemes[scheme].header,
+      ],
       headerLeft: null,
       headerRight: (
         <TouchableOpacity onPress={() => navigation.goBack()} dayId={dayId}>
-          <Text style={{ fontFamily: "fugaz-one-regular" }}>Done</Text>
+          <Text
+            style={{ fontFamily: "fugaz-one-regular", color: Colors[scheme] }}
+          >
+            Done
+          </Text>
         </TouchableOpacity>
       ),
     };
@@ -150,6 +158,7 @@ class MenuScreen extends React.Component {
       notifications,
       mealsOnly,
       navigation,
+      scheme,
     } = this.props;
     const { nodes } = plan.days.Monday;
     const pickerHeights = {};
@@ -215,7 +224,9 @@ class MenuScreen extends React.Component {
       return (
         <ScrollView style={MenuScreenStyles.settingsWrap}>
           <TouchableOpacity onPress={clearSavedState}>
-            <Text style={MenuScreenStyles.title}>Make a Plan</Text>
+            <Text style={[MenuScreenStyles.title, { color: Colors[scheme] }]}>
+              Make a Plan
+            </Text>
           </TouchableOpacity>
           <View style={{ flex: 1 }}>
             <View style={SectionStyles.container}>
@@ -296,8 +307,9 @@ const mapStateToProps = state => {
   const waterTracking = _getWaterTrackingState(state);
   const weightTracking = _getWeightTrackingState(state);
   const notifications = _getNotificationsState(state);
+  const scheme = getScheme(state.uiState);
   const { plan } = state;
-  return { waterTracking, weightTracking, notifications, plan };
+  return { waterTracking, weightTracking, notifications, plan, scheme };
 };
 
 const mapDispatchToProps = dispatch => {

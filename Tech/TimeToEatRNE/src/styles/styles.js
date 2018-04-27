@@ -4,6 +4,59 @@ import Colors from "./colors";
 import { FormSettings } from "../styles/formStyles";
 const isSe = isSeSize();
 
+export const Schemes = {
+  board: StyleSheet.create({
+    header: {
+      backgroundColor: "#F7E6B5",
+    },
+  }),
+  board_lt: StyleSheet.create({
+    header: {
+      backgroundColor: "#F7E6B5",
+    },
+  }),
+  coffee: StyleSheet.create({
+    header: {
+      backgroundColor: "#A16C4F",
+    },
+  }),
+  coffee_lt: StyleSheet.create({
+    header: {
+      backgroundColor: "#A16C4F",
+    },
+  }),
+  herbs: StyleSheet.create({
+    header: {
+      backgroundColor: "#23A2CE",
+    },
+  }),
+  herbs_lt: StyleSheet.create({
+    header: {
+      backgroundColor: "#23A2CE",
+    },
+  }),
+  nuts: StyleSheet.create({
+    header: {
+      backgroundColor: "#23A2CE",
+    },
+  }),
+  nuts_lt: StyleSheet.create({
+    header: {
+      backgroundColor: "#23A2CE",
+    },
+  }),
+  pasta: StyleSheet.create({
+    header: {
+      backgroundColor: "#EFAE27",
+    },
+  }),
+  pasta_lt: StyleSheet.create({
+    header: {
+      backgroundColor: "#EFAE27",
+    },
+  }),
+};
+
 export const TextStyles = StyleSheet.create({
   contentWrap: {
     marginLeft: FormSettings.textMarginLeft,
@@ -89,6 +142,22 @@ export const MapScreenStyles = StyleSheet.create({
     backgroundColor: Colors.superLtGrey,
     flex: 1,
   },
+  bg: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+  upperShadow: {
+    width: 500,
+    height: 100,
+    position: "absolute",
+    top: -100,
+    left: -50,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.8,
+    shadowRadius: 12,
+  },
   box: {
     backgroundColor: Colors.borderGrey,
     height: 50,
@@ -107,9 +176,27 @@ export const MapScreenStyles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   weightTextButton: {
-    marginRight: 14,
+    flex: 0,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "flex-start",
+    borderWidth: 1,
+    borderColor: "white",
+    backgroundColor: "white",
+    borderRadius: 30,
+    paddingRight: 30,
+    paddingLeft: 10,
+    height: 35,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    marginRight: 10,
+  },
+  weightButtonIcon: {
+    position: "absolute",
+    top: 5,
+    right: 7,
   },
   weightText: {
     fontSize: isSe ? 18 : 20,
@@ -117,7 +204,7 @@ export const MapScreenStyles = StyleSheet.create({
     marginRight: 6,
   },
   weightTextActive: {
-    fontSize: 20,
+    fontSize: isSe ? 18 : 20,
     letterSpacing: -1,
     marginRight: 6,
     color: Colors.textRed,
@@ -135,8 +222,6 @@ export const MapScreenStyles = StyleSheet.create({
   },
   bodyRow: {
     flex: 1,
-    marginRight: isSe ? 8 : 14,
-    marginLeft: isSe ? 0 : 8,
   },
   titleRow: {
     height: 36,

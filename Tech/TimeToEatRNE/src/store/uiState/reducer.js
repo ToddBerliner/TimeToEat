@@ -13,6 +13,16 @@ import {
 } from "../plan/reducer";
 import { Notifications } from "expo";
 
+export const BOARD = "board";
+export const BOARD_LT = "board_lt";
+export const COFFEE = "coffee";
+export const COFFEE_LT = "coffee_lt";
+export const HERBS = "herbs";
+export const HERBS_LT = "herbs_lt";
+export const NUTS = "nuts";
+export const NUTS_LT = "nuts_lt";
+export const PASTA_LT = "pasta_lt";
+
 // Action Types
 export const DAY_SELECTED = "day_selected";
 export const WATER_TRACKING_TOGGLED = "water_tracking_toggled";
@@ -20,6 +30,7 @@ export const WEIGHT_TRACKING_TOGGLED = "weight_tracking_toggled";
 export const NOTIFICATIONS_TOGGLED = "notifications_toggled";
 export const ONBOARDING_COMPLETED = "onboarding_completed";
 export const INTRO_READ = "intro_read";
+export const SCHEME_SET = "scheme_set";
 
 // Actions
 export const selectDay = (dayId = getDateKey()) => {
@@ -68,6 +79,10 @@ export const readIntro = (read = true) => {
   return { type: INTRO_READ, read };
 };
 
+export const setScheme = (scheme = HERBS_LT) => {
+  return { type: SCHEME_SET, scheme };
+};
+
 // Reducer
 const initialState = Immutable({
   selectedDayId: null,
@@ -76,6 +91,7 @@ const initialState = Immutable({
   notifications: false,
   onboardingComplete: false,
   introRead: false,
+  scheme: HERBS_LT,
 });
 
 export default function reduce(state = initialState, action = {}) {
@@ -95,6 +111,8 @@ export default function reduce(state = initialState, action = {}) {
       });
     case INTRO_READ:
       return Immutable.set(state, ["introRead"], action.read);
+    case SCHEME_SET:
+      return Immutable.set(state, ["scheme"], action.scheme);
     default:
       return state;
   }
@@ -107,3 +125,4 @@ export const getWeightTrackingState = state => state.weightTracking;
 export const getNotificationsState = state => state.notifications;
 export const getOnboardingState = state => state.onboardingComplete;
 export const getIntroReadState = state => state.introRead;
+export const getScheme = state => state.scheme || HERBS_LT;

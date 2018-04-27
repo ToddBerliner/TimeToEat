@@ -10,6 +10,7 @@ import uiState, {
   getWeightTrackingState,
   getNotificationsState,
   getIntroReadState,
+  getScheme,
 } from "./uiState/reducer";
 import plan, {
   getPlanDayByDayId,
@@ -111,4 +112,7 @@ export const _getNotificationIdByMealIdx = (state, mealIdx) => {
 };
 export const _getNotificationStatus = state => {
   return state.uiState.notifications;
+};
+export const _getScheme = state => {
+  return getScheme(state.uiState);
 };

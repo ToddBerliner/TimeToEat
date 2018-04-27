@@ -8,7 +8,7 @@ import MapScreen from "../containers/MapScreen";
 import MenuScreen from "../containers/MenuScreen";
 import MetricsScreen from "../containers/MetricsScreen";
 import HelpScreen from "../components/HelpScreen";
-import { _getSelectedDayId } from "../store/reducer";
+import { _getSelectedDayId, _getScheme } from "../store/reducer";
 
 export const AppNavigator = StackNavigator(
   {
@@ -31,14 +31,15 @@ export const AppNavigator = StackNavigator(
   },
 );
 
-const AppWithNavigationState = ({ dispatch, nav, dayId }) => {
-  return <AppNavigator screenProps={{ dayId }} />;
+const AppWithNavigationState = ({ dispatch, nav, dayId, scheme }) => {
+  return <AppNavigator screenProps={{ dayId, scheme }} />;
 };
 
 const mapStateToProps = state => {
   return {
     nav: state.nav,
     dayId: _getSelectedDayId(state),
+    scheme: _getScheme(state),
   };
 };
 

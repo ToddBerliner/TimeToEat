@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   StyleSheet,
   View,
+  Image,
   Text,
   TouchableOpacity,
   Alert,
@@ -34,6 +35,18 @@ import {
   selectDay,
   readIntro,
   getIntroReadState,
+  setScheme,
+  getScheme,
+  BOARD,
+  BOARD_LT,
+  COFFEE,
+  COFFEE_LT,
+  HERBS,
+  HERBS_LT,
+  NUTS,
+  NUTS_LT,
+  PASTA,
+  PASTA_LT,
 } from "../store/uiState/reducer";
 import { tapWater, tapAndHoldWater, editWeight } from "../store/days/reducer";
 import { nodeRowHeight } from "../components/NodeRow";
@@ -60,8 +73,20 @@ import Icon from "react-native-vector-icons/Ionicons";
 import McIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { StackNavigator } from "react-navigation";
 import { Notifications, Permissions } from "expo";
-import Colors from "../styles/colors";
-import { MapScreenStyles } from "../styles/styles";
+import Colors, { HeaderColors } from "../styles/colors";
+import { Schemes, MapScreenStyles } from "../styles/styles";
+const backgrounds = {
+  board: require("../../assets/backgrounds/board.png"),
+  board_lt: require("../../assets/backgrounds/board_lt.png"),
+  coffee: require("../../assets/backgrounds/coffee.png"),
+  coffee_lt: require("../../assets/backgrounds/coffee_lt.png"),
+  herbs: require("../../assets/backgrounds/herbs.png"),
+  herbs_lt: require("../../assets/backgrounds/herbs_lt.png"),
+  nuts: require("../../assets/backgrounds/nuts.png"),
+  nuts_lt: require("../../assets/backgrounds/nuts_lt.png"),
+  pasta: require("../../assets/backgrounds/pasta.png"),
+  pasta_lt: require("../../assets/backgrounds/pasta_lt.png"),
+};
 
 import Notification from "react-native-in-app-notification";
 const notificationIcon = require("../../assets/images/notification_icon.png");
@@ -70,13 +95,16 @@ const notificationIcon = require("../../assets/images/notification_icon.png");
 class MapScreen extends Component {
   static navigationOptions = ({ navigation, screenProps }) => {
     const { navigate } = navigation;
+    const { scheme } = screenProps;
     return {
-      headerTitle: <TitleDateNav />,
-      headerStyle: {
-        paddingRight: 12,
-        paddingLeft: 12,
-        backgroundColor: "white",
-      },
+      headerTitle: <TitleDateNav scheme={scheme} />,
+      headerStyle: [
+        {
+          paddingRight: 12,
+          paddingLeft: 12,
+        },
+        Schemes[scheme].header,
+      ],
       headerLeft: (
         <TouchableOpacity
           onPress={() => {
@@ -85,7 +113,11 @@ class MapScreen extends Component {
           style={{ width: 30 }}
           hitSlop={{ left: 10, right: 10 }}
         >
-          <Icon name="ios-contact" size={24} />
+          <Icon
+            name="ios-contact-outline"
+            size={24}
+            color={HeaderColors[scheme]}
+          />
         </TouchableOpacity>
       ),
       headerRight: (
@@ -97,9 +129,10 @@ class MapScreen extends Component {
           hitSlop={{ left: 10, right: 10 }}
         >
           <Icon
-            name="ios-speedometer"
+            name="ios-calendar-outline"
             size={24}
             style={{ alignSelf: "flex-end" }}
+            color={HeaderColors[scheme]}
           />
         </TouchableOpacity>
       ),
@@ -245,6 +278,22 @@ class MapScreen extends Component {
     return bodyRowHeight > height ? bodyRowHeight : height;
   };
 
+  _cycleScheme = () => {
+    // get current scheme
+    // set next one or first
+    const schemes = [BOARD_LT, COFFEE, HERBS_LT, NUTS, NUTS_LT, PASTA_LT];
+    let nextIdx = null;
+    console.log(`cur scheme is ${this.props.scheme}`);
+    for (let idx = 0; idx < schemes.length; idx++) {
+      if (schemes[idx] === this.props.scheme) {
+        nextIdx = idx + 1 === schemes.length ? 0 : idx + 1;
+        console.log(`nextIdx is ${nextIdx}: ${schemes[nextIdx]}`);
+        break;
+      }
+    }
+    this.props.setScheme(schemes[nextIdx]);
+  };
+
   _openIntro = () => {
     this.setState({ introVisible: true });
   };
@@ -281,6 +330,7 @@ class MapScreen extends Component {
   }
 
   render() {
+    const { scheme } = this.props;
     const trackedMeals = this.props.nodes.filter(node => node.tracking);
     const heightInterpolate = this.state.weightPickerAnimated.interpolate({
       inputRange: [0, 1],
@@ -296,23 +346,32 @@ class MapScreen extends Component {
     const isSe = isSeSize();
     return (
       <SafeAreaView style={MapScreenStyles.appWrap}>
+        <Image style={MapScreenStyles.bg} source={backgrounds[scheme]} />
+        <View style={MapScreenStyles.upperShadow} />
         <View style={MapScreenStyles.weightRow}>
           <View style={MapScreenStyles.weightTextRow}>
             {this.props.weightTracking && (
               <TouchableOpacity
                 onPress={this._toggleWeightPicker.bind(this)}
                 style={MapScreenStyles.weightTextButton}
+                activeOpacity={0.8}
               >
                 <Text
-                  style={
+                  style={[
+                    { color: Colors[scheme] },
                     this.state.weightPickerOpen
                       ? MapScreenStyles.weightTextActive
-                      : MapScreenStyles.weightText
-                  }
+                      : MapScreenStyles.weightText,
+                  ]}
                 >
                   {this.props.weight} lbs.
                 </Text>
-                <McIcon name="scale-bathroom" size={isSe ? 24 : 34} />
+                <McIcon
+                  name="scale-bathroom"
+                  size={24}
+                  color={Colors[scheme]}
+                  style={MapScreenStyles.weightButtonIcon}
+                />
               </TouchableOpacity>
             )}
           </View>
@@ -337,6 +396,7 @@ class MapScreen extends Component {
           {this.state.bodyRowHeight ? (
             trackedMeals.length > 0 ? (
               <NodeRows
+                scheme={scheme}
                 dayId={this.props.dayId}
                 nodes={this.props.nodes}
                 openPicker={this.state.openPicker}
@@ -370,10 +430,12 @@ class MapScreen extends Component {
         </ScrollView>
         <View style={MapScreenStyles.footerRow}>
           <AddSnack
+            scheme={scheme}
             onTap={() => {
               this.props.tapAddSnack(this.props.dayId, new Date().getTime());
             }}
           />
+          <Button title="Cycle" onPress={this._cycleScheme} />
           {this.props.waterTracking ? (
             <WaterPie
               waterCount={this.props.waterCount}
@@ -410,6 +472,7 @@ const mapStateToProps = state => {
   const waterTracking = _getWaterTrackingState(state);
   const weightTracking = _getWeightTrackingState(state);
   const introRead = getIntroReadState(state.uiState);
+  const scheme = getScheme(state.uiState);
   return {
     dayId,
     waterCount: dayObj.water.completedTimes.length,
@@ -419,6 +482,7 @@ const mapStateToProps = state => {
     weightTracking,
     weight: dayObj.weight,
     introRead,
+    scheme,
   };
 };
 
@@ -454,6 +518,9 @@ const mapDispatchToProps = dispatch => {
     },
     readIntro: (read = true) => {
       dispatch(readIntro(read));
+    },
+    setScheme: scheme => {
+      dispatch(setScheme(scheme));
     },
     _logState: () => {
       dispatch(_logState());

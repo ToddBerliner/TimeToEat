@@ -23,7 +23,12 @@ class NodeRow extends React.Component {
     switch (props.status) {
       case CHECKED:
         circleFillJsx = (
-          <View style={styles.circleFill}>
+          <View
+            style={[
+              styles.circleFill,
+              { backgroundColor: Colors[props.scheme] },
+            ]}
+          >
             <Icon
               name="ios-checkmark"
               style={styles.nodeIcon}
@@ -34,7 +39,12 @@ class NodeRow extends React.Component {
         break;
       case MISSED:
         circleFillJsx = (
-          <View style={styles.circleFill}>
+          <View
+            style={[
+              styles.circleFill,
+              { backgroundColor: Colors[props.scheme] },
+            ]}
+          >
             <Icon
               name="ios-close"
               style={styles.nodeIcon}
@@ -49,22 +59,32 @@ class NodeRow extends React.Component {
 
     return (
       <View style={styles.nodeRowWrap}>
-        <View style={styles.nodeRow}>
+        <View style={styles.nodeRowBgWrap}>
+          <View style={styles.nodeRowBgBar} />
+          <View style={styles.nodeRowBgCircleColumn}>
+            <View style={styles.nodeRowBgCircle} />
+          </View>
+        </View>
+        <View style={styles.circleColumn}>
           <TouchableOpacity
             onPress={props.onTap}
             onLongPress={props.onTapAndHold}
             style={styles.circleTouchable}
           >
-            <View style={styles.circle}>{circleFillJsx}</View>
-          </TouchableOpacity>
-          <View style={styles.nodeNameBlock}>
-            <View style={styles.nodeNameRow}>
-              <Text style={styles.nodeName} numberOfLines={1}>
-                {props.name}
-              </Text>
+            <View
+              style={[styles.circle, { borderColor: Colors[props.scheme] }]}
+            >
+              {circleFillJsx}
             </View>
-            <Text>{getFriendlyTime(props.time)}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.nodeNameBlock}>
+          <View style={styles.nodeNameRow}>
+            <Text style={styles.nodeName} numberOfLines={1}>
+              {props.name}
+            </Text>
           </View>
+          <Text>{getFriendlyTime(props.time)}</Text>
         </View>
         <Animated.View
           style={{ overflow: "hidden", height: props.pickerHeight }}
@@ -87,13 +107,10 @@ class NodeRow extends React.Component {
 const styles = StyleSheet.create({
   nodeRowWrap: {
     display: "flex",
-  },
-  nodeRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
     height: nodeRowHeight,
-    paddingLeft: 14,
   },
   nodeRowSelected: {
     backgroundColor: "rgba(216,216,216,40)",
@@ -103,10 +120,46 @@ const styles = StyleSheet.create({
     height: nodeRowHeight,
     paddingLeft: 14,
   },
+  nodeRowBgWrap: {
+    position: "absolute",
+    width: "100%",
+    height: nodeRowHeight,
+    opacity: 0.8,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  nodeRowBgBar: {
+    width: "100%",
+    height: 50,
+    backgroundColor: "white",
+  },
+  nodeRowBgCircleColumn: {
+    position: "absolute",
+    height: nodeRowHeight,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: isSe ? 70 : 90,
+  },
+  nodeRowBgCircle: {
+    width: isSe ? 64 : 74,
+    height: isSe ? 64 : 74,
+    borderRadius: isSe ? 32 : 37,
+    backgroundColor: "white",
+  },
+  circleColumn: {
+    width: isSe ? 70 : 90,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   circleTouchable: {
     width: isSe ? 50 : 60,
     height: isSe ? 50 : 60,
     borderRadius: 30,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   circle: {
     width: isSe ? 50 : 60,
@@ -114,7 +167,6 @@ const styles = StyleSheet.create({
     borderRadius: isSe ? 25 : 30,
     borderStyle: "solid",
     borderWidth: 2,
-    borderColor: "black",
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
@@ -123,7 +175,6 @@ const styles = StyleSheet.create({
     width: isSe ? 42 : 52,
     height: isSe ? 42 : 52,
     borderRadius: isSe ? 21 : 26,
-    backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 2,
@@ -136,7 +187,6 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
   nodeNameBlock: {
-    marginLeft: 14,
     flex: 1,
   },
   nodeName: {

@@ -10,8 +10,31 @@ const Colors = {
   textGreen: "rgb(65,117,5)",
   textRed: "rgb(208,2,27)",
   blue: "rgb(0, 122, 255)",
+  board: "#800415",
+  board_lt: "#800415",
+  coffee: "#675148",
+  coffee_lt: "#675148",
+  herbs: "#066A8D",
+  herbs_lt: "#066A8D",
+  nuts: "#066A8D",
+  nuts_lt: "#066A8D",
+  pasta: "#7C2200",
+  pasta_lt: "#7C2200",
 };
 export default Colors;
+
+export const HeaderColors = {
+  board: "#800415",
+  board_lt: "#800415",
+  coffee: "#FFFFFF",
+  coffee_lt: "#FFFFFF",
+  herbs: "#FFFFFF",
+  herbs_lt: "#FFFFFF",
+  nuts: "#FFFFFF",
+  nuts_lt: "#FFFFFF",
+  pasta: "#7C2200",
+  pasta_lt: "#7C2200",
+};
 
 /*
 TODO:

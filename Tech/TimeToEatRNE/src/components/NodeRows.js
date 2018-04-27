@@ -29,7 +29,7 @@ const getCurrentNodeId = nodes => {
 // NodeRows handles layout of node rows
 const NodeRows = props => {
   let rows = [];
-  const { nodes, height, scrollingRequired } = props;
+  const { nodes, height, scrollingRequired, scheme } = props;
   const selectedNodeId = getCurrentNodeId(nodes);
   const justifyContent = scrollingRequired ? "space-between" : "space-around";
   nodes.forEach(node => {
@@ -68,6 +68,7 @@ const NodeRows = props => {
               isPickerShowing={props.openPicker === node.id}
               onShowPicker={() => props.onShowPicker(node.id)}
               pickerHeight={props.pickerHeights[node.id]}
+              scheme={scheme}
             />,
           );
         }
