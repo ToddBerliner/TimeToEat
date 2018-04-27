@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AsyncStorage, StyleSheet, Dimensions } from "react-native";
+import { AsyncStorage, StyleSheet, Dimensions, Image } from "react-native";
 import { Provider } from "react-redux";
 import configureStore, {
   getSavedState,
@@ -7,13 +7,60 @@ import configureStore, {
 } from "./src/store/configureStore";
 
 import { AppLoading, Asset, Font } from "expo";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import NavSwitch from "./src/containers/NavSwitch";
+
+function cacheImages(images) {
+  return images.map(image => {
+    if (typeof image === "string") {
+      return Image.prefetch(image);
+    } else {
+      return Asset.fromModule(image).downloadAsync();
+    }
+  });
+}
 
 export default class App extends Component {
   state = {
     loaded: false,
     store: null,
+  };
+
+  _loadResourcesAsync = async () => {
+    const getState = AsyncStorage.getItem("@state")
+      .then(savedState => {
+        let state = undefined;
+        if (savedState !== null) {
+          state = JSON.parse(savedState);
+        }
+        const store = configureStore(state);
+        this.setState({ store });
+      })
+      .catch(err => {
+        console.error("Err saving state:", err);
+      });
+    const getImages = cacheImages([
+      require("./assets/backgrounds/board_lt.png"),
+      require("./assets/backgrounds/coffee.png"),
+      require("./assets/backgrounds/herbs_lt.png"),
+      require("./assets/backgrounds/nuts.png"),
+      require("./assets/backgrounds/nuts_lt.png"),
+      require("./assets/backgrounds/pasta_lt.png"),
+    ]);
+    const getFonts = Font.loadAsync({
+      ...Ionicons.font,
+      ...MaterialCommunityIcons.font,
+      "fugaz-one-regular": require("./assets/fonts/FugazOne-Regular.ttf"),
+    });
+    await Promise.all([getState, getImages, getFonts]);
+  };
+
+  _handleLoadingError = error => {
+    console.warn(error);
+  };
+
+  _handleBeingLoaded = values => {
+    this.setState({ loaded: true });
   };
 
   render() {
@@ -35,46 +82,6 @@ export default class App extends Component {
       );
     }
   }
-
-  _loadResourcesAsync = async () => {
-    const getState = AsyncStorage.getItem("@state");
-    return Promise.all([
-      Asset.loadAsync([
-        require("./assets/images/wp0.png"),
-        require("./assets/images/wp0.png"),
-        require("./assets/images/wp0.png"),
-        require("./assets/images/wp0.png"),
-        require("./assets/images/wp0.png"),
-        require("./assets/images/wp0.png"),
-        require("./assets/images/wp0.png"),
-        require("./assets/images/wp0.png"),
-      ]),
-      Font.loadAsync({
-        ...Ionicons.font,
-        "fugaz-one-regular": require("./assets/fonts/FugazOne-Regular.ttf"),
-      }),
-      getState
-        .then(savedState => {
-          let state = undefined;
-          if (savedState !== null) {
-            state = JSON.parse(savedState);
-          }
-          const store = configureStore(state);
-          this.setState({ store });
-        })
-        .catch(err => {
-          console.error("Err saving state:", err);
-        }),
-    ]);
-  };
-
-  _handleLoadingError = error => {
-    console.warn(error);
-  };
-
-  _handleBeingLoaded = values => {
-    this.setState({ loaded: true });
-  };
 }
 
 const styles = StyleSheet.create({

@@ -283,11 +283,9 @@ class MapScreen extends Component {
     // set next one or first
     const schemes = [BOARD_LT, COFFEE, HERBS_LT, NUTS, NUTS_LT, PASTA_LT];
     let nextIdx = null;
-    console.log(`cur scheme is ${this.props.scheme}`);
     for (let idx = 0; idx < schemes.length; idx++) {
       if (schemes[idx] === this.props.scheme) {
         nextIdx = idx + 1 === schemes.length ? 0 : idx + 1;
-        console.log(`nextIdx is ${nextIdx}: ${schemes[nextIdx]}`);
         break;
       }
     }
