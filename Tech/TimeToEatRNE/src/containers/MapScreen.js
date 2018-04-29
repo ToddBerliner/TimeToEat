@@ -22,6 +22,7 @@ import NodeRows from "../components/NodeRows";
 import TitleDateNav from "../containers/TitleDateNav";
 import NumberSpinner from "../components/NumberSpinner";
 import MapIntro from "../components/MapIntro";
+import HeaderShadow from "../components/HeaderShadow";
 import TteNotificationBody from "../components/TteNotificationBody";
 import {
   _getSelectedDayId,
@@ -345,7 +346,7 @@ class MapScreen extends Component {
     return (
       <SafeAreaView style={MapScreenStyles.appWrap}>
         <Image style={MapScreenStyles.bg} source={backgrounds[scheme]} />
-        <View style={MapScreenStyles.upperShadow} />
+        <HeaderShadow />
         <View style={MapScreenStyles.weightRow}>
           <View style={MapScreenStyles.weightTextRow}>
             {this.props.weightTracking && (

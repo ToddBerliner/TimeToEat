@@ -11,9 +11,10 @@ import {
 } from "react-native";
 import DateBackButton from "../components/DateBackButton";
 import { Calendar } from "react-native-calendars";
-import Colors from "../styles/colors";
+import Colors, { HeaderColors, BackgroundColors } from "../styles/colors";
 import WeightChart from "../components/WeightChart";
 import DayChart from "../components/DayChart";
+import HeaderShadow from "../components/HeaderShadow";
 import DateLabel from "../components/DateLabel";
 import {
   getMonth,
@@ -58,7 +59,6 @@ class MetricsScreen extends React.Component {
       ✔ day tap = selectDay (if not disabled)
       ✔ markedDates for state
       ❍ make dot and period marking PR?
-      ❍ at least color text of days w/ off plan snacks
       ❍ suggestions! (eg, you have a lot of off-plan snacks - update your plan)
   */
   static navigationOptions = ({ navigation, screenProps }) => {
@@ -76,7 +76,10 @@ class MetricsScreen extends React.Component {
       headerRight: (
         <TouchableOpacity onPress={() => navigation.goBack()} dayId={dayId}>
           <Text
-            style={{ fontFamily: "fugaz-one-regular", color: Colors[scheme] }}
+            style={{
+              fontFamily: "fugaz-one-regular",
+              color: HeaderColors[scheme],
+            }}
           >
             Done
           </Text>
@@ -166,26 +169,16 @@ class MetricsScreen extends React.Component {
 
   _legend = (text, color, idx) => {
     return (
-      <View
-        key={`lv${idx}`}
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          marginLeft: 8,
-        }}
-      >
+      <View key={`lv${idx}`} style={MetricsScreenStyles.trackingLegendWrap}>
         <View
-          style={{
-            width: isSe ? 12 : 15,
-            height: isSe ? 12 : 15,
-            borderRadius: 7,
-            backgroundColor: color,
-          }}
+          style={[
+            MetricsScreenStyles.trackingLegendDot,
+            {
+              backgroundColor: color,
+            },
+          ]}
         />
-        <Text style={{ fontSize: 12, color: "#808080", marginLeft: 4 }}>
-          {text}
-        </Text>
+        <Text style={MetricsScreenStyles.trackingLegendText}>{text}</Text>
       </View>
     );
   };
@@ -218,78 +211,90 @@ class MetricsScreen extends React.Component {
       this._legend(legendDef.text, legendDef.color, idx),
     );
     return (
-      <ScrollView style={MetricsScreenStyles.metricsWrap}>
-        <Text style={[MetricsScreenStyles.title, { color: Colors[scheme] }]}>
-          How You're Eating
-        </Text>
-        <Text style={SectionStyles.sectionTitle}>MEAL TRACKING</Text>
-        <View style={whiteBlock}>
-          <Calendar
-            style={{ width: "95%", alignSelf: "center" }}
-            markedDates={markedDates}
-            markingType={"period"}
-            onDayPress={this._handleDayPress.bind(this)}
-            hideExtraDays={true}
-            onMonthChange={this._handleMonthChange.bind(this)}
-            hideArrowsPastMinMaxMonths={true}
-            minMonthDate={new Date(parseInt(firstDayId, 10))}
-            maxMonthDate={new Date()}
-          />
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <ScrollView
+          style={[
+            MetricsScreenStyles.metricsWrap,
+            { backgroundColor: BackgroundColors[scheme] },
+          ]}
+        >
+          <Text style={[MetricsScreenStyles.title, { color: Colors[scheme] }]}>
+            How You're Eating
+          </Text>
+          <Text style={SectionStyles.sectionTitle}>MEAL TRACKING</Text>
+          <View style={whiteBlock}>
+            <Calendar
+              style={{ width: "95%", alignSelf: "center" }}
+              markedDates={markedDates}
+              markingType={"period"}
+              onDayPress={this._handleDayPress.bind(this)}
+              hideExtraDays={true}
+              onMonthChange={this._handleMonthChange.bind(this)}
+              hideArrowsPastMinMaxMonths={true}
+              minMonthDate={new Date(parseInt(firstDayId, 10))}
+              maxMonthDate={new Date()}
+            />
             <View
               style={{
                 flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
               }}
-            >
-              {legends}
-            </View>
-          </View>
-        </View>
-        {weightTracking ? (
-          <View style={{ flex: 1, marginTop: 8 }}>
-            <Text style={SectionStyles.sectionTitle}>WEIGHT TRACKING</Text>
-            <View
-              style={[whiteBlock, { alignItems: "center", marginBottom: 22 }]}
             >
               <View
                 style={{
-                  width: width - FormSettings.textMarginLeft * 2,
                   flexDirection: "row",
-                  justifyContent: "space-between",
-                  borderBottomWidth: StyleSheet.hairlineWidth,
-                  borderColor: Colors.borderGrey,
                 }}
               >
-                <DateLabel
-                  month={getMonth(this.state.calMonth - 1)}
-                  day={1}
-                  monthFontSize={12}
-                  subFontSize={9}
-                />
-                <DateLabel
-                  month={getMonth(this.state.calMonth - 1)}
-                  day={this.state.daysInMonth}
-                  monthFontSize={12}
-                  subFontSize={9}
-                />
+                {legends}
               </View>
-              <WeightChart
-                width={width}
-                markedDates={markedDates}
-                calMonth={this.state.calMonth}
-                calYear={this.state.calYear}
-                style={{ marginTop: 0 }}
-              />
             </View>
           </View>
-        ) : null}
-      </ScrollView>
+          {weightTracking ? (
+            <View style={{ flex: 1, marginTop: 8 }}>
+              <Text style={SectionStyles.sectionTitle}>WEIGHT TRACKING</Text>
+              <View
+                style={[whiteBlock, { alignItems: "center", marginBottom: 22 }]}
+              >
+                <View
+                  style={{
+                    width: width - FormSettings.textMarginLeft * 2,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderColor: Colors.borderGrey,
+                  }}
+                >
+                  <DateLabel
+                    month={getMonth(this.state.calMonth - 1)}
+                    day={1}
+                    monthFontSize={12}
+                    subFontSize={9}
+                  />
+                  <DateLabel
+                    month={getMonth(this.state.calMonth - 1)}
+                    day={this.state.daysInMonth}
+                    monthFontSize={12}
+                    subFontSize={9}
+                  />
+                </View>
+                <WeightChart
+                  width={width}
+                  markedDates={markedDates}
+                  calMonth={this.state.calMonth}
+                  calYear={this.state.calYear}
+                  style={{ marginTop: 0 }}
+                />
+              </View>
+            </View>
+          ) : null}
+        </ScrollView>
+        <HeaderShadow />
+      </View>
     );
   }
 }

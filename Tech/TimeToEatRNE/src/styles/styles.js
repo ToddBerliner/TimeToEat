@@ -147,17 +147,6 @@ export const MapScreenStyles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  upperShadow: {
-    width: 500,
-    height: 100,
-    position: "absolute",
-    top: -100,
-    left: -50,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.8,
-    shadowRadius: 12,
-  },
   box: {
     backgroundColor: Colors.borderGrey,
     height: 50,
@@ -332,6 +321,22 @@ export const MetricsScreenStyles = StyleSheet.create({
     fontSize: isSe ? 24 : 36,
     marginLeft: FormSettings.textMarginLeft,
     marginBottom: isSe ? 12 : 20,
+  },
+  trackingLegendWrap: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginLeft: 8,
+  },
+  trackingLegendDot: {
+    width: isSe ? 12 : 15,
+    height: isSe ? 12 : 15,
+    borderRadius: 7,
+  },
+  trackingLegendText: {
+    fontSize: 12,
+    color: "#808080",
+    marginLeft: 4,
   },
 });
 

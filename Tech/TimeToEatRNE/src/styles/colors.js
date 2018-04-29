@@ -36,6 +36,19 @@ export const HeaderColors = {
   pasta_lt: "#7C2200",
 };
 
+export const BackgroundColors = {
+  board: "#FFF3F1",
+  board_lt: "#FFF3F1",
+  coffee: "#F9F9F9",
+  coffee_lt: "#F9F9F9",
+  herbs: "#F7FFEC",
+  herbs_lt: "#F7FFEC",
+  nuts: "#F4FDFD",
+  nuts_lt: "#F4FDFD",
+  pasta: "#FFFAEF",
+  pasta_lt: "#FFFAEF",
+};
+
 /*
 TODO:
 - move all styles to stylesheets

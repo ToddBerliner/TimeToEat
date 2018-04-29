@@ -36,6 +36,7 @@ import {
 import Line from "../components/forms/Line";
 import SwitchRow from "../components/forms/SwitchRow";
 import TextAndTimeRow from "../components/forms/TextAndTimeRow";
+import HeaderShadow from "../components/HeaderShadow";
 import {
   FormSettings,
   SectionStyles,
@@ -44,7 +45,7 @@ import {
   TIStyles,
 } from "../styles/formStyles";
 import { MenuScreenStyles, TextStyles, Schemes } from "../styles/styles";
-import Colors, { HeaderColors } from "../styles/colors";
+import Colors, { HeaderColors, BackgroundColors } from "../styles/colors";
 import { Notifications, Permissions } from "expo";
 
 class MenuScreen extends React.Component {
@@ -63,7 +64,10 @@ class MenuScreen extends React.Component {
       headerRight: (
         <TouchableOpacity onPress={() => navigation.goBack()} dayId={dayId}>
           <Text
-            style={{ fontFamily: "fugaz-one-regular", color: Colors[scheme] }}
+            style={{
+              fontFamily: "fugaz-one-regular",
+              color: HeaderColors[scheme],
+            }}
           >
             Done
           </Text>
@@ -222,76 +226,84 @@ class MenuScreen extends React.Component {
       );
     } else {
       return (
-        <ScrollView style={MenuScreenStyles.settingsWrap}>
-          <TouchableOpacity onPress={clearSavedState}>
-            <Text style={[MenuScreenStyles.title, { color: Colors[scheme] }]}>
-              Make a Plan
-            </Text>
-          </TouchableOpacity>
-          <View style={{ flex: 1 }}>
-            <View style={SectionStyles.container}>
-              <View>
-                <Text style={SectionStyles.sectionTitle}>MEALS TO TRACK</Text>
-                <View style={SectionStyles.sectionWrapper}>{meals}</View>
-                <Text
-                  key={"mealsToTrackHelpText"}
-                  style={SectionStyles.sectionHelpText}
-                >
-                  Rename or edit the time for each.
-                </Text>
-              </View>
-            </View>
-            <View style={SectionStyles.container}>
-              <Text style={SectionStyles.sectionTitle}>
-                TIME TO EAT OPTIONS
+        <View style={{ flex: 1 }}>
+          <ScrollView
+            style={[
+              MenuScreenStyles.settingsWrap,
+              { backgroundColor: BackgroundColors[scheme] },
+            ]}
+          >
+            <TouchableOpacity onPress={clearSavedState}>
+              <Text style={[MenuScreenStyles.title, { color: Colors[scheme] }]}>
+                Make a Plan
               </Text>
-              <View style={SectionStyles.sectionWrapper}>
-                <SwitchRow
-                  switchTitle="Track Weight"
-                  onValueChange={this.handleToggleWeight.bind(this)}
-                  value={weightTracking}
-                />
-                <Line marginLeft={FormSettings.textMarginLeft} />
-                <SwitchRow
-                  switchTitle="Notifications"
-                  onValueChange={this.handleToggleNotifications.bind(this)}
-                  value={notifications}
-                />
-                {this.state.notificationsDisabled && (
-                  <View style={MenuScreenStyles.notificationsMsgWrap}>
-                    <Text style={{ fontWeight: "700", marginBottom: 4 }}>
-                      Notifications Are Currently Off
-                    </Text>
-                    <Text>
-                      Time to Eat Notifications are not allowed in your
-                      Settings. Please go to{` `}
-                      <Text style={{ fontWeight: "bold" }}>
-                        Settings > Time to Eat > Notifications
+            </TouchableOpacity>
+            <View style={{ flex: 1 }}>
+              <View style={SectionStyles.container}>
+                <View>
+                  <Text style={SectionStyles.sectionTitle}>MEALS TO TRACK</Text>
+                  <View style={SectionStyles.sectionWrapper}>{meals}</View>
+                  <Text
+                    key={"mealsToTrackHelpText"}
+                    style={SectionStyles.sectionHelpText}
+                  >
+                    Rename or edit the time for each.
+                  </Text>
+                </View>
+              </View>
+              <View style={SectionStyles.container}>
+                <Text style={SectionStyles.sectionTitle}>
+                  TIME TO EAT OPTIONS
+                </Text>
+                <View style={SectionStyles.sectionWrapper}>
+                  <SwitchRow
+                    switchTitle="Track Weight"
+                    onValueChange={this.handleToggleWeight.bind(this)}
+                    value={weightTracking}
+                  />
+                  <Line marginLeft={FormSettings.textMarginLeft} />
+                  <SwitchRow
+                    switchTitle="Notifications"
+                    onValueChange={this.handleToggleNotifications.bind(this)}
+                    value={notifications}
+                  />
+                  {this.state.notificationsDisabled && (
+                    <View style={MenuScreenStyles.notificationsMsgWrap}>
+                      <Text style={{ fontWeight: "700", marginBottom: 4 }}>
+                        Notifications Are Currently Off
                       </Text>
-                      {` `}and turn on "Allow Notifications".
-                    </Text>
-                  </View>
-                )}
-              </View>
-              <View style={MenuScreenStyles.helpButtonRow}>
-                <TteButton
-                  iconName="ios-help-circle-outline"
-                  style={{ width: "80%" }}
-                  title="Help"
-                  onPress={() => navigation.navigate("Help")}
-                />
-              </View>
-              <View style={MenuScreenStyles.linkRow}>
-                <TouchableOpacity onPress={this.goToPrivacy}>
-                  <Text style={TextStyles.link}>Privacy Policy</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.goToTos}>
-                  <Text style={TextStyles.link}>Terms of Service</Text>
-                </TouchableOpacity>
+                      <Text>
+                        Time to Eat Notifications are not allowed in your
+                        Settings. Please go to{` `}
+                        <Text style={{ fontWeight: "bold" }}>
+                          Settings > Time to Eat > Notifications
+                        </Text>
+                        {` `}and turn on "Allow Notifications".
+                      </Text>
+                    </View>
+                  )}
+                </View>
+                <View style={MenuScreenStyles.helpButtonRow}>
+                  <TteButton
+                    iconName="ios-help-circle-outline"
+                    style={{ width: "80%" }}
+                    title="Help"
+                    onPress={() => navigation.navigate("Help")}
+                  />
+                </View>
+                <View style={MenuScreenStyles.linkRow}>
+                  <TouchableOpacity onPress={this.goToPrivacy}>
+                    <Text style={TextStyles.link}>Privacy Policy</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={this.goToTos}>
+                    <Text style={TextStyles.link}>Terms of Service</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+          <HeaderShadow />
+        </View>
       );
     }
   }
