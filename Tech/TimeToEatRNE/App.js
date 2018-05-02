@@ -40,6 +40,10 @@ export default class App extends Component {
         console.error("Err saving state:", err);
       });
     const getImages = cacheImages([
+      require("./assets/icon.png"),
+      require("./assets/splash.png"),
+      require("./assets/images/welcome_icon.png"),
+      require("./assets/images/notification_icon.png"),
       require("./assets/backgrounds/board_lt.png"),
       require("./assets/backgrounds/coffee.png"),
       require("./assets/backgrounds/herbs_lt.png"),

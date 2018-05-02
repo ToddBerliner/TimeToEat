@@ -249,7 +249,6 @@ export const HelpScreenStyles = StyleSheet.create({
   helpWrap: {
     flex: 1,
     backgroundColor: Colors.superLtGrey,
-    paddingTop: isSe ? 8 : 20,
   },
   headerWrap: {
     flexDirection: "row",

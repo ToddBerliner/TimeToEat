@@ -51,6 +51,7 @@ class TextAndTimeRow extends React.Component {
             value={value}
             style={TIStyles.defaultInputStyle}
             onChange={onChange}
+            returnKeyType="done"
           />
           <TouchableOpacity onPress={onShowPicker} style={TATStyles.container}>
             <Text

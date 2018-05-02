@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Linking,
+  KeyboardAvoidingView,
 } from "react-native";
 import { clearSavedState } from "../store/configureStore";
 import DateBackButton from "../components/DateBackButton";
@@ -226,7 +227,11 @@ class MenuScreen extends React.Component {
       );
     } else {
       return (
-        <View style={{ flex: 1 }}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior="padding"
+          keyboardVerticalOffset={65}
+        >
           <ScrollView
             style={[
               MenuScreenStyles.settingsWrap,
@@ -251,59 +256,59 @@ class MenuScreen extends React.Component {
                   </Text>
                 </View>
               </View>
-              <View style={SectionStyles.container}>
-                <Text style={SectionStyles.sectionTitle}>
-                  TIME TO EAT OPTIONS
-                </Text>
-                <View style={SectionStyles.sectionWrapper}>
-                  <SwitchRow
-                    switchTitle="Track Weight"
-                    onValueChange={this.handleToggleWeight.bind(this)}
-                    value={weightTracking}
-                  />
-                  <Line marginLeft={FormSettings.textMarginLeft} />
-                  <SwitchRow
-                    switchTitle="Notifications"
-                    onValueChange={this.handleToggleNotifications.bind(this)}
-                    value={notifications}
-                  />
-                  {this.state.notificationsDisabled && (
-                    <View style={MenuScreenStyles.notificationsMsgWrap}>
-                      <Text style={{ fontWeight: "700", marginBottom: 4 }}>
-                        Notifications Are Currently Off
+            </View>
+            <View style={SectionStyles.container}>
+              <Text style={SectionStyles.sectionTitle}>
+                TIME TO EAT OPTIONS
+              </Text>
+              <View style={SectionStyles.sectionWrapper}>
+                <SwitchRow
+                  switchTitle="Track Weight"
+                  onValueChange={this.handleToggleWeight.bind(this)}
+                  value={weightTracking}
+                />
+                <Line marginLeft={FormSettings.textMarginLeft} />
+                <SwitchRow
+                  switchTitle="Notifications"
+                  onValueChange={this.handleToggleNotifications.bind(this)}
+                  value={notifications}
+                />
+                {this.state.notificationsDisabled && (
+                  <View style={MenuScreenStyles.notificationsMsgWrap}>
+                    <Text style={{ fontWeight: "700", marginBottom: 4 }}>
+                      Notifications Are Currently Off
+                    </Text>
+                    <Text>
+                      Time to Eat Notifications are not allowed in your
+                      Settings. Please go to{` `}
+                      <Text style={{ fontWeight: "bold" }}>
+                        Settings > Time to Eat > Notifications
                       </Text>
-                      <Text>
-                        Time to Eat Notifications are not allowed in your
-                        Settings. Please go to{` `}
-                        <Text style={{ fontWeight: "bold" }}>
-                          Settings > Time to Eat > Notifications
-                        </Text>
-                        {` `}and turn on "Allow Notifications".
-                      </Text>
-                    </View>
-                  )}
-                </View>
-                <View style={MenuScreenStyles.helpButtonRow}>
-                  <TteButton
-                    iconName="ios-help-circle-outline"
-                    style={{ width: "80%" }}
-                    title="Help"
-                    onPress={() => navigation.navigate("Help")}
-                  />
-                </View>
-                <View style={MenuScreenStyles.linkRow}>
-                  <TouchableOpacity onPress={this.goToPrivacy}>
-                    <Text style={TextStyles.link}>Privacy Policy</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={this.goToTos}>
-                    <Text style={TextStyles.link}>Terms of Service</Text>
-                  </TouchableOpacity>
-                </View>
+                      {` `}and turn on "Allow Notifications".
+                    </Text>
+                  </View>
+                )}
+              </View>
+              <View style={MenuScreenStyles.helpButtonRow}>
+                <TteButton
+                  iconName="ios-help-circle-outline"
+                  style={{ width: "80%" }}
+                  title="Help"
+                  onPress={() => navigation.navigate("Help")}
+                />
+              </View>
+              <View style={MenuScreenStyles.linkRow}>
+                <TouchableOpacity onPress={this.goToPrivacy}>
+                  <Text style={TextStyles.link}>Privacy Policy</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.goToTos}>
+                  <Text style={TextStyles.link}>Terms of Service</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </ScrollView>
           <HeaderShadow />
-        </View>
+        </KeyboardAvoidingView>
       );
     }
   }

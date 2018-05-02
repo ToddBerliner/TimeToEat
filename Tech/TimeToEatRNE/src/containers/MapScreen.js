@@ -423,6 +423,7 @@ class MapScreen extends Component {
               <EmptyPlan
                 navigate={this.props.navigation.navigate}
                 height={this.state.scrollContentHeight}
+                dayId={this.props.dayId}
               />
             )
           ) : null}

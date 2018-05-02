@@ -18,6 +18,8 @@ import { toggleNotifications } from "../../store/uiState/reducer";
 
 const welcomeIcon = require("../../../assets/images/welcome_icon.png");
 import { obText, obTitle } from "../../styles/styles";
+import { BackgroundColors } from "../../styles/colors";
+import { isSeSize } from "../../utils";
 
 class WelcomeScreen extends Component {
   static navigationOptions = {
@@ -63,20 +65,36 @@ class WelcomeScreen extends Component {
   }
 
   render() {
+    const isSe = isSeSize();
+    const logoStyle = {
+      width: isSe ? 50 : 96,
+      height: isSe ? 50 : 96,
+      marginBottom: isSe ? 18 : 35,
+    };
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: BackgroundColors.herbs,
+        }}
+      >
         <TouchableOpacity onPress={clearSavedState}>
-          <Image source={welcomeIcon} style={{ marginBottom: 35 }} />
+          <Image source={welcomeIcon} style={logoStyle} />
         </TouchableOpacity>
         <Text style={obTitle}>Welcome!</Text>
         <Text style={obText}>
-          Time to Eat is the simple meal tracker that will help you to make a
-          plan and stick to it. We believe in habbits and that tracking is the
-          best way to make or break them.
+          Time to Eat is the simple meal tracker that will help you to{" "}
+          <Text style={{ fontWeight: "bold" }}>
+            make a plan and stick to it
+          </Text>. We believe in habbits and that tracking is the best way to
+          make or break them.
         </Text>
         <Text style={[obText, { marginBottom: 36 }]}>
           Let’s get you started by turning on Notifications so that we can let
-          you know when it’s Time to Eat!
+          you know when{" "}
+          <Text style={{ fontWeight: "bold" }}>it’s Time to Eat!</Text>
         </Text>
         <TteButton
           style={{ width: "80%" }}
