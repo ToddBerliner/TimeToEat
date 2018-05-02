@@ -8,6 +8,7 @@ import MapScreen from "../containers/MapScreen";
 import MenuScreen from "../containers/MenuScreen";
 import MetricsScreen from "../containers/MetricsScreen";
 import HelpScreen from "../components/HelpScreen";
+import SchemeScreen from "../containers/SchemeScreen";
 import { _getSelectedDayId, _getScheme } from "../store/reducer";
 
 export const AppNavigator = StackNavigator(
@@ -23,6 +24,9 @@ export const AppNavigator = StackNavigator(
     },
     Help: {
       screen: HelpScreen,
+    },
+    Scheme: {
+      screen: SchemeScreen,
     },
   },
   {

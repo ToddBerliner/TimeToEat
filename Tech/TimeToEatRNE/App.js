@@ -44,11 +44,15 @@ export default class App extends Component {
       require("./assets/splash.png"),
       require("./assets/images/welcome_icon.png"),
       require("./assets/images/notification_icon.png"),
+      require("./assets/backgrounds/board.png"),
       require("./assets/backgrounds/board_lt.png"),
       require("./assets/backgrounds/coffee.png"),
+      require("./assets/backgrounds/coffee_lt.png"),
+      require("./assets/backgrounds/herbs.png"),
       require("./assets/backgrounds/herbs_lt.png"),
       require("./assets/backgrounds/nuts.png"),
       require("./assets/backgrounds/nuts_lt.png"),
+      require("./assets/backgrounds/pasta.png"),
       require("./assets/backgrounds/pasta_lt.png"),
     ]);
     const getFonts = Font.loadAsync({

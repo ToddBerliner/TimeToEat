@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Image } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { getDateKey } from "../utils";
+import { getDateKey, isSeSize } from "../utils";
 
 import TteButton from "./TteButton";
 const welcomeIcon = require("../../assets/images/welcome_icon.png");
@@ -9,6 +9,7 @@ import { obText, obTitle, obSmallTitle } from "../styles/styles";
 
 export default class EmptyPlan extends Component {
   render() {
+    const isSe = isSeSize();
     return (
       <View
         key="nomeals"
@@ -33,7 +34,14 @@ export default class EmptyPlan extends Component {
             borderRadius: 18,
           }}
         >
-          <Image source={welcomeIcon} style={{ marginBottom: 35 }} />
+          <Image
+            source={welcomeIcon}
+            style={{
+              width: isSe ? 48 : 96,
+              height: isSe ? 48 : 96,
+              marginBottom: isSe ? 20 : 35,
+            }}
+          />
           <Text style={obSmallTitle}>
             {this.props.dayId === getDateKey()
               ? "Your Plan Needs Meals!"

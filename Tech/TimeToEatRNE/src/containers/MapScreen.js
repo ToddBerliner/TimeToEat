@@ -36,18 +36,7 @@ import {
   selectDay,
   readIntro,
   getIntroReadState,
-  setScheme,
   getScheme,
-  BOARD,
-  BOARD_LT,
-  COFFEE,
-  COFFEE_LT,
-  HERBS,
-  HERBS_LT,
-  NUTS,
-  NUTS_LT,
-  PASTA,
-  PASTA_LT,
 } from "../store/uiState/reducer";
 import { tapWater, tapAndHoldWater, editWeight } from "../store/days/reducer";
 import { nodeRowHeight } from "../components/NodeRow";
@@ -77,15 +66,10 @@ import { Notifications, Permissions } from "expo";
 import Colors, { HeaderColors } from "../styles/colors";
 import { Schemes, MapScreenStyles } from "../styles/styles";
 const backgrounds = {
-  board: require("../../assets/backgrounds/board.png"),
   board_lt: require("../../assets/backgrounds/board_lt.png"),
-  coffee: require("../../assets/backgrounds/coffee.png"),
   coffee_lt: require("../../assets/backgrounds/coffee_lt.png"),
-  herbs: require("../../assets/backgrounds/herbs.png"),
   herbs_lt: require("../../assets/backgrounds/herbs_lt.png"),
   nuts: require("../../assets/backgrounds/nuts.png"),
-  nuts_lt: require("../../assets/backgrounds/nuts_lt.png"),
-  pasta: require("../../assets/backgrounds/pasta.png"),
   pasta_lt: require("../../assets/backgrounds/pasta_lt.png"),
 };
 
@@ -279,20 +263,6 @@ class MapScreen extends Component {
     return bodyRowHeight > height ? bodyRowHeight : height;
   };
 
-  _cycleScheme = () => {
-    // get current scheme
-    // set next one or first
-    const schemes = [BOARD_LT, COFFEE, HERBS_LT, NUTS, NUTS_LT, PASTA_LT];
-    let nextIdx = null;
-    for (let idx = 0; idx < schemes.length; idx++) {
-      if (schemes[idx] === this.props.scheme) {
-        nextIdx = idx + 1 === schemes.length ? 0 : idx + 1;
-        break;
-      }
-    }
-    this.props.setScheme(schemes[nextIdx]);
-  };
-
   _openIntro = () => {
     this.setState({ introVisible: true });
   };
@@ -435,7 +405,6 @@ class MapScreen extends Component {
               this.props.tapAddSnack(this.props.dayId, new Date().getTime());
             }}
           />
-          <Button title="Cycle" onPress={this._cycleScheme} />
         </View>
         <Notification
           closeInterval={60000}
@@ -507,9 +476,6 @@ const mapDispatchToProps = dispatch => {
     },
     readIntro: (read = true) => {
       dispatch(readIntro(read));
-    },
-    setScheme: scheme => {
-      dispatch(setScheme(scheme));
     },
     _logState: () => {
       dispatch(_logState());

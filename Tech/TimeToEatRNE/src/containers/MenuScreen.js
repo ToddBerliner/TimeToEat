@@ -35,6 +35,7 @@ import {
   getTimeObjFromDate,
 } from "../utils";
 import Line from "../components/forms/Line";
+import TextRow from "../components/forms/TextRow";
 import SwitchRow from "../components/forms/SwitchRow";
 import TextAndTimeRow from "../components/forms/TextAndTimeRow";
 import HeaderShadow from "../components/HeaderShadow";
@@ -68,6 +69,7 @@ class MenuScreen extends React.Component {
             style={{
               fontFamily: "fugaz-one-regular",
               color: HeaderColors[scheme],
+              fontSize: 16,
             }}
           >
             Done
@@ -288,6 +290,11 @@ class MenuScreen extends React.Component {
                     </Text>
                   </View>
                 )}
+                <Line marginLeft={FormSettings.textMarginLeft} />
+                <TextRow
+                  title="Select Theme"
+                  onPress={() => navigation.navigate("Scheme")}
+                />
               </View>
               <View style={MenuScreenStyles.helpButtonRow}>
                 <TteButton

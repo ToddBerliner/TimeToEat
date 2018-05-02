@@ -79,6 +79,7 @@ class MetricsScreen extends React.Component {
             style={{
               fontFamily: "fugaz-one-regular",
               color: HeaderColors[scheme],
+              fontSize: 16,
             }}
           >
             Done

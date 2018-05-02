@@ -39,6 +39,7 @@ class HelpScreen extends Component {
             style={{
               fontFamily: "fugaz-one-regular",
               color: HeaderColors[scheme],
+              fontSize: 16,
             }}
           >
             Done
@@ -137,8 +138,10 @@ class HelpScreen extends Component {
               Tap the meal time to change it.
             </Text>
             <Text style={TextStyles.content}>
-              Toggle the weight tracking, water tracking and notifications on
-              and off.
+              Toggle the weight tracking and notifications on and off.
+            </Text>
+            <Text style={TextStyles.content}>
+              Select the visual theme for the app.
             </Text>
           </View>
         </ScrollView>
