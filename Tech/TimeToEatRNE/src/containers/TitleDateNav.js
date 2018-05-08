@@ -20,37 +20,34 @@ class TitleDateNav extends Component {
   render() {
     return (
       <View style={styles.titleRowCenter}>
-        <View>
+        <TitleDate dayId={this.props.dayId} scheme={this.props.scheme} />
+        <TouchableOpacity
+          onPress={this._selectDate.bind(this, PREV)}
+          style={styles.titleLeftArrow}
+        >
+          <Icon
+            name="ios-arrow-back"
+            size={24}
+            color={HeaderColors[this.props.scheme]}
+            style={{ marginLeft: 8 }}
+          />
+        </TouchableOpacity>
+        {this.props.isToday ? (
+          <View style={styles.titleRightArrow} />
+        ) : (
           <TouchableOpacity
-            onPress={this._selectDate.bind(this, PREV)}
-            style={styles.titleLeftArrow}
+            onPress={this._selectDate.bind(this, NEXT)}
+            style={styles.titleRightArrow}
             hitSlop={{ left: 10, right: 10 }}
           >
             <Icon
-              name="ios-arrow-back"
+              name="ios-arrow-forward"
               size={24}
               color={HeaderColors[this.props.scheme]}
+              style={{ marginRight: 8 }}
             />
           </TouchableOpacity>
-        </View>
-        <TitleDate dayId={this.props.dayId} scheme={this.props.scheme} />
-        <View>
-          {this.props.isToday ? (
-            <View style={styles.titleRightArrow} />
-          ) : (
-            <TouchableOpacity
-              onPress={this._selectDate.bind(this, NEXT)}
-              style={styles.titleRightArrow}
-              hitSlop={{ left: 10, right: 10 }}
-            >
-              <Icon
-                name="ios-arrow-forward"
-                size={24}
-                color={HeaderColors[this.props.scheme]}
-              />
-            </TouchableOpacity>
-          )}
-        </View>
+        )}
       </View>
     );
   }
@@ -65,12 +62,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   titleLeftArrow: {
-    width: 30,
-    alignItems: "flex-end",
+    width: 60,
+    height: 36,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    position: "absolute",
+    top: 0,
+    left: 0,
   },
   titleRightArrow: {
-    width: 30,
-    alignItems: "flex-start",
+    width: 60,
+    height: 36,
+    alignItems: "flex-end",
+    justifyContent: "center",
+    position: "absolute",
+    top: 0,
+    right: 0,
   },
 });
 
