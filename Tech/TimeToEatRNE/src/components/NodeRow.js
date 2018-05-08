@@ -112,14 +112,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     height: nodeRowHeight,
   },
-  nodeRowSelected: {
-    backgroundColor: "rgba(216,216,216,40)",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    height: nodeRowHeight,
-    paddingLeft: 14,
-  },
   nodeRowBgWrap: {
     position: "absolute",
     width: "100%",

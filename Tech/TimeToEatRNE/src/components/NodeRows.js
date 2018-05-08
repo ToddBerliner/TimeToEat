@@ -84,6 +84,7 @@ const NodeRows = props => {
             onDateChange={time => props.onEditSnackTime(node.id, time)}
             isPickerShowing={props.openPicker === node.id}
             onShowPicker={() => props.onShowPicker(node.id)}
+            scheme={scheme}
           />,
         );
       default:

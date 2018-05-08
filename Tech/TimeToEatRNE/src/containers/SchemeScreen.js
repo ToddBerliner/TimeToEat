@@ -18,37 +18,26 @@ import Icon from "react-native-vector-icons/Ionicons";
 import {
   setScheme,
   getScheme,
-  BOARD,
   BOARD_LT,
-  COFFEE,
-  COFFEE_LT,
-  HERBS,
   HERBS_LT,
   NUTS,
-  NUTS_LT,
-  PASTA,
-  PASTA_LT,
 } from "../store/uiState/reducer";
 import Colors, { HeaderColors } from "../styles/colors";
 const backgrounds = {
-  board_lt: require("../../assets/backgrounds/board.png"),
-  coffee_lt: require("../../assets/backgrounds/coffee.png"),
-  herbs_lt: require("../../assets/backgrounds/herbs.png"),
-  nuts: require("../../assets/backgrounds/nuts.png"),
-  pasta_lt: require("../../assets/backgrounds/pasta.png"),
+  board_lt: require("../../assets/backgrounds/scheme_board.png"),
+  herbs_lt: require("../../assets/backgrounds/scheme_herbs.png"),
+  nuts: require("../../assets/backgrounds/scheme_nuts.png"),
 };
 const labels = {
   board_lt: "The Board",
-  coffee_lt: "COFFEE!",
-  herbs_lt: "Herbs",
-  nuts: "Nuts",
-  pasta_lt: "Noodles",
+  herbs_lt: "Green Herbs",
+  nuts: "Nuts & Leaves",
 };
 
 class SchemeBlock extends React.PureComponent {
   render() {
     const { height } = Dimensions.get("window");
-    const itemHeight = (height - 150) / 5;
+    const itemHeight = 150;
     return (
       <TouchableOpacity
         onPress={() => {
@@ -90,7 +79,7 @@ class SchemeBlock extends React.PureComponent {
           <Image
             style={{
               width: 150,
-              height: "100%",
+              height: 150,
             }}
             source={backgrounds[this.props.scheme]}
             resizeMode="cover"
@@ -185,19 +174,17 @@ class SchemeScreen extends Component {
             borderColor: Colors.borderGrey,
           }}
         >
-          {["board_lt", "coffee_lt", "herbs_lt", "nuts", "pasta_lt"].map(
-            (scheme, idx) => (
-              <SchemeBlock
-                scheme={scheme}
-                key={scheme}
-                idx={idx}
-                selected={scheme === this.props.scheme}
-                onPress={scheme => {
-                  this.props.setScheme(scheme);
-                }}
-              />
-            ),
-          )}
+          {["board_lt", "herbs_lt", "nuts"].map((scheme, idx) => (
+            <SchemeBlock
+              scheme={scheme}
+              key={scheme}
+              idx={idx}
+              selected={scheme === this.props.scheme}
+              onPress={scheme => {
+                this.props.setScheme(scheme);
+              }}
+            />
+          ))}
         </View>
         <HeaderShadow />
       </View>

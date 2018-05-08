@@ -27,12 +27,12 @@ export const Schemes = {
   }),
   herbs: StyleSheet.create({
     header: {
-      backgroundColor: "#23A2CE",
+      backgroundColor: "#DFF3C8",
     },
   }),
   herbs_lt: StyleSheet.create({
     header: {
-      backgroundColor: "#23A2CE",
+      backgroundColor: "#DFF3C8",
     },
   }),
   nuts: StyleSheet.create({

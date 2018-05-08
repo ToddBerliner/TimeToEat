@@ -40,11 +40,10 @@ const styles = {
   },
   icon: {
     resizeMode: "contain",
-    width: 48,
-    height: 48,
+    width: 36,
+    height: 36,
     marginLeft: 12,
     marginRight: 18,
-    justifySelf: "center",
   },
   textContainer: {
     flex: 1,

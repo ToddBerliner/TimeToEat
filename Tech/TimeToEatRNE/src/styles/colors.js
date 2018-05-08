@@ -28,8 +28,8 @@ export const HeaderColors = {
   board_lt: "#800415",
   coffee: "#FFFFFF",
   coffee_lt: "#FFFFFF",
-  herbs: "#FFFFFF",
-  herbs_lt: "#FFFFFF",
+  herbs: "#066A8D",
+  herbs_lt: "#066A8D",
   nuts: "#FFFFFF",
   nuts_lt: "#FFFFFF",
   pasta: "#7C2200",
@@ -48,12 +48,3 @@ export const BackgroundColors = {
   pasta: "#FFFAEF",
   pasta_lt: "#FFFAEF",
 };
-
-/*
-TODO:
-- move all styles to stylesheets
-- except a truely re-usable component - pickers?
-- all colors in color def - move to StyleSheet
-- all font scaling in StyleSheet
--- set const in stylesheet and use that
-*/

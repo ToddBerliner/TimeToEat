@@ -46,14 +46,13 @@ export default class App extends Component {
       require("./assets/images/notification_icon.png"),
       require("./assets/backgrounds/board.png"),
       require("./assets/backgrounds/board_lt.png"),
-      require("./assets/backgrounds/coffee.png"),
-      require("./assets/backgrounds/coffee_lt.png"),
       require("./assets/backgrounds/herbs.png"),
       require("./assets/backgrounds/herbs_lt.png"),
       require("./assets/backgrounds/nuts.png"),
       require("./assets/backgrounds/nuts_lt.png"),
-      require("./assets/backgrounds/pasta.png"),
-      require("./assets/backgrounds/pasta_lt.png"),
+      require("./assets/backgrounds/scheme_board.png"),
+      require("./assets/backgrounds/scheme_herbs.png"),
+      require("./assets/backgrounds/scheme_nuts.png"),
     ]);
     const getFonts = Font.loadAsync({
       ...Ionicons.font,

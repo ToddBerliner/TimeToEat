@@ -67,10 +67,8 @@ import Colors, { HeaderColors } from "../styles/colors";
 import { Schemes, MapScreenStyles } from "../styles/styles";
 const backgrounds = {
   board_lt: require("../../assets/backgrounds/board_lt.png"),
-  coffee_lt: require("../../assets/backgrounds/coffee_lt.png"),
   herbs_lt: require("../../assets/backgrounds/herbs_lt.png"),
   nuts: require("../../assets/backgrounds/nuts.png"),
-  pasta_lt: require("../../assets/backgrounds/pasta_lt.png"),
 };
 
 import Notification from "react-native-in-app-notification";
@@ -315,7 +313,11 @@ class MapScreen extends Component {
     const isSe = isSeSize();
     return (
       <SafeAreaView style={MapScreenStyles.appWrap}>
-        <Image style={MapScreenStyles.bg} source={backgrounds[scheme]} />
+        <Image
+          resizeMode="cover"
+          style={MapScreenStyles.bg}
+          source={backgrounds[scheme]}
+        />
         <HeaderShadow />
         <View style={MapScreenStyles.weightRow}>
           <View style={MapScreenStyles.weightTextRow}>
