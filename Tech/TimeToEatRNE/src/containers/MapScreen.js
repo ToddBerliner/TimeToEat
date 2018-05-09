@@ -17,7 +17,6 @@ import {
 } from "react-native";
 import EmptyPlan from "../components/EmptyPlan";
 import AddSnack from "../components/AddSnack";
-import WaterPie from "../components/WaterPie";
 import NodeRows from "../components/NodeRows";
 import TitleDateNav from "../containers/TitleDateNav";
 import NumberSpinner from "../components/NumberSpinner";
@@ -67,13 +66,13 @@ import { Notifications, Permissions } from "expo";
 import Colors, { HeaderColors } from "../styles/colors";
 import { Schemes, MapScreenStyles } from "../styles/styles";
 const backgrounds = {
-  board_lt: require("../../assets/backgrounds/board_lt.png"),
-  herbs_lt: require("../../assets/backgrounds/herbs_lt.png"),
-  nuts: require("../../assets/backgrounds/nuts.png"),
+  board_lt: require("../../assets/board_lt.png"),
+  herbs_lt: require("../../assets/herbs_lt.png"),
+  nuts: require("../../assets/nuts.png"),
 };
 
 import Notification from "react-native-in-app-notification";
-const notificationIcon = require("../../assets/images/notification_icon.png");
+const notificationIcon = require("../../assets/notification_icon.png");
 
 // MapScreen is a route in the App
 class MapScreen extends Component {

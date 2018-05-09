@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import DateBackButton from "../components/DateBackButton";
 import TteButton from "../components/TteButton";
+import { clearSavedState } from "../store/configureStore";
 import {
   _getWaterTrackingState,
   _getWeightTrackingState,
@@ -239,9 +240,11 @@ class MenuScreen extends React.Component {
               { backgroundColor: BackgroundColors[scheme] },
             ]}
           >
-            <Text style={[MenuScreenStyles.title, { color: Colors[scheme] }]}>
-              Make a Plan
-            </Text>
+            <TouchableOpacity onPress={clearSavedState}>
+              <Text style={[MenuScreenStyles.title, { color: Colors[scheme] }]}>
+                Make a Plan
+              </Text>
+            </TouchableOpacity>
             <View style={{ flex: 1 }}>
               <View style={SectionStyles.container}>
                 <View>

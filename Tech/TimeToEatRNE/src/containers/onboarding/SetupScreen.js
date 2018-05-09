@@ -18,7 +18,7 @@ import { isSeSize } from "../../utils";
 
 import { clearSavedState } from "../../store/configureStore";
 
-const welcomeIcon = require("../../../assets/images/welcome_icon.png");
+const welcomeIcon = require("../../../assets/welcome_icon.png");
 import { obText, obTitle } from "../../styles/styles";
 import { BackgroundColors } from "../../styles/colors";
 

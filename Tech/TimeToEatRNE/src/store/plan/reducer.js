@@ -16,7 +16,7 @@ import {
 import { NODE_UPDATED } from "../nodes/reducer";
 import { NOTIFICATIONS_TOGGLED } from "../uiState/reducer";
 import { Notifications } from "expo";
-const notificationIcon = require("../../../assets/images/notification_icon.png");
+const notificationIcon = require("../../../assets/notification_icon.png");
 
 // Action Types & Constants
 export const MEAL_EDITED = "meal_edited";

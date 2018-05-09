@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { getDateKey, isSeSize } from "../utils";
 
 import TteButton from "./TteButton";
-const welcomeIcon = require("../../assets/images/welcome_icon.png");
+const welcomeIcon = require("../../assets/welcome_icon.png");
 import { obText, obTitle, obSmallTitle } from "../styles/styles";
 
 export default class EmptyPlan extends Component {

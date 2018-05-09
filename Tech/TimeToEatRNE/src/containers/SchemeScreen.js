@@ -24,9 +24,9 @@ import {
 } from "../store/uiState/reducer";
 import Colors, { HeaderColors } from "../styles/colors";
 const backgrounds = {
-  board_lt: require("../../assets/backgrounds/scheme_board.png"),
-  herbs_lt: require("../../assets/backgrounds/scheme_herbs.png"),
-  nuts: require("../../assets/backgrounds/scheme_nuts.png"),
+  board_lt: require("../../assets/scheme_board.png"),
+  herbs_lt: require("../../assets/scheme_herbs.png"),
+  nuts: require("../../assets/scheme_nuts.png"),
 };
 const labels = {
   board_lt: "The Board",

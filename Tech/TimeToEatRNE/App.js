@@ -42,29 +42,24 @@ export default class App extends Component {
     const getImages = cacheImages([
       require("./assets/icon.png"),
       require("./assets/splash.png"),
-      require("./assets/images/welcome_icon.png"),
-      require("./assets/images/notification_icon.png"),
-      require("./assets/backgrounds/board.png"),
-      require("./assets/backgrounds/board_lt.png"),
-      require("./assets/backgrounds/herbs.png"),
-      require("./assets/backgrounds/herbs_lt.png"),
-      require("./assets/backgrounds/nuts.png"),
-      require("./assets/backgrounds/nuts_lt.png"),
-      require("./assets/backgrounds/scheme_board.png"),
-      require("./assets/backgrounds/scheme_herbs.png"),
-      require("./assets/backgrounds/scheme_nuts.png"),
+      require("./assets/welcome_icon.png"),
+      require("./assets/notification_icon.png"),
+      require("./assets/board_lt.png"),
+      require("./assets/herbs_lt.png"),
+      require("./assets/nuts.png"),
+      require("./assets/scheme_board.png"),
+      require("./assets/scheme_herbs.png"),
+      require("./assets/scheme_nuts.png"),
     ]);
     const getFonts = Font.loadAsync({
       ...Ionicons.font,
       ...MaterialCommunityIcons.font,
-      "fugaz-one-regular": require("./assets/fonts/FugazOne-Regular.ttf"),
+      "fugaz-one-regular": require("./assets/FugazOne-Regular.ttf"),
     });
     await Promise.all([getState, getImages, getFonts]);
   };
 
-  _handleLoadingError = error => {
-    console.warn(error);
-  };
+  _handleLoadingError = error => {};
 
   _handleBeingLoaded = values => {
     this.setState({ loaded: true });

@@ -16,7 +16,7 @@ import TteButton from "../../components/TteButton";
 import { clearSavedState } from "../../store/configureStore";
 import { toggleNotifications } from "../../store/uiState/reducer";
 
-const welcomeIcon = require("../../../assets/images/welcome_icon.png");
+const welcomeIcon = require("../../../assets/welcome_icon.png");
 import { obText, obTitle } from "../../styles/styles";
 import { BackgroundColors } from "../../styles/colors";
 import { isSeSize } from "../../utils";
