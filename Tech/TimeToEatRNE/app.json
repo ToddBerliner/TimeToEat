@@ -2,20 +2,27 @@
   "expo": {
     "name": "TimeToEat",
     "description": "Make a plan, eat it up. Meal tracking simplified.",
-    "slug": "TimeToEatRNE",
+    "slug": "expo.io/@berlinpark/TimeToEatRNE",
     "privacy": "public",
     "sdkVersion": "25.0.0",
+    "githubUrl": "https://github.com/ToddBerliner/TimeToEat",
     "platforms": ["ios"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "notification": {
+      "icon": "./assets/"
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#BFF8FC"
     },
     "ios": {
-      "supportsTablet": false
-    }
+      "supportsTablet": false,
+      "bundleIdentifier": "com.toddberliner.timetoeat"
+    },
+    "assetBundlePatterns": ["./assets/**"],
+    "updates.fallbackToCacheTimeout": 0
   }
 }
