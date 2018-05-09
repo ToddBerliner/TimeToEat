@@ -55,6 +55,7 @@ import {
   getFriendlyDate,
   sendImmediateNotification,
   isSeSize,
+  isXSize,
   PREV,
   NEXT,
 } from "../utils";
@@ -311,8 +312,9 @@ class MapScreen extends Component {
       });
     }
     const isSe = isSeSize();
+    const isX = isXSize();
     return (
-      <SafeAreaView style={MapScreenStyles.appWrap}>
+      <View style={MapScreenStyles.appWrap}>
         <Image
           resizeMode="cover"
           style={MapScreenStyles.bg}
@@ -400,7 +402,9 @@ class MapScreen extends Component {
             )
           ) : null}
         </ScrollView>
-        <View style={MapScreenStyles.footerRow}>
+        <View
+          style={isX ? MapScreenStyles.footerRowX : MapScreenStyles.footerRow}
+        >
           <AddSnack
             scheme={scheme}
             onTap={() => {
@@ -419,7 +423,7 @@ class MapScreen extends Component {
           visible={this.state.introVisible}
           onClose={this._closeIntro}
         />
-      </SafeAreaView>
+      </View>
     );
   }
 }

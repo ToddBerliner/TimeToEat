@@ -239,6 +239,15 @@ export const MapScreenStyles = StyleSheet.create({
     marginLeft: 14,
     marginRight: 14,
   },
+  footerRowX: {
+    height: 70,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginLeft: 14,
+    marginRight: 14,
+    marginBottom: 18,
+  },
   collapsed: {
     height: 0,
     overflow: "hidden",

@@ -13,7 +13,6 @@ import {
   Linking,
   KeyboardAvoidingView,
 } from "react-native";
-import { clearSavedState } from "../store/configureStore";
 import DateBackButton from "../components/DateBackButton";
 import TteButton from "../components/TteButton";
 import {
@@ -240,11 +239,9 @@ class MenuScreen extends React.Component {
               { backgroundColor: BackgroundColors[scheme] },
             ]}
           >
-            <TouchableOpacity onPress={clearSavedState}>
-              <Text style={[MenuScreenStyles.title, { color: Colors[scheme] }]}>
-                Make a Plan
-              </Text>
-            </TouchableOpacity>
+            <Text style={[MenuScreenStyles.title, { color: Colors[scheme] }]}>
+              Make a Plan
+            </Text>
             <View style={{ flex: 1 }}>
               <View style={SectionStyles.container}>
                 <View>

@@ -53,6 +53,11 @@ export function isSeSize() {
   return width < 375 || height < 375;
 }
 
+export function isXSize() {
+  const { width, height } = Dimensions.get("window");
+  return width > 736 || height > 736;
+}
+
 export function getDow(dayIndex) {
   return DOW[dayIndex] || null;
 }
