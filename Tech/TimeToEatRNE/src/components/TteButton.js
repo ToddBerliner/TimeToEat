@@ -7,7 +7,7 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 class TteButton extends Component {
   render() {
@@ -51,7 +51,7 @@ class TteButton extends Component {
         style={style}
       >
         <View style={buttonStyles}>
-          {iconName ? <Icon name={iconName} size={24} /> : null}
+          {iconName ? <Ionicons name={iconName} size={24} /> : null}
           <Text style={textStyles} disabled={disabled}>
             {formattedTitle}
           </Text>

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Text, TouchableHighlight, View } from "react-native";
 import TteButton from "./TteButton";
-import Icon from "react-native-vector-icons/Ionicons";
-import McIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import Colors from "../styles/colors";
 import { TextStyles, IntroStyles } from "../styles/styles";
 import { isSeSize } from "../utils";
@@ -30,7 +29,7 @@ class MapIntro extends Component {
               Let's Get You Tracking
             </Text>
             <View style={IntroStyles.sectionWrap}>
-              <Icon
+              <Ionicons
                 name="ios-checkmark-circle"
                 size={36}
                 style={{ marginBottom: 10 }}
@@ -42,7 +41,7 @@ class MapIntro extends Component {
             </View>
             <View style={IntroStyles.divider} />
             <View style={IntroStyles.sectionWrap}>
-              <Icon
+              <Ionicons
                 name="ios-add-circle-outline"
                 size={36}
                 style={{ marginBottom: 10 }}
@@ -54,7 +53,7 @@ class MapIntro extends Component {
             </View>
             <View style={IntroStyles.divider} />
             <View style={IntroStyles.sectionWrap}>
-              <McIcon
+              <MaterialCommunityIcons
                 name="scale-bathroom"
                 size={36}
                 style={{ marginBottom: 10 }}

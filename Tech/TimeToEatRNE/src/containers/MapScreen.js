@@ -59,8 +59,7 @@ import {
   NEXT,
 } from "../utils";
 import { _logState } from "../store/reducer";
-import Icon from "react-native-vector-icons/Ionicons";
-import McIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { StackNavigator } from "react-navigation";
 import { Notifications, Permissions } from "expo";
 import Colors, { HeaderColors } from "../styles/colors";
@@ -96,7 +95,7 @@ class MapScreen extends Component {
           style={{ width: 30 }}
           hitSlop={{ left: 10, right: 10 }}
         >
-          <Icon
+          <Ionicons
             name="ios-contact-outline"
             size={24}
             color={HeaderColors[scheme]}
@@ -111,7 +110,7 @@ class MapScreen extends Component {
           style={{ width: 30 }}
           hitSlop={{ left: 10, right: 10 }}
         >
-          <Icon
+          <Ionicons
             name="ios-calendar-outline"
             size={24}
             style={{ alignSelf: "flex-end" }}
@@ -338,7 +337,7 @@ class MapScreen extends Component {
                 >
                   {this.props.weight} lbs.
                 </Text>
-                <McIcon
+                <MaterialCommunityIcons
                   name="scale-bathroom"
                   size={24}
                   color={Colors[scheme]}

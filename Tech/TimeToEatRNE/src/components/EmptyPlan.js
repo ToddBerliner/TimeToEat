@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Image } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import { getDateKey, isSeSize } from "../utils";
 
 import TteButton from "./TteButton";

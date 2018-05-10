@@ -16,7 +16,7 @@ import {
   Schemes,
 } from "../styles/styles";
 import Colors, { HeaderColors, BackgroundColors } from "../styles/colors";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import HeaderShadow from "./HeaderShadow";
 import { isSeSize } from "../utils";
 
@@ -68,7 +68,7 @@ class HelpScreen extends Component {
             Time for Help
           </Text>
           <View style={HelpScreenStyles.headerWrap}>
-            <Icon
+            <Ionicons
               name="ios-checkmark-circle-outline"
               size={36}
               color={Colors[scheme]}
@@ -94,7 +94,7 @@ class HelpScreen extends Component {
             </Text>
           </View>
           <View style={HelpScreenStyles.headerWrap}>
-            <Icon
+            <Ionicons
               name="ios-calendar-outline"
               size={36}
               color={Colors[scheme]}
@@ -120,7 +120,7 @@ class HelpScreen extends Component {
             </Text>
           </View>
           <View style={HelpScreenStyles.headerWrap}>
-            <Icon name="ios-contact-outline" size={36} color={Colors[scheme]} />
+            <Ionicons name="ios-contact-outline" size={36} color={Colors[scheme]} />
             <Text
               style={[HelpScreenStyles.headerText, { color: Colors[scheme] }]}
             >

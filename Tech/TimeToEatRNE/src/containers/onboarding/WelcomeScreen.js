@@ -9,7 +9,7 @@ import {
   Image,
   Alert,
 } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import { Permissions } from "expo";
 import TteButton from "../../components/TteButton";
 

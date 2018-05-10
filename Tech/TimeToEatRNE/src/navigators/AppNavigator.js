@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "react-native";
 import { connect } from "react-redux";
 import { addNavigationHelpers, StackNavigator } from "react-navigation";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 import MapScreen from "../containers/MapScreen";
 import MenuScreen from "../containers/MenuScreen";
@@ -30,7 +30,7 @@ export const AppNavigator = StackNavigator(
     },
   },
   {
-    initialRouteName: "Map",
+    initialRouteName: "Metrics",
     mode: "modal",
   },
 );

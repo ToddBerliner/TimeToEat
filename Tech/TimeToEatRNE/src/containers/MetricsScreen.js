@@ -52,15 +52,6 @@ class MetricsScreen extends React.Component {
       ).getDate(),
     };
   }
-  /*
-    Calendar TODO:
-      ✔ minDate = first date in state.days
-      ✔ month nav buttons - only allow scroll to months in state
-      ✔ day tap = selectDay (if not disabled)
-      ✔ markedDates for state
-      ❍ make dot and period marking PR?
-      ❍ suggestions! (eg, you have a lot of off-plan snacks - update your plan)
-  */
   static navigationOptions = ({ navigation, screenProps }) => {
     const { dayId, scheme } = screenProps;
     return {

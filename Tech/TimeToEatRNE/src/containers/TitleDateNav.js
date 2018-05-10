@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import TitleDate from "../components/TitleDate";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import { selectDay } from "../store/uiState/reducer";
 import { getDateKey, getAdjacentDateKey, PREV, NEXT } from "../utils";
 import { _getSelectedDayId } from "../store/reducer";
@@ -25,7 +25,7 @@ class TitleDateNav extends Component {
           onPress={this._selectDate.bind(this, PREV)}
           style={styles.titleLeftArrow}
         >
-          <Icon
+          <Ionicons
             name="ios-arrow-back"
             size={24}
             color={HeaderColors[this.props.scheme]}
@@ -40,7 +40,7 @@ class TitleDateNav extends Component {
             style={styles.titleRightArrow}
             hitSlop={{ left: 10, right: 10 }}
           >
-            <Icon
+            <Ionicons
               name="ios-arrow-forward"
               size={24}
               color={HeaderColors[this.props.scheme]}

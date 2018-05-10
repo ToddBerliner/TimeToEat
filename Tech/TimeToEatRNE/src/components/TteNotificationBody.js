@@ -11,7 +11,7 @@ import {
 import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 const styles = {
   root: {
@@ -137,7 +137,7 @@ class TteNotificationBody extends React.Component {
                 onClose();
               }}
             >
-              <Icon name="ios-close-circle-outline" color="white" size={30} />
+              <Ionicons name="ios-close-circle-outline" color="white" size={30} />
             </TouchableOpacity>
           </View>
           <View style={styles.footer} />

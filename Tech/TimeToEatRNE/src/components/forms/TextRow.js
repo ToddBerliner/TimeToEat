@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { FormSettings, SectionStyles, SCStyles } from "../../styles/formStyles";
 import Colors from "../../styles/colors";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 class TextRow extends React.Component {
   render() {
@@ -14,7 +14,7 @@ class TextRow extends React.Component {
         <Text style={[SCStyles.titleStyle, { color: Colors.blue }]}>
           {this.props.title}
         </Text>
-        <Icon
+        <Ionicons
           style={[SCStyles.switch, { color: Colors.grey }]}
           name="ios-arrow-forward-outline"
           size={24}

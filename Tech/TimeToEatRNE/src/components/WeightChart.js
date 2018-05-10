@@ -2,15 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import { AreaChart, XAxis, LineChart } from "react-native-svg-charts";
-import {
-  Circle,
-  G,
-  Text as SvgText,
-  TSpan,
-  Path,
-  Line,
-  Rect,
-} from "react-native-svg";
+import { Svg } from "expo";
 import DateLabel from "./DateLabel";
 import { getMonth } from "../utils";
 
@@ -100,9 +92,9 @@ export default class WeightChart extends React.PureComponent {
 
     const StartEndDots = ({ x, y }) => {
       return (
-        <G key="startEndDots">
+        <Svg.G key="startEndDots">
           {circles.map(point => (
-            <Circle
+            <Svg.Circle
               key={`c${point.idx}`}
               x={x(point.idx)}
               cy={y(data[point.idx])}
@@ -112,16 +104,16 @@ export default class WeightChart extends React.PureComponent {
               fill={point.color}
             />
           ))}
-        </G>
+        </Svg.G>
       );
     };
 
     const WeightLabels = ({ x, y }) => {
       return (
-        <G key="weightLabels">
+        <Svg.G key="weightLabels">
           {weightLabels.map(point => (
-            <G key={`gl${point.idx}`} x={x(point.idx)}>
-              <Line
+            <Svg.G key={`gl${point.idx}`} x={x(point.idx)}>
+              <Svg.Line
                 key={`line${point.idx}`}
                 y1={y(data[point.idx])}
                 y2={this.props.height + this.props.bottomInset}
@@ -129,9 +121,9 @@ export default class WeightChart extends React.PureComponent {
                 stroke={Colors.grey}
                 strokeWidth={1}
               />
-            </G>
+            </Svg.G>
           ))}
-          <Rect
+          <Svg.Rect
             key="weightmask"
             x="0"
             y={this.props.height + 12}
@@ -140,9 +132,9 @@ export default class WeightChart extends React.PureComponent {
             fill={"white"}
           />
           {textLabels.map(point => (
-            <G key={`gt${point.idx}`} x={x(point.idx)}>
-              <G key={`lab${point.idx}`}>
-                <SvgText
+            <Svg.G key={`gt${point.idx}`} x={x(point.idx)}>
+              <Svg.G key={`lab${point.idx}`}>
+                <Svg.Text
                   key={`wl${point.idx}`}
                   y={this.props.height + 12}
                   textAnchor={"middle"}
@@ -150,8 +142,8 @@ export default class WeightChart extends React.PureComponent {
                   fontWeight={-0.4}
                 >
                   {data[point.idx]}
-                </SvgText>
-                <SvgText
+                </Svg.Text>
+                <Svg.Text
                   key={`wlt${point.idx}`}
                   y={this.props.height + 12 + 18}
                   textAnchor={"middle"}
@@ -160,16 +152,16 @@ export default class WeightChart extends React.PureComponent {
                   fill={Colors.grey}
                 >
                   LBS
-                </SvgText>
-              </G>
-            </G>
+                </Svg.Text>
+              </Svg.G>
+            </Svg.G>
           ))}
-        </G>
+        </Svg.G>
       );
     };
 
     const Fline = ({ line }) => (
-      <Path
+      <Svg.Path
         key={"line"}
         d={line}
         stroke={Colors.grey}
@@ -224,8 +216,9 @@ export default class WeightChart extends React.PureComponent {
             left: 22,
             right: 22,
           }}
-          extras={[WeightLabels, Fline, StartEndDots]}
-        />
+        >
+          <Fline />
+        </AreaChart>
       </View>
     );
   }

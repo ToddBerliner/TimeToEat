@@ -14,7 +14,7 @@ import { Schemes } from "../styles/styles";
 import { FormSettings } from "../styles/formStyles";
 import { BackgroundColors } from "../styles/colors";
 import { isSeSize } from "../utils";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import {
   setScheme,
   getScheme,
@@ -68,7 +68,7 @@ class SchemeBlock extends React.PureComponent {
               {labels[this.props.scheme]}
             </Text>
             {this.props.selected && (
-              <Icon
+              <Ionicons
                 name="ios-checkmark-circle-outline"
                 size={48}
                 style={{ marginRight: 12 }}

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { getFriendlyTime, isSeSize } from "../utils";
 import { CHECKED, MISSED } from "../store/nodes/reducer";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import Colors from "../styles/colors";
 import { topBottomBorder } from "../styles/styles";
 
@@ -29,7 +29,7 @@ class NodeRow extends React.Component {
               { backgroundColor: Colors[props.scheme] },
             ]}
           >
-            <Icon
+            <Ionicons
               name="ios-checkmark"
               style={styles.nodeIcon}
               size={isSe ? 50 : 56}
@@ -45,7 +45,7 @@ class NodeRow extends React.Component {
               { backgroundColor: Colors[props.scheme] },
             ]}
           >
-            <Icon
+            <Ionicons
               name="ios-close"
               style={styles.nodeIcon}
               size={isSe ? 50 : 56}

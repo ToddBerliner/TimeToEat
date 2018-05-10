@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import Colors from "../styles/colors";
 
 const AddSnack = props => {
   return (
     <TouchableOpacity onPress={props.onTap} style={styles.addSnackWrap}>
-      <Icon
+      <Ionicons
         name="ios-add-circle-outline"
         size={32}
         style={styles.addSnackIcon}
