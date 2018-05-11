@@ -1,11 +1,12 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 
-export default class HeaderShadow extends React.PureComponent {
+export default class HeaderShadow extends React.Component {
   render() {
     return (
       <View
         style={{
+          backgroundColor: "white",
           width: 500,
           height: 50,
           position: "absolute",
