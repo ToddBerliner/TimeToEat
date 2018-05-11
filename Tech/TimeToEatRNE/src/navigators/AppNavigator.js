@@ -30,7 +30,7 @@ export const AppNavigator = StackNavigator(
     },
   },
   {
-    initialRouteName: "Metrics",
+    initialRouteName: "Map",
     mode: "modal",
   },
 );

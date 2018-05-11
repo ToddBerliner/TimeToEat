@@ -129,26 +129,26 @@ export default class WeightChart extends React.PureComponent {
             y={this.props.height + 12}
             width={this.props.width}
             height={this.props.bottomInset - 12}
-            fill={"white"}
+            fill="white"
           />
           {textLabels.map(point => (
             <Svg.G key={`gt${point.idx}`} x={x(point.idx)}>
               <Svg.G key={`lab${point.idx}`}>
                 <Svg.Text
                   key={`wl${point.idx}`}
-                  y={this.props.height + 12}
-                  textAnchor={"middle"}
-                  fontSize={16}
-                  fontWeight={-0.4}
+                  textAnchor="middle"
+                  y={this.props.height + 12 + 18}
+                  fontSize="16"
+                  fontWeight="lighter"
                 >
                   {data[point.idx]}
                 </Svg.Text>
                 <Svg.Text
-                  key={`wlt${point.idx}`}
-                  y={this.props.height + 12 + 18}
-                  textAnchor={"middle"}
-                  fontSize={10}
-                  fontWeight={-0.4}
+                  key={`wllbs${point.idx}`}
+                  y={this.props.height + 12 + 16 + 14}
+                  textAnchor="middle"
+                  fontSize="10"
+                  fontWeight="lighter"
                   fill={Colors.grey}
                 >
                   LBS
@@ -217,7 +217,9 @@ export default class WeightChart extends React.PureComponent {
             right: 22,
           }}
         >
+          <WeightLabels />
           <Fline />
+          <StartEndDots />
         </AreaChart>
       </View>
     );
