@@ -14,6 +14,7 @@ import {
   SafeAreaView,
   Dimensions,
   Modal,
+  StatusBar,
 } from "react-native";
 import EmptyPlan from "../components/EmptyPlan";
 import AddSnack from "../components/AddSnack";
@@ -36,6 +37,7 @@ import {
   readIntro,
   getIntroReadState,
   getScheme,
+  NUTS,
 } from "../store/uiState/reducer";
 import { tapWater, tapAndHoldWater, editWeight } from "../store/days/reducer";
 import { nodeRowHeight } from "../components/NodeRow";
@@ -297,6 +299,8 @@ class MapScreen extends Component {
 
   render() {
     const { scheme } = this.props;
+    const statusBarStyle = scheme === NUTS ? "light-content" : "dark-content";
+    StatusBar.setBarStyle(statusBarStyle);
     const trackedMeals = this.props.nodes.filter(node => node.tracking);
     const heightInterpolate = this.state.weightPickerAnimated.interpolate({
       inputRange: [0, 1],
