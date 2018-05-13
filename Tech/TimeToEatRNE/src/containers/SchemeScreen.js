@@ -37,6 +37,7 @@ const labels = {
 class SchemeBlock extends React.PureComponent {
   render() {
     const { height } = Dimensions.get("window");
+    const isSe = isSeSize();
     const itemHeight = 150;
     return (
       <TouchableOpacity
@@ -62,7 +63,7 @@ class SchemeBlock extends React.PureComponent {
           >
             <Text
               style={{
-                fontSize: 20,
+                fontSize: isSe ? 16 : 20,
               }}
             >
               {labels[this.props.scheme]}
@@ -70,7 +71,7 @@ class SchemeBlock extends React.PureComponent {
             {this.props.selected && (
               <Ionicons
                 name="ios-checkmark-circle-outline"
-                size={48}
+                size={isSe ? 24 : 48}
                 style={{ marginRight: 12 }}
               />
             )}
@@ -105,6 +106,7 @@ class SchemeBlock extends React.PureComponent {
                 shadowOffset: { width: 0, height: 0 },
                 shadowOpacity: 1.0,
                 shadowRadius: 12,
+                backgroundColor: "black",
               }}
             />
           </View>
