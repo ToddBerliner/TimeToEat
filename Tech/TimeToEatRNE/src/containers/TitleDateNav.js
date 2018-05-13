@@ -4,7 +4,7 @@ import TitleDate from "../components/TitleDate";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { selectDay } from "../store/uiState/reducer";
-import { getDateKey, getAdjacentDateKey, PREV, NEXT } from "../utils";
+import { getDateKey, getAdjacentDateKey, isSeSize, PREV, NEXT } from "../utils";
 import { _getSelectedDayId } from "../store/reducer";
 import Colors, { HeaderColors } from "../styles/colors";
 
@@ -18,8 +18,9 @@ class TitleDateNav extends Component {
   }
 
   render() {
+    const isSe = isSeSize();
     return (
-      <View style={styles.titleRowCenter}>
+      <View style={[styles.titleRowCenter, { width: isSe ? 220 : 240 }]}>
         <TitleDate dayId={this.props.dayId} scheme={this.props.scheme} />
         <TouchableOpacity
           onPress={this._selectDate.bind(this, PREV)}
@@ -55,7 +56,6 @@ class TitleDateNav extends Component {
 
 const styles = StyleSheet.create({
   titleRowCenter: {
-    flex: 1,
     height: 36,
     alignItems: "center",
     justifyContent: "center",
