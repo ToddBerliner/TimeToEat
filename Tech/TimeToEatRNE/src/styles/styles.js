@@ -83,6 +83,10 @@ export const TextStyles = StyleSheet.create({
     fontSize: isSe ? 18 : 22,
     marginBottom: 8,
   },
+  subTitleRegText: {
+    fontSize: isSe ? 18 : 22,
+    marginBottom: 8,
+  },
   link: {
     color: Colors.blue,
   },
@@ -103,16 +107,20 @@ export const IntroStyles = StyleSheet.create({
     marginTop: isSe ? 40 : 60,
     marginRight: isSe ? 10 : 20,
     marginLeft: isSe ? 10 : 20,
-    marginBottom: isSe ? 10 : 20,
-    backgroundColor: "white",
+    marginBottom: isSe ? 40 : 60,
+    backgroundColor: Colors.bgGreen,
     borderRadius: 40,
     flex: 1,
     paddingTop: isSe ? 15 : 30,
     paddingLeft: isSe ? 15 : 30,
     paddingRight: isSe ? 15 : 30,
-    paddingBottom: 15,
+    paddingBottom: 25,
     alignItems: "center",
     justifyContent: "space-between",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
   },
   contentWrap: {
     flex: 1,
@@ -132,7 +140,7 @@ export const IntroStyles = StyleSheet.create({
   divider: {
     width: 200,
     borderBottomWidth: 1,
-    borderColor: Colors.borderGrey,
+    borderColor: "black",
     marginBottom: isSe ? 8 : 16,
   },
 });

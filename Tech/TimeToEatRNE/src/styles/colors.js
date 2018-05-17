@@ -20,6 +20,7 @@ const Colors = {
   nuts_lt: "#066A8D",
   pasta: "#7C2200",
   pasta_lt: "#7C2200",
+  bgGreen: "#F0FFDA",
 };
 export default Colors;
 

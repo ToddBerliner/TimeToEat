@@ -18,12 +18,20 @@ class MapIntro extends Component {
         <View style={IntroStyles.mask} />
         <View style={IntroStyles.wrap}>
           <View style={IntroStyles.contentWrap}>
-            <Text style={[TextStyles.title, TextStyles.centered]}>Hello!</Text>
             <Text
               style={[
-                TextStyles.subTitle,
+                TextStyles.title,
                 TextStyles.centered,
-                { marginBottom: 16 },
+                { marginBottom: -10 },
+              ]}
+            >
+              Hello!
+            </Text>
+            <Text
+              style={[
+                TextStyles.subTitleRegText,
+                TextStyles.centered,
+                { marginBottom: 12 },
               ]}
             >
               Let's Get You Tracking
@@ -35,9 +43,11 @@ class MapIntro extends Component {
                 style={{ marginBottom: 10 }}
               />
               <Text style={IntroStyles.content}>
-                Tap a meal to mark it eaten
+                Tap a meal to mark it eaten.
               </Text>
-              <Text style={IntroStyles.content}>Tap and hold to unmark it</Text>
+              <Text style={IntroStyles.content}>
+                Tap and hold to unmark it.
+              </Text>
             </View>
             <View style={IntroStyles.divider} />
             <View style={IntroStyles.sectionWrap}>
@@ -47,9 +57,11 @@ class MapIntro extends Component {
                 style={{ marginBottom: 10 }}
               />
               <Text style={IntroStyles.content}>
-                Tap "Add Snack" to record a snack
+                Tap "Add Snack" to record a snack.
               </Text>
-              <Text style={IntroStyles.content}>Tap and hold to remove it</Text>
+              <Text style={IntroStyles.content}>
+                Tap and hold to remove it.
+              </Text>
             </View>
             <View style={IntroStyles.divider} />
             <View style={IntroStyles.sectionWrap}>
@@ -59,10 +71,10 @@ class MapIntro extends Component {
                 style={{ marginBottom: 10 }}
               />
               <Text style={IntroStyles.content}>
-                Tap the weight to record your weight daily
+                Tap the scale to record your weight.
               </Text>
-              <Text style={IntroStyles.content}>
-                (You can turn off weight tracking in App Settings)
+              <Text style={[IntroStyles.content, { fontSize: 13 }]}>
+                (You can turn off weight tracking {"\n"}in App Settings)
               </Text>
             </View>
           </View>

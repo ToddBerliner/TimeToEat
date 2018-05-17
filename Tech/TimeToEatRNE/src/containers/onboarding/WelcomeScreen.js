@@ -55,7 +55,7 @@ class WelcomeScreen extends Component {
       });
     }
     let text =
-      "Time to Eat works best with notifications enabled so we can help you stick to your plan. You can turn notifications on and off anytime in the settings menu.";
+      "EatOnTime works best with notifications enabled so we can help you stick to your plan. You can turn notifications on and off anytime in the settings menu.";
     if (includeCancel) {
       text =
         text +
@@ -85,16 +85,16 @@ class WelcomeScreen extends Component {
         </TouchableOpacity>
         <Text style={obTitle}>Welcome!</Text>
         <Text style={obText}>
-          Time to Eat is the simple meal tracker that will help you to{" "}
+          EatOnTime is the simple meal tracker that will help you to{" "}
           <Text style={{ fontWeight: "bold" }}>
             make a plan and stick to it
-          </Text>. We believe in habbits and that tracking is the best way to
+          </Text>. We believe in habits and that tracking is the best way to
           make or break them.
         </Text>
         <Text style={[obText, { marginBottom: 36 }]}>
           Let’s get you started by turning on Notifications so that we can let
-          you know when{" "}
-          <Text style={{ fontWeight: "bold" }}>it’s Time to Eat!</Text>
+          you know when to{" "}
+          <Text style={{ fontWeight: "bold" }}>EatOnTime!</Text>
         </Text>
         <TteButton
           style={{ width: "80%" }}
