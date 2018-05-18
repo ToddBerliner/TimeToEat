@@ -85,8 +85,7 @@ const styles = StyleSheet.create({
       // iOS blue from https://developer.apple.com/ios/human-interface-guidelines/visual-design/color/
       // color: "#007AFF",
       textAlign: "center",
-      paddingTop: 18,
-      paddingBottom: 18,
+      padding: 18,
       fontSize: 16,
       fontWeight: "700",
     },

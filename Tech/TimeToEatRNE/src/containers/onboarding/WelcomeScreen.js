@@ -18,7 +18,7 @@ import { toggleNotifications } from "../../store/uiState/reducer";
 
 const welcomeIcon = require("../../../assets/welcome_icon.png");
 import { obText, obTitle } from "../../styles/styles";
-import { BackgroundColors } from "../../styles/colors";
+import Colors, { BackgroundColors } from "../../styles/colors";
 import { isSeSize } from "../../utils";
 
 class WelcomeScreen extends Component {
@@ -77,12 +77,10 @@ class WelcomeScreen extends Component {
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: BackgroundColors.herbs,
+          backgroundColor: Colors.bgGreen,
         }}
       >
-        <TouchableOpacity onPress={clearSavedState}>
-          <Image source={welcomeIcon} style={logoStyle} />
-        </TouchableOpacity>
+        <Image source={welcomeIcon} style={logoStyle} />
         <Text style={obTitle}>Welcome!</Text>
         <Text style={obText}>
           EatOnTime is the simple meal tracker that will help you to{" "}

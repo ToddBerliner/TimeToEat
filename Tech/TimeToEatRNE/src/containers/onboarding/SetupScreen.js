@@ -20,7 +20,7 @@ import { clearSavedState } from "../../store/configureStore";
 
 const welcomeIcon = require("../../../assets/welcome_icon.png");
 import { obText, obTitle } from "../../styles/styles";
-import { BackgroundColors } from "../../styles/colors";
+import Colors, { BackgroundColors } from "../../styles/colors";
 
 class SetupScreen extends Component {
   static navigationOptions = {
@@ -50,7 +50,7 @@ class SetupScreen extends Component {
           alignItems: "center",
           justifyContent: "center",
           borderWidth: 1,
-          backgroundColor: BackgroundColors.herbs,
+          backgroundColor: Colors.bgGreen,
         }}
         behavior="padding"
         keyboardVerticalOffset={25}
