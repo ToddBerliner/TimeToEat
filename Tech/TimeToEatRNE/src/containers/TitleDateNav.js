@@ -27,16 +27,17 @@ class TitleDateNav extends Component {
         ]}
       >
         <View style={styles.arrowWrap}>
-          <Ionicons
-            name="ios-arrow-back"
-            size={24}
-            color={HeaderColors[this.props.scheme]}
-            style={styles.arrowIcon}
-          />
           <TouchableOpacity
             onPress={this._selectDate.bind(this, PREV)}
             style={styles.arrowButton}
-          />
+          >
+            <Ionicons
+              name="ios-arrow-back"
+              size={24}
+              color={HeaderColors[this.props.scheme]}
+              style={styles.arrowIcon}
+            />
+          </TouchableOpacity>
         </View>
         <View style={styles.titleWrap}>
           <TitleDate dayId={this.props.dayId} scheme={this.props.scheme} />
@@ -45,16 +46,17 @@ class TitleDateNav extends Component {
           <View style={styles.arrowWrap} />
         ) : (
           <View style={styles.arrowWrap}>
-            <Ionicons
-              name="ios-arrow-forward"
-              size={24}
-              color={HeaderColors[this.props.scheme]}
-              style={[styles.arrowIcon]}
-            />
             <TouchableOpacity
               onPress={this._selectDate.bind(this, NEXT)}
               style={styles.arrowButton}
-            />
+            >
+              <Ionicons
+                name="ios-arrow-forward"
+                size={24}
+                color={HeaderColors[this.props.scheme]}
+                style={[styles.arrowIcon]}
+              />
+            </TouchableOpacity>
           </View>
         )}
       </View>
@@ -81,12 +83,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  arrowIcon: {
-    position: "absolute",
-  },
   arrowButton: {
     height: "100%",
     width: 30,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

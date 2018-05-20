@@ -153,17 +153,14 @@ export const MapScreenStyles = StyleSheet.create({
   headerSide: {
     height: "100%",
     width: 50,
-  },
-  headerIcon: {
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
-    height: "100%",
-    position: "absolute",
   },
   headerButton: {
     width: "100%",
     height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   bg: {
     position: "absolute",

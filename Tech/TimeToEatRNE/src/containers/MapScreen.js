@@ -86,37 +86,35 @@ class MapScreen extends Component {
       headerStyle: Schemes[scheme].header,
       headerLeft: (
         <View style={MapScreenStyles.headerSide}>
-          <View style={MapScreenStyles.headerIcon}>
-            <Ionicons
-              name="ios-contact-outline"
-              size={24}
-              color={HeaderColors[scheme]}
-            />
-          </View>
           <TouchableOpacity
             onPress={() => {
               navigate("Menu");
             }}
             style={MapScreenStyles.headerButton}
-          />
+          >
+            <Ionicons
+              name="ios-contact-outline"
+              size={24}
+              color={HeaderColors[scheme]}
+            />
+          </TouchableOpacity>
         </View>
       ),
       headerRight: (
         <View style={MapScreenStyles.headerSide}>
-          <View style={MapScreenStyles.headerIcon}>
+          <TouchableOpacity
+            onPress={() => {
+              navigate("Metrics");
+            }}
+            style={MapScreenStyles.headerButton}
+          >
             <Ionicons
               name="ios-calendar-outline"
               size={24}
               style={{ position: "absolute" }}
               color={HeaderColors[scheme]}
             />
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              navigate("Metrics");
-            }}
-            style={MapScreenStyles.headerButton}
-          />
+          </TouchableOpacity>
         </View>
       ),
     };
