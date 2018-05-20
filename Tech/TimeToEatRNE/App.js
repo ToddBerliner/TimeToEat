@@ -85,16 +85,3 @@ export default class App extends Component {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
-  },
-  styledText: {
-    fontFamily: "fugaz-one-regular",
-  },
-});

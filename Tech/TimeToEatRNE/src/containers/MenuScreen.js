@@ -33,6 +33,7 @@ import {
   getTimestampFromTimeObj,
   getDateKey,
   getTimeObjFromDate,
+  isXSize,
 } from "../utils";
 import Line from "../components/forms/Line";
 import TextRow from "../components/forms/TextRow";
@@ -167,6 +168,7 @@ class MenuScreen extends React.Component {
       navigation,
       scheme,
     } = this.props;
+    const isX = isXSize();
     const { nodes } = plan.days.Monday;
     const pickerHeights = {};
     nodes.forEach((node, idx) => {
@@ -237,7 +239,9 @@ class MenuScreen extends React.Component {
           <ScrollView
             style={[
               MenuScreenStyles.settingsWrap,
-              { backgroundColor: BackgroundColors[scheme] },
+              {
+                backgroundColor: BackgroundColors[scheme],
+              },
             ]}
           >
             <TouchableOpacity onPress={clearSavedState}>
@@ -304,7 +308,12 @@ class MenuScreen extends React.Component {
                   onPress={() => navigation.navigate("Help")}
                 />
               </View>
-              <View style={MenuScreenStyles.linkRow}>
+              <View
+                style={[
+                  MenuScreenStyles.linkRow,
+                  { marginBottom: isX ? 28 : 0 },
+                ]}
+              >
                 <TouchableOpacity onPress={this.goToPrivacy}>
                   <Text style={TextStyles.link}>Privacy Policy</Text>
                 </TouchableOpacity>
