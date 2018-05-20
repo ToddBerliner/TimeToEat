@@ -90,7 +90,6 @@ class MapScreen extends Component {
             <Ionicons
               name="ios-contact-outline"
               size={24}
-              style={{ position: "absolute" }}
               color={HeaderColors[scheme]}
             />
           </View>
