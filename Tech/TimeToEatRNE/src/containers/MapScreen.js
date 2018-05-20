@@ -78,47 +78,47 @@ const notificationIcon = require("../../assets/notification_icon.png");
 // MapScreen is a route in the App
 class MapScreen extends Component {
   static navigationOptions = ({ navigation, screenProps }) => {
+    const isSe = isSeSize();
     const { navigate } = navigation;
     const { scheme } = screenProps;
     return {
       headerTitle: <TitleDateNav scheme={scheme} />,
-      headerStyle: [
-        {
-          paddingRight: 12,
-          paddingLeft: 12,
-        },
-        Schemes[scheme].header,
-      ],
+      headerStyle: Schemes[scheme].header,
       headerLeft: (
-        <TouchableOpacity
-          onPress={() => {
-            navigate("Menu");
-          }}
-          style={{ width: 30 }}
-          hitSlop={{ left: 10, right: 10 }}
-        >
-          <Ionicons
-            name="ios-contact-outline"
-            size={24}
-            color={HeaderColors[scheme]}
+        <View style={MapScreenStyles.headerSide}>
+          <View style={MapScreenStyles.headerIcon}>
+            <Ionicons
+              name="ios-contact-outline"
+              size={24}
+              style={{ position: "absolute" }}
+              color={HeaderColors[scheme]}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              navigate("Menu");
+            }}
+            style={MapScreenStyles.headerButton}
           />
-        </TouchableOpacity>
+        </View>
       ),
       headerRight: (
-        <TouchableOpacity
-          onPress={() => {
-            navigate("Metrics");
-          }}
-          style={{ width: 30 }}
-          hitSlop={{ left: 10, right: 10 }}
-        >
-          <Ionicons
-            name="ios-calendar-outline"
-            size={24}
-            style={{ alignSelf: "flex-end" }}
-            color={HeaderColors[scheme]}
+        <View style={MapScreenStyles.headerSide}>
+          <View style={MapScreenStyles.headerIcon}>
+            <Ionicons
+              name="ios-calendar-outline"
+              size={24}
+              style={{ position: "absolute" }}
+              color={HeaderColors[scheme]}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              navigate("Metrics");
+            }}
+            style={MapScreenStyles.headerButton}
           />
-        </TouchableOpacity>
+        </View>
       ),
     };
   };

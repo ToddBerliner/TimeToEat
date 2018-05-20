@@ -150,6 +150,20 @@ export const MapScreenStyles = StyleSheet.create({
     backgroundColor: Colors.superLtGrey,
     flex: 1,
   },
+  headerSide: {
+    height: "100%",
+    width: 50,
+  },
+  headerIcon: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+  },
+  headerButton: {
+    width: isSe ? 30 : 50,
+    height: "100%",
+  },
   bg: {
     position: "absolute",
     width: "100%",

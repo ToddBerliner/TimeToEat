@@ -20,34 +20,42 @@ class TitleDateNav extends Component {
   render() {
     const isSe = isSeSize();
     return (
-      <View style={[styles.titleRowCenter, { width: isSe ? 220 : 240 }]}>
-        <TitleDate dayId={this.props.dayId} scheme={this.props.scheme} />
-        <TouchableOpacity
-          onPress={this._selectDate.bind(this, PREV)}
-          style={styles.titleLeftArrow}
-        >
+      <View
+        style={[
+          styles.titleRowCenter,
+          { width: isSeSize ? 220 : 240, height: "100%" },
+        ]}
+      >
+        <View style={styles.arrowWrap}>
           <Ionicons
             name="ios-arrow-back"
             size={24}
             color={HeaderColors[this.props.scheme]}
-            style={{ marginLeft: 8 }}
+            style={styles.arrowIcon}
           />
-        </TouchableOpacity>
-        {this.props.isToday ? (
-          <View style={styles.titleRightArrow} />
-        ) : (
           <TouchableOpacity
-            onPress={this._selectDate.bind(this, NEXT)}
-            style={styles.titleRightArrow}
-            hitSlop={{ left: 10, right: 10 }}
-          >
+            onPress={this._selectDate.bind(this, PREV)}
+            style={styles.arrowButton}
+          />
+        </View>
+        <View style={styles.titleWrap}>
+          <TitleDate dayId={this.props.dayId} scheme={this.props.scheme} />
+        </View>
+        {this.props.isToday ? (
+          <View style={styles.arrowWrap} />
+        ) : (
+          <View style={styles.arrowWrap}>
             <Ionicons
               name="ios-arrow-forward"
               size={24}
               color={HeaderColors[this.props.scheme]}
-              style={{ marginRight: 8 }}
+              style={[styles.arrowIcon]}
             />
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this._selectDate.bind(this, NEXT)}
+              style={styles.arrowButton}
+            />
+          </View>
         )}
       </View>
     );
@@ -58,26 +66,27 @@ const styles = StyleSheet.create({
   titleRowCenter: {
     height: 36,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     flexDirection: "row",
   },
-  titleLeftArrow: {
-    width: 60,
-    height: 36,
-    alignItems: "flex-start",
+  titleWrap: {
+    height: "100%",
+    flex: 1,
+    alignItems: "center",
     justifyContent: "center",
-    position: "absolute",
-    top: 0,
-    left: 0,
   },
-  titleRightArrow: {
-    width: 60,
-    height: 36,
-    alignItems: "flex-end",
+  arrowWrap: {
+    width: 30,
+    height: "100%",
+    alignItems: "center",
     justifyContent: "center",
+  },
+  arrowIcon: {
     position: "absolute",
-    top: 0,
-    right: 0,
+  },
+  arrowButton: {
+    height: "100%",
+    width: 30,
   },
 });
 
