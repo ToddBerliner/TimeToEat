@@ -59,7 +59,7 @@ class SetupScreen extends Component {
         <Text style={obTitle}>Make Your Plan</Text>
         <Text style={[obText, { marginBottom: 12 }]}>
           Now tell us what meals you want to track, what you want to call them,
-          and when you want to be eat them.
+          and when you want to eat them.
         </Text>
         <View style={{ width: "100%" }}>
           <MenuScreen mealsOnly={true} />
