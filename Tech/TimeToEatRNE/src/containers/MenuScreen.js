@@ -98,10 +98,6 @@ class MenuScreen extends React.Component {
     Linking.openURL("https://github.com/ToddBerliner/TimeToEat");
   };
 
-  goToTos = () => {
-    Linking.openURL("https://github.com/ToddBerliner/TimeToEat");
-  };
-
   handleShowPicker(mealIdx) {
     this.setState(
       prevState => {
@@ -316,9 +312,6 @@ class MenuScreen extends React.Component {
               >
                 <TouchableOpacity onPress={this.goToPrivacy}>
                   <Text style={TextStyles.link}>Privacy Policy</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.goToTos}>
-                  <Text style={TextStyles.link}>Terms of Service</Text>
                 </TouchableOpacity>
               </View>
             </View>
