@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Linking,
 } from "react-native";
 import {
   obTitle,
@@ -48,6 +49,11 @@ class HelpScreen extends Component {
       ),
     };
   };
+
+  contact = () => {
+    Linking.openURL("mailto://help@eatontime.app");
+  };
+
   render() {
     const { scheme } = this.props.screenProps;
     const isSe = isSeSize();
@@ -67,6 +73,28 @@ class HelpScreen extends Component {
           >
             Time for Help
           </Text>
+          <View style={[HelpScreenStyles.helpSection, { marginTop: 8 }]}>
+            <Text style={TextStyles.content}>
+              Please find the simple instructions below and email us with any
+              questions or feedback.
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons
+                name="ios-mail-outline"
+                size={22}
+                color={Colors[scheme]}
+                style={{ marginRight: 4 }}
+              />
+              <TouchableOpacity onPress={this.contact} style={{ height: 22 }}>
+                <Text style={TextStyles.link}>support@eatontime.app</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
           <View style={HelpScreenStyles.headerWrap}>
             <Ionicons
               name="ios-checkmark-circle-outline"
@@ -120,7 +148,11 @@ class HelpScreen extends Component {
             </Text>
           </View>
           <View style={HelpScreenStyles.headerWrap}>
-            <Ionicons name="ios-contact-outline" size={36} color={Colors[scheme]} />
+            <Ionicons
+              name="ios-contact-outline"
+              size={36}
+              color={Colors[scheme]}
+            />
             <Text
               style={[HelpScreenStyles.headerText, { color: Colors[scheme] }]}
             >
