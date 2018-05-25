@@ -95,7 +95,7 @@ class MenuScreen extends React.Component {
   }
 
   goToPrivacy = () => {
-    Linking.openURL("https://github.com/ToddBerliner/TimeToEat");
+    Linking.openURL("https://eatontime.app/privacy-policy");
   };
 
   handleShowPicker(mealIdx) {
