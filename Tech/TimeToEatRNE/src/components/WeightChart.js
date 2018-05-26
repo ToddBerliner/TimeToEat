@@ -84,7 +84,7 @@ export default class WeightChart extends React.PureComponent {
 
     let prevIdx = null;
     weightLabels.forEach(point => {
-      if (prevIdx === null || point.idx - prevIdx > 2) {
+      if (prevIdx === null || point.idx - prevIdx > 3) {
         textLabels.push(point);
         prevIdx = point.idx;
       }
@@ -138,7 +138,7 @@ export default class WeightChart extends React.PureComponent {
                   key={`wl${point.idx}`}
                   textAnchor="middle"
                   y={this.props.height + 12 + 18}
-                  fontSize="16"
+                  fontSize="14"
                   fontWeight="lighter"
                 >
                   {data[point.idx]}
