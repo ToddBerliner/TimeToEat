@@ -10,10 +10,8 @@ export const clearSavedState = async () => {
   try {
     await AsyncStorage.removeItem("@state");
     await Notifications.cancelAllScheduledNotificationsAsync();
-    console.log("State cleared");
     return true;
   } catch (err) {
-    console.log("Err clearing saved state:", err);
     return false;
   }
 };
@@ -27,7 +25,6 @@ export const getSavedState = () => {
       return JSON.parse(state);
     })
     .catch(err => {
-      console.log("Err getting saved state:", err);
       return undefined;
     });
 };
@@ -35,23 +32,19 @@ export const getSavedState = () => {
 export const saveState = async state => {
   try {
     await AsyncStorage.setItem("@state", JSON.stringify(state));
-  } catch (err) {
-    console.log("Err trying to save state:", err);
-  }
+  } catch (err) {}
 };
 
 export const configureStore = (savedState = undefined) => {
   // create the store
   let store = null;
   if (savedState !== undefined) {
-    console.log("Found savedState, creating store.");
     store = createStore(
       rootReducer,
       Immutable(savedState),
       applyMiddleware(thunk),
     );
   } else {
-    console.log("Null savedState, creating fresh store.");
     store = createStore(rootReducer, applyMiddleware(thunk));
   }
   // subscribe to save

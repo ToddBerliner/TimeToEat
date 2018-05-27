@@ -56,10 +56,9 @@ export function scheduleMealNotification(mealIdx, meal, dispatch) {
     mealNotificationSchedule,
   )
     .then(notificationId => {
-      // console.log(`Scheduled notification ${notificationId}`);
       dispatch({ type: NOTIFICATION_UPDATED, mealIdx, notificationId });
     })
-    .catch(err => console.log(err));
+    .catch();
 }
 
 // Actions

@@ -78,7 +78,8 @@ class HelpScreen extends Component {
               Please find the simple instructions below and email us with any
               questions or feedback.
             </Text>
-            <View
+            <TouchableOpacity
+              onPress={this.contact}
               style={{
                 flexDirection: "row",
                 alignItems: "center",
@@ -86,14 +87,12 @@ class HelpScreen extends Component {
             >
               <Ionicons
                 name="ios-mail-outline"
-                size={22}
-                color={Colors[scheme]}
+                size={24}
+                color={Colors.blue}
                 style={{ marginRight: 4 }}
               />
-              <TouchableOpacity onPress={this.contact} style={{ height: 22 }}>
-                <Text style={TextStyles.link}>Contact Us</Text>
-              </TouchableOpacity>
-            </View>
+              <Text style={[TextStyles.link, { height: 19 }]}>Contact Us</Text>
+            </TouchableOpacity>
           </View>
           <View style={HelpScreenStyles.headerWrap}>
             <Ionicons
