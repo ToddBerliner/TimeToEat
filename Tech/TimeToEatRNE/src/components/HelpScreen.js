@@ -51,7 +51,7 @@ class HelpScreen extends Component {
   };
 
   contact = () => {
-    Linking.openURL("mailto://help@eatontime.app");
+    Linking.openURL("mailto://support@eatontime.app");
   };
 
   render() {
@@ -91,7 +91,7 @@ class HelpScreen extends Component {
                 style={{ marginRight: 4 }}
               />
               <TouchableOpacity onPress={this.contact} style={{ height: 22 }}>
-                <Text style={TextStyles.link}>support@eatontime.app</Text>
+                <Text style={TextStyles.link}>Contact Us</Text>
               </TouchableOpacity>
             </View>
           </View>
